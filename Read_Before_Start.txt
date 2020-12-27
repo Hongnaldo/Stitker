@@ -1,0 +1,18 @@
+처음 시작하실때 git cmd 창을 켜신후
+cd를 하여 저장을 원하는 폴더에 위치하시고
+git clone "https://github.com/Hongnaldo/Stitker.git" 명령어를 사용하시면 
+로컬 저장소가 생성이 됩니다.
+
+이후 작업을 시작하실때 항상 git pull 명령어를 통해 최신화를 시켜주세요
+
+명령어를 치시고 나서 작업을 진행하여 주시고
+
+이후 작업이 끝나면
+
+git add .
+git commit -m "작업내용"
+git push -u origin main
+순으로 명령어를 치시면 github repository에 반영이 됩니다.
+
+주의해야 할 점 : 작업 시작하실때 항상 git pull 을 통해 최신화를 시켜주셔야 합니다.
+안그러면 큰일날수도 있습니다.
