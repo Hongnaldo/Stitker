@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+C:\Stitker\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2211408456.index
+3830634512.index
+3573594780.index
+2089783116.index
+1904835845.index
+2002324697.index
+1036437547.index

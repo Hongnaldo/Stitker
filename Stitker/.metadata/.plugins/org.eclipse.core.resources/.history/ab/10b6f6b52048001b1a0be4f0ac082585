@@ -1,0 +1,310 @@
+@charset "UTF-8";
+*
+{
+	margin: 0px;
+	padding: 0px;
+}
+
+body
+{
+	font-size: 9pt;
+	font-family: 돋움;
+}
+
+a
+{
+	cursor: pointer;
+	color: #000000;
+	text-decoration: none;
+	font-size: 9pt;
+	line-height: 150%;
+}
+
+a:hover, a:active
+{
+	font-size: 9pt;
+	color: red;
+}
+
+ul
+{
+	list-style: none;
+}
+
+#BoardType
+{
+	float: left;
+	padding-left: 20px;
+	padding-top: 100px;
+	width: 150px;
+	margin: 30px auto;
+	text-align: left;
+	font-weight: bold;
+}
+
+#BoardType a
+{
+	font-size: 10pt; 
+	font-weight: bold;  
+               
+}
+#BoardType li
+{
+	font-size: 10pt;   
+	border-bottom: 1px solid;   
+	padding-top: 10px;
+	padding-bottom: 10px;
+	                    
+}
+
+#BoardMenu
+{
+	float: right;
+	padding-right: 250px;
+	padding-top: 10px;
+	width: 750px;
+	text-align: right;
+}
+
+
+#footer
+{
+	clear: both;
+	height: 32px;
+	line-height: 32px;
+	margin-top: 5px;
+	text-align: center;
+}
+
+#BoardArticle
+{
+   width: 750px;
+   margin: 30px auto;
+   text-align: left;
+}
+
+#BoardArticle_title
+{
+   width: 750px;
+   padding-left: 20px;
+   padding-top: 20px;
+   height: 40px;
+   text-align: left;
+   font-weight: bold;
+   line-height: 40px;
+   font-size: 20pt;
+   margin-bottom: 30px;
+}
+
+#BoardDetail
+{
+	float: right;
+	width: 750px;
+	overflow: visible;
+	border-top: 3px solid #000000;
+	border-bottom: 3px solid #000000;    
+	text-align: left;
+}
+
+#BoardDetail_header
+{
+   height: 35px;
+   line-height: 35px;
+   border-bottom: 2px solid #000000;
+   text-align: left;
+}
+
+#BoardDetail dt
+{
+   float: left;
+   height: 35px;
+   width: 60px;
+   line-height: 35px;
+   text-align: center;
+   background-color: #c0c0c0;
+}
+
+#BoardDetail dd
+{
+   float: left;
+   height: 35px;
+   width: 230px;
+   line-height: 35px;
+   text-align: left;
+   padding-left: 10px;
+}
+
+#BoardDetail_content table
+{
+	width: 600;
+}
+
+#BoardDetail_content td
+{
+
+	vertical-align: top; 
+	height: 150;
+}
+
+.BoardDetail_bottomLine
+{
+   height: 35px;
+   line-height: 35px;
+   clear: both;
+   text-align: left;
+   border-bottom: 1px solid #000000;
+}
+
+.BoardDetail_noLine
+{
+   height: 25px;
+   line-height: 25px;
+   clear: both;
+   text-align: left;
+}
+
+#BoardDetail_content
+{
+   overflow: visible;
+   border-bottom: 1px solid #000000;
+   text-align: left;
+   min-height: 250px;
+   padding: 20px 60px 20px 60px;
+   word-break: break-all;
+}
+
+#BoardDetail_footer
+{
+   width: 750px;
+   clear: both;
+   height: 32px;
+   line-height: 32px;
+}
+
+#BoardDetail_footer #leftFooter
+{
+   float: left;
+   width: 375px;
+   text-align: left;
+}
+
+
+#BoardDetail_footer #rightFooter
+{
+   float: right;
+   width: 375px;
+   text-align: right;
+}
+
+#BoardDetail_comment
+{
+	border-bottom: 2px solid #000000;
+	width: 750px;
+}
+
+.BoardDetail_commentHead
+{
+   height: 35px;
+   line-height: 35px;
+   clear: both;
+   text-align: left;
+   border-top: 2px solid #000000;
+   border-bottom: 1px solid #000000;
+   
+}
+
+.BoardDetail_commentHead td
+{
+   padding-left: 10px;
+   
+}
+
+.BoardDetail_commentHead #table #notify
+{
+	width: 630px;
+	text-align: right;
+}
+
+
+.BoardDetail_commentWrite
+{
+	border: 1px solid #000000;
+	width: 750px;
+	height: 120px;
+	margin-bottom: 20px;
+}
+
+.BoardDetail_commentRead #comment
+{
+	width: 660px;
+	text-align: left;
+	padding-left: 10px;
+}
+
+.BoardDetail_commentRead p
+{
+	text-align: center;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+
+#commentCnt
+{
+	float: right;
+} 
+.btn2
+{
+	float: right;
+	margin-left: 10px;
+	
+}
+
+.commentBox
+{
+	border: 0px solid #000000;
+	color: #000000;
+}
+
+
+
+.BoardDetail_commentRead td
+{
+   height: 25px;
+   line-height: 25px;
+   clear: both;
+   text-align: left;
+   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

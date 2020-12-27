@@ -1,0 +1,181 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+	String cp = request.getContextPath();
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FreeBoard_list.jsp</title>
+<link rel="stylesheet" type="text/css" href="<%=cp %>/css/detailpage.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+
+	$(document).ready(function() {
+	    $('#commentBox').on('keyup', function() {
+	        $('#commentCnt').html("("+$(this).val().length+" / 300)");
+	 
+	        if($(this).val().length > 300) {
+	            $(this).val($(this).val().substring(0, 300));
+	            $('#commentCnt').html("(300 / 300)");
+	        }
+	    });
+	});
+
+</script>
+</head>
+<body>
+
+<div id="BoardType">
+		<ul>
+			<li>
+				<a>세미나 및 공모전</a>
+			</li>
+			<li>
+				<a>IT기술정보공유</a>
+			</li>
+			<li>
+				<a>Q&A</a>
+			</li>
+			<li>
+				<a>자유게시판</a>
+			</li>
+			<li>
+				<a>면접/코딩테스트 후기</a>
+			</li>
+			<li>
+				<a>스터디 후기</a>
+			</li>
+		</ul>
+</div><!-- #BoardType -->
+
+<div id="BoardMenu">
+	<a>홈</a> > <a>정보공유게시판</a> > <a>자유게시판</a> > <a>안녕하세요</a>
+
+</div>
+
+<div id="BoardArticle">
+	<div id="BoardArticle_title">
+		자유게시판
+	</div><!-- #BoardDetail_title -->
+	
+	<div id="BoardDetail">
+	
+		<div id="BoardDetail_header">
+			안녕하세요
+		</div><!-- #bbsArticle_header -->
+		
+		<div class="BoardDetail_bottomLine">
+			<dl>
+				<dt>작성자</dt>
+				<dd>박혜인</dd>
+				<dt>말머리</dt>
+				<dd>개발자</dd>
+			</dl>
+		</div><!-- .BoardDetail_bottomLine -->
+		
+		<div class="BoardDetail_bottomLine">
+			<dl>
+				<dt id="date">등록일</dt>
+				<dd id="date">2020-11-30</dd>
+				<dt id="hitCount">조회수</dt>
+				<dd id="hitCount">0</dd>
+			</dl>
+		</div><!-- .BoardDetail_bottomLine -->
+		
+		<div id="BoardDetail_content">
+			<table>
+				<tr>
+					<td>
+						안녕하세요 박혜인입니다.
+					</td>
+				</tr>
+			</table>
+		</div><!-- #BoardDetail_content-->
+		
+		<div class="BoardDetail_noLine">
+			이전글 : (1) 반갑습니다
+		</div><!-- .BoardDetail_noLine -->
+		
+		<div class="BoardDetail_noLine">
+			다음글 : (3) 개발자입니다
+		</div><!-- .BoardDetail_noLine -->
+	
+	</div><!-- #BoardDetail -->
+	
+	
+	<div id="BoardDetail_footer">
+	
+		<div id="leftFooter">
+			<input type="button" value="리스트" class="btn">
+		</div><!-- #leftFooter -->
+		
+		<div id="rightFooter">
+			<input type="button" value="수정" class="btn">
+			<input type="button" value="삭제" class="btn">
+		</div><!-- #rightFooter -->
+		
+	</div><!-- #BoardDetail_footer -->
+	
+	<div class="BoardDetail_commentHead">
+			<table id="table">
+				<tr>
+					<td>댓글 2</td>
+					<td>추천 80</td>
+					<td id="notify"><input type="button" value="신고" class="btn"></td>
+			</table>
+	</div><!-- .BoardDetail_commenthead -->
+	
+	<div id="BoardDetail_comment">
+		
+		<div class="BoardDetail_commentRead">
+			<table>
+				<tr>
+			 		<th>박혜인</th>
+			 		<td id="comment">하이</td>
+			 		<td><a>답글<a></a></td>
+			 	</tr>
+			 	<tr>
+			 		<th>조인경</th>
+			 		<td id="comment">안녕</td>
+			 		<td><a>답글<a></a></td>
+			 	</tr>
+			 	<tr>
+			 		<th>조인경</th>
+			 		<td id="comment">안녕안녕</td>
+			 		<td><a>답글<a></a></td>
+			 	</tr>
+		 	</table>
+		 	<p>< 1 2 ></p>
+		</div><!-- .BoardDetail_commentRead -->
+		
+		<div class="BoardDetail_commentWrite">
+ 			<textarea id="commentBox" name="commentBox" cols="108" rows="5" 
+				class="commentBox" placeholder="댓글을 입력하세요."></textarea><br><br>
+    		<button type="button" class="btn2">등록</button>
+    		<div id="commentCnt">(0 / 300)</div>
+    		
+
+			
+			 		
+		</div><!-- .BoardDetail_commentWrite -->
+			
+
+	</div><!-- #BoardDetail_comment -->
+	
+	<div id="footer">
+		
+		<p> 1 Prev 21 22 23 24 25 26 27 28 29 30 Next 90 </p>
+
+	</div><!-- #footer -->
+	
+	
+
+</div><!-- #BoardDetail -->
+
+
+
+</body>
+</html>
