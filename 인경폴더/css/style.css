@@ -2,9 +2,55 @@
   margin: 0;
   padding: 0;
 }
-body {
-  font-family: sans-serif;
-}
+
 .radio {
   margin-left: 17px;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: sans-serif;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.main-content {
+  flex: 1;
+}
+.footer {
+  width: 100%;
+  padding: 30px 0;
+  /* bottom: 0;
+  left: 0; */
+}
+
+#table1 {
+  display: table;
+  width: 100%;
+}
+
+.ro {
+  display: table-row;
+}
+.cell {
+  display: table-cell;
+  padding: 3px;
+  border-bottom: 1px solid #ddd;
+}
+.col11 {
+  width: 10%;
+}
+.col22 {
+  width: 20%;
+}
+.col33 {
+  width: 30%;
+}
+.col44 {
+  width: 40%;
 }
