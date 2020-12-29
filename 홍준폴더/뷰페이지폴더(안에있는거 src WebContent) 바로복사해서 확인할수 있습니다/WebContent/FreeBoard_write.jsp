@@ -115,6 +115,14 @@ ul {
 	font-size: 10pt;
 	margin-bottom: 30px;
 }
+#bbsCreated
+{
+	width: 600px;
+	overflow: visible;
+	border-top: 3px solid #DBDBDB;
+	border-bottom: 3px solid #DBDBDB;
+	text-align: left;
+}
 </style>
 </head>
 <body>
@@ -137,7 +145,7 @@ ul {
 			
 			<td colspan="2">
 				<div id="BoardMenu">
-					<a>홈</a> > <a>정보공유게시판</a> > <a>자유게시판</a> > <a>글 수정페이지</a>
+					<a>홈</a> > <a>정보공유게시판</a> > <a>자유게시판</a> > <a>글 작성페이지</a>
 
 				</div>
 
@@ -154,33 +162,46 @@ ul {
 								<dt>제&nbsp;&nbsp;&nbsp;&nbsp;목</dt>
 								<dd>
 									<input type="text" name="subject" size="74" maxlength="100"
-										class="boxTF" value="글의 수정전 제목이 나와야됨">
+										class="boxTF">
 								</dd>
 							</dl>
 						</div>
 						<!-- bbsCreated_bottomLine -->
-
+						
+						<div class="bbsCreated_bottomLine">
+							<dl>
+								<dt>말&nbsp;&nbsp;&nbsp;&nbsp;머&nbsp;&nbsp;&nbsp;&nbsp;리</dt>
+								<dd>
+									<select name="searchCategory" class="selectFiled">
+										<option value="all">전체</option>
+										<option value="dba">DBA/데이터베이스</option>
+										<option value="network">네트워크/서버/보안</option>
+										<option value="developer">개발자</option>
+										<option value="pm">기획자/PM</option>
+										<option value="marketing">마케팅</option>
+										<option value="designer">디자이너</option>
+										<option value="contents">컨텐츠/사이트운영</option>
+										<option value="game">게임</option>
+										<option value="bigdata">빅데이터/AI</option>
+										<option value="videomaking">동영상제작/편집</option>
+										<option value="software">소프트웨어/하드웨어</option>
+										<option value="erp">ERP/시스템분석/설계</option>
+										<option value="edu">교육</option>
+									</select>
+								</dd>
+							</dl>
+						</div>
 
 						<div id="bbsCreated_content">
 							<dl>
 								<dt>내&nbsp;&nbsp;&nbsp;&nbsp;용</dt>
 								<dd>
-									<textarea rows="12" cols="63" name="content" class="boxTA">글의 수정전 내용이 나와야됨 ㅎㅎ</textarea>
+									<textarea rows="12" cols="63" name="content" class="boxTA"></textarea>
 								</dd>
 							</dl>
 						</div>
 						<!-- #bbsCreated_content -->
 
-						<div id="bbsCreated_noLine">
-							<dl>
-								<dt>패스워드</dt>
-								<dd>
-									<input type="password" name="pwd" size="35" maxlength="10"
-										class="boxTF"> &nbsp;<span style="font-size: 7pt;"></span>
-								</dd>
-							</dl>
-						</div>
-						<!-- #bbsCreated_noLine -->
 
 						<div id="bbsCreated_footer">
 							<input type="button" value="게시물등록" class="btn2"
