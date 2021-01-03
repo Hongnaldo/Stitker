@@ -1,0 +1,172 @@
+@charset "UTF-8";
+ #table
+{
+	width: 600px;
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+#table td
+{
+	border: 1px solid black;
+	font-size: 9pt;
+}
+
+#tblTop 
+{
+	width: 600px;
+	text-align: right;
+}
+
+#tblTop ol
+{
+	float: right;
+	text-align: right;
+
+}
+
+#table1
+{
+	width: 600px;
+	font-size: 9pt;
+}
+
+#table1 th
+{
+	width: 100px;
+	background: #f0f0f0;
+}
+
+#table1 td
+{
+	width: 500px;
+	text-align: left;
+}
+
+
+#table1 td:nth-child(1){text-align: left;}
+
+#table1 #title
+{
+	width: 500px;
+}
+
+#table1 .boxTA
+{
+	width: 600px;
+	height: 500px;
+	
+}
+
+#btnSet
+{
+	margin-bottom: 40px;
+}
+
+.main
+{
+	width: 600px;
+	margin: 0px auto;
+}
+
+#BoardType
+{
+	float: left;
+}
+
+#BoardType li
+{
+	font-size: 10pt;   
+	border-bottom: 1px solid;   
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-weight: bold;
+	                    
+}
+
+ul
+{
+	list-style: none;
+	text-align: left;
+}
+
+#BoardMenu 
+{
+	padding-left: 300px;
+	width: 800px;
+	text-align: right;
+} 
+
+a
+{
+	cursor: pointer;
+	color: #000000;
+	text-decoration: none;
+	line-height: 150%;
+}
+
+a:hover, a:active
+{
+	color: #8000ff;
+	text-decoration: underline;
+}
+
+#BoardList_title
+{
+	width: 664px; /* 690 - (padding-left + border: 3px + border:3px) */
+	height: 40px;
+	text-align: left;
+	font-weight: bold;
+	line-height: 40px;
+	font-size: 20pt;
+	margin-bottom: 30px;
+	margin-left: 300px;
+}
+
+
+
+
+
+
+
+#footer
+{
+	margin-bottom: 30px;
+}
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,263 @@
+@charset "UTF-8";
+ #table
+{
+	width: 600px;
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+#table td
+{
+	border: 1px solid black;
+	font-size: 9pt;
+}
+
+#tblTop 
+{
+	width: 600px;
+	text-align: right;
+}
+
+#tblTop ol
+{
+	float: right;
+	text-align: right;
+
+}
+
+#table1
+{
+	width: 600px;
+	font-size: 9pt;
+	margin-bottom: 10px;
+}
+
+#table1 th
+{
+	width: 100px;
+	background: #f0f0f0;
+}
+
+#table1 td
+{
+	width: 100px;
+}
+
+
+#table1 td:nth-child(1){text-align: left;}
+
+#commentHeader
+{
+	width: 600px;
+	font-size: 9pt;	
+}
+
+#commentHeader td
+{
+	text-align: center;	
+}
+
+#commentHeader td:nth-child(1){width: 100px; }
+#commentHeader td:nth-child(2){width: 100px; }
+#commentHeader td:nth-child(3){width: 100px; }
+#commentHeader td:nth-child(4){width: 300px; text-align: right;}
+
+
+#table2
+{
+	width: 600px;
+	font-size: 9pt;
+	margin-bottom: 10px;
+}
+
+#table2 th{text-align: center; width: 100px;}
+#table2 td:nth-child(2){width: 400px; }
+#table2 td:nth-child(3){width: 100px; text-align: right;}
+
+
+
+#btnSet
+{
+	margin-bottom: 30px;
+}
+
+.main
+{
+	width: 600px;
+	margin: 0px auto;
+}
+
+#BoardType
+{
+	float: left;
+}
+
+#BoardType li
+{
+	font-size: 10pt;   
+	border-bottom: 1px solid;   
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-weight: bold;
+	                    
+}
+
+ul
+{
+	list-style: none;
+	text-align: left;
+}
+
+#BoardMenu 
+{
+	padding-left: 300px;
+	width: 800px;
+	text-align: right;
+} 
+
+a
+{
+	cursor: pointer;
+	color: #000000;
+	text-decoration: none;
+	line-height: 150%;
+}
+
+a:hover, a:active
+{
+	color: #8000ff;
+	text-decoration: underline;
+}
+
+#BoardList_title
+{
+	width: 664px; /* 690 - (padding-left + border: 3px + border:3px) */
+	height: 40px;
+	text-align: left;
+	font-weight: bold;
+	line-height: 40px;
+	font-size: 20pt;
+	margin-bottom: 30px;
+	margin-left: 300px;
+}
+
+#BoardList
+{
+	float: right;
+	width: 800px;
+	margin: 30px auto;
+	text-align: left;
+	padding-right: 250px;
+}
+#BoardList_header
+{
+	height: 27px;
+
+}
+
+#BoardList_header #leftHeader
+{
+
+
+	text-align: left;
+}
+
+#BoardList_header #rightHeader
+{
+
+	width: 150px;
+	text-align: right
+}
+
+#BoardList_header .selectField
+{
+	border: 1px solid;
+	border-color: #000000;
+	background-color: #ffffff;
+	font-family: '굴림';
+	font-size: 7pt;
+	height: 20px
+}
+
+#BoardList_header .textField
+{
+	border: 1px solid;
+	height: 13px;
+	padding: 2px 2px 2px 2px;
+	border-color: #000000;
+	background-color: #ffffff;
+	font-family: '굴림';
+	font-size: 9pt;
+}
+
+.BoardDetail_commentWrite
+{
+	border: 1px solid #000000;
+	width: 600px;
+	height: 120px;
+	margin-bottom: 40px;
+}
+
+#commentCnt
+{
+	float: left;
+	margin-left: 480px;
+	font-size: 8pt;
+} 
+
+.btn2
+{
+	float: right;
+	margin-right: 10px;
+	
+} 
+
+
+.commentBox
+{
+	border: 0px solid #000000;
+	color: #000000;
+}
+
+
+#footer
+{
+	margin-bottom: 30px;
+}
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
