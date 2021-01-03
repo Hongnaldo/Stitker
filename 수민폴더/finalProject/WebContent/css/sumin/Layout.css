@@ -6,6 +6,8 @@ body {margin: 0; }
 .menu {float: left; background-color: white; width: 20%; min-height: 800px; border-right: 1px solid black;}
 .content {float: left; width: 80%; background-color: white; min-height: 800px;}
 
+/* footer 설정 */
+.footer {clear: left;}
 
 /* 왼쪽네비게이션 설정 */
 .menu nav ul li { list-style: none; text-align: center; margin: 20px; height: 50px; }

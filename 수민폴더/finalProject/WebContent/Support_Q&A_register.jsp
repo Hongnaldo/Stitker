@@ -6,16 +6,16 @@
 <meta charset="UTF-8">
 <title>Support_Q&A_register.jsp</title>
 
-<!-- 직접 설정한 CSS -->
-<link rel="stylesheet" href="css/sumin/Layout.css">
-<link rel="stylesheet" href="css/sumin/Q&A_register.css">
-
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="https://kit.fontawesome.com/5cdf4f755d.js" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+
+<!-- 직접 설정한 CSS -->
+<link rel="stylesheet" href="css/sumin/Layout.css">
+<link rel="stylesheet" href="css/sumin/Q&A_register.css">
 
 <script type="text/javascript">
 

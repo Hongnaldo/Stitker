@@ -1,0 +1,68 @@
+■■■ summernote-lite 사용법 ■■■
+
+
+1. 해당 파일은 파일만 있으면 독립적으로 사용 가능한 lite버전입니다.
+   부트스트랩, 제이쿼리 기반인 에디터인데 기본이 부트스트랩4에 맞춰져 있어서 
+   저희는 lite버전을 쓰는 게 좋을 것 같아요.
+   (저희는 5를 쓰고있어서 제대로 적용이 안돼요.)
+
+2. css, js폴더에 각각 파일,폴더들을 넣어주세요.
+   css폴더 안에 font 폴더가 있는데, 안의 폰트파일들을 빼서 css폴더에 넣지말고 font폴더 그대로 넣어주세요.
+
+3. 에디터가 필요한 파일에 아래처럼 설정해주세요.
+
+   1) head 부분에 summernote 파일 불러오기
+      
+	↓제이쿼리가 필요해서 제이쿼리 안가져오셨으면 같이 붙여넣어주세요.
+	<script src="http://code.jquery.com/jquery.min.js"></script>
+
+	<!-- Summernote-lite 가져오기 -->
+	<script src="js/summernote-lite.js"></script>
+	<script src="js/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="css/summernote-lite.css">  
+
+   
+   2) head 부분에 script로 설정하기 / lang을 뺀 설정부분은 직접 하시면 됩니다!
+      (높이, 최소높이, 최대높이, 커서자동놓이기, 언어, 입력안했을때 보이는 문구)  
+   
+	<script type="text/javascript">
+	
+		$(document).ready(function() {
+			$('#summernote').summernote({
+				height: 500,
+				minHeight: null,
+				maxHeight: null,
+				focus: true,
+				lang: "ko-KR",
+				placeholder: '내용을 입력하세요.'
+	  		});
+	  
+		});
+	
+	</script>
+
+   3) form 태그 안에 textarea 넣기 : 다들 테이블 안에 textarea를 넣으셨을테니까 form 안에 테이블 넣어주세요!
+                                     textarea가 form 안에 존재하기만 하면 돼요!
+
+	↓name, id만 설정해주시고 cols, row 설정안하셔도 됩니다.
+	<textarea name="editordata" id="summernote"></textarea> 
+
+
+   4) 잘 나오는지 확인!
+
+   5) 높이는 위에 스크립트부분에서 설정가능한데, 넓이는 따로 없더라구요. 
+      따로 설정안하면 해당 테이블 td칸 꽉 차게 나와요.
+      그리고 textarea태그 선택자나 class 부여해서 클래스 선택자로 css 설정하려고해도 적용이 안돼서 textarea가 들어있는 
+      td에 class 속성 부여하고, 그 td의 padding값을 설정해서 폭을 줄였어요!
+      저는 제목부분이 해당 td넓이의 90프로만 차지하고, 왼쪽에 나머지 10% 공백이 있도록 해놨어서
+      내용부분도 td의 90%만 차지해야 딱 맞기때문에 해당 td의 padding-right를 10%로 설정했더니
+      둘이 딱 맞아요!
+
+      ↓이렇게 했습니다.(※ 부트스트랩 적용한 태그들-table, button등 은 해당부트스트랩 코드랑 겹쳐서 꼭 class선택자로 (.부모클래스 .자식클래스) 설정해야 잘 적용되더라구요.)
+      .table .textareaTd {padding-right: 10%;}
+
+
+
+                                     
+      
+   
