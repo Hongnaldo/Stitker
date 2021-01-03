@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Support_Q&A_list_admin.jsp</title>
+<title>Support_notice_list.jsp</title>
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="css/bootstrap.css">
@@ -29,29 +29,30 @@
 			<br><br><br>
 			<nav>
 				<ul>
-					<li><a href="Support_notice_list.jsp">공지사항</a></li>
-					<li><a href="Support_Q&A_list.jsp"  class="selected">1:1문의</a></li>
+					<li><a href="Support_notice_list.jsp" class="selected">공지사항</a></li>
+					<li><a href="Support_Q&A_list.jsp">1:1문의</a></li>
 				</ul>
 			</nav>
 		</div>
 
-		<div class="content">		
-			<br><br>
+		<div class="content">
+			<a href="Support_notice_write.jsp" class="btn btn-outline-primary">글 작성하기</a>	
+			<br><br>	
 			<div class="tableDiv">
 				<table class="table table-hover">
-					<thead>
+					<thead>				
 					<tr class="first">
 						<th>번호</th>
-						<th class="title">제목</th>
+						<th>제목</th>
+						<th>작성자</th>
 						<th>작성일</th>
-						<th>답변</th>
 					</tr>
 					</thead>
-					<tr>
-						<td>예시)1</td>
-						<td>예시)스터디관련질문입니다.</td>
-						<td>예시)2020/12/26</td>
-						<td>예시)답변완료</td>
+					<tr onclick="window.location.href='Support_notice_detailpage.jsp'">
+						<td>예시</td>
+						<td>예시</td>
+						<td>예시</td>
+						<td>예시</td>
 					</tr>
 					<tr>
 						<td>예시</td>

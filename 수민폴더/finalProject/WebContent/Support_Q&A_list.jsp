@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Support_Q&A_list_admin.jsp</title>
+<title>Support_Q&A_list.jsp</title>
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="css/bootstrap.css">
@@ -22,9 +22,9 @@
 
 <div class="wrapper">
 	<jsp:include page="header.jsp" flush="false"/>
-	<div class="main-content"><br>
+	<div class="main-content">
 		<div class="menu">
-		<br> 
+		<br><br>
 			<h1 class="text-center">고객센터</h1>
 			<br><br><br>
 			<nav>
@@ -35,25 +35,27 @@
 			</nav>
 		</div>
 
-		<div class="content">		
+		<div class="content">	
+			<br>	
+			<a href="Support_Q&A_register.jsp" class="btn btn-outline-primary">글 작성하기</a>
 			<br><br>
 			<div class="tableDiv">
 				<table class="table table-hover">
 					<thead>
 					<tr class="first">
 						<th>번호</th>
-						<th class="title">제목</th>
+						<th>제목</th>
 						<th>작성일</th>
 						<th>답변</th>
 					</tr>
 					</thead>
-					<tr>
+					<tr onclick="window.location.href='Support_Q&A_detailpage.jsp'">
 						<td>예시)1</td>
 						<td>예시)스터디관련질문입니다.</td>
 						<td>예시)2020/12/26</td>
 						<td>예시)답변완료</td>
 					</tr>
-					<tr>
+					<tr onclick="window.location.href='Support_Q&A_answer.jsp'">
 						<td>예시</td>
 						<td>예시</td>
 						<td>예시</td>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Support_Q&A_list_admin.jsp</title>
+<title>Support_Q&A_modify.jsp</title>
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="css/bootstrap.css">
@@ -15,11 +15,16 @@
 
 <!-- 직접 설정한 CSS -->
 <link rel="stylesheet" href="css/sumin/Layout.css">
-<link rel="stylesheet" href="css/sumin/ListPage.css">
+<link rel="stylesheet" href="css/sumin/Q&A_register.css">
 
+<script type="text/javascript">
+
+	window.onload = function() {
+		document.getElementById("title").focus();
+	}
+</script>
 </head>
 <body>
-
 <div class="wrapper">
 	<jsp:include page="header.jsp" flush="false"/>
 	<div class="main-content"><br>
@@ -34,36 +39,33 @@
 				</ul>
 			</nav>
 		</div>
-
 		<div class="content">		
-			<br><br>
+			<p class="category">1:1 질문 수정하기</p>
+			<br>
 			<div class="tableDiv">
-				<table class="table table-hover">
-					<thead>
-					<tr class="first">
-						<th>번호</th>
-						<th class="title">제목</th>
-						<th>작성일</th>
-						<th>답변</th>
-					</tr>
-					</thead>
+				<table class="table table-borderless">
 					<tr>
-						<td>예시)1</td>
-						<td>예시)스터디관련질문입니다.</td>
-						<td>예시)2020/12/26</td>
-						<td>예시)답변완료</td>
+						<th>제목</th>
+						<td>
+							<input type="text" class="write" id="title" placeholder="제목을 입력하세요">
+						</td>
 					</tr>
 					<tr>
-						<td>예시</td>
-						<td>예시</td>
-						<td>예시</td>
-						<td>예시</td>
+						<th>질문내용</th>
+						<td>
+							<textarea rows="20" cols="80" id="content" class="write" placeholder="내용을 입력하세요."></textarea>
+							<br><br>
+							<div class="buttons">
+								<button type="submit" class="btn btn-outline-primary">수정완료</button>
+								<button type="submit" class="btn btn-outline-primary" onclick="window.location.href='Support_Q&A_detailpage.jsp'">취소하기</button>
+							</div>
+							<br><br>
+						</td>
 					</tr>
 				</table>
+				</div>
 			</div>
 			<br>
-			<div class="page">페이징처리필요 1 2 3 4 5 6 7 8 9 10 > >></div>
-		</div>	
 	</div>
 	<jsp:include page="footer.jsp" flush="false"/>
 </div>
@@ -71,3 +73,4 @@
 		
 </body>
 </html>
+
