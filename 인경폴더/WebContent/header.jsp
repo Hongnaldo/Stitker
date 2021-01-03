@@ -14,7 +14,7 @@ String cp = request.getContextPath();
 	<nav class="navbar navbar-expand-sm navbar-light bg-light">
 		<div class="container-fluid">
 			<a class="navbar-brand m-sm-3" href="#"> <img
-				src="images/logo3.jpg" alt="" width="150px" height="70px">
+				src="images/logo3.png" alt="" width="150px" height="70px">
 			</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
