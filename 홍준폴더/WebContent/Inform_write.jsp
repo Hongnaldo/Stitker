@@ -47,7 +47,7 @@
 				
 				if(result)
 				{
-					location.replace("FreeBoard_write.jsp");
+					location.replace("Inform_write.jsp");
 				}
 			});
 	  
@@ -68,9 +68,9 @@
 		<br><br>
 		<nav>
 			<ul>
-				<li><a href="" class="selected">자유게시판</a></li>
+				<li><a href="">자유게시판</a></li>
 				<li><a href="">Q&A</a></li>
-				<li><a href="">기술정보공유</a></li>
+				<li><a href="" class="selected">기술정보공유</a></li>
 				<li><a href="">세미나/공모전</a></li>
 				<li><a href="">면접/코딩테스트</a></li>
 			</ul>
@@ -78,7 +78,7 @@
 	</div>
 	
 	<div class="content">
-		<p class="category">자유게시판 글 수정하기</p>
+		<p class="category">기술정보공유 글 작성하기</p>
 		<br>
 		<form action="" method="post" name="myForm" role="form" class="form-inline">
 		<table class="table table-borderless" id="table">
@@ -87,8 +87,7 @@
 					제목
 				</th>
 				<td>
-					<input type="text" class="form-control" placeholder="제목을 입력하세요" required="required" id="title"
-					value="수정전의 제목을 받아옴">
+					<input type="text" class="form-control" placeholder="제목을 입력하세요" required="required" id="title">
 				</td>
 			</tr>
 			<tr>
@@ -115,22 +114,15 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<textarea class="form-control" placeholder="내용을 입력하세요"  style="height: 170px;" required="required" name="editordata" id="summernote"
-					>수정전 글의 내용을 받아옴</textarea>
-				</td>
-			</tr>
-			<tr>
-				<th>패스워드</th>
-				<td>
-					<input type="password" class="form-control" placeholder="패스워드를 입력하세요" required="required">
+					<textarea class="form-control" placeholder="내용을 입력하세요"  style="height: 170px;" required="required" name="editordata" id="summernote"></textarea>
 				</td>
 			</tr>
 			
 			
 		</table>
 		<div id="btnSet">
-			<input type="submit" value="수정하기" class="btn-outline-primary">
-			<input type="button" value="취소하기" class="btn-outline-primary" id="cancel" >	
+			<input type="submit" value="작성하기" class="btn-outline-primary">
+			<input type="button" value="취소하기" class="btn-outline-primary" id="cancel">	
 		</div>
 		</form>
 	

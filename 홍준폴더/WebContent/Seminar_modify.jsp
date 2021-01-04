@@ -47,7 +47,7 @@
 				
 				if(result)
 				{
-					location.replace("FreeBoard_write.jsp");
+					location.replace("Seminar_write.jsp");
 				}
 			});
 	  
@@ -68,17 +68,17 @@
 		<br><br>
 		<nav>
 			<ul>
-				<li><a href="" class="selected">자유게시판</a></li>
+				<li><a href="">자유게시판</a></li>
 				<li><a href="">Q&A</a></li>
 				<li><a href="">기술정보공유</a></li>
-				<li><a href="">세미나/공모전</a></li>
+				<li><a href="" class="selected">세미나/공모전</a></li>
 				<li><a href="">면접/코딩테스트</a></li>
 			</ul>
 		</nav>
 	</div>
 	
 	<div class="content">
-		<p class="category">자유게시판 글 수정하기</p>
+		<p class="category">세미나/공모전 글 수정하기</p>
 		<br>
 		<form action="" method="post" name="myForm" role="form" class="form-inline">
 		<table class="table table-borderless" id="table">
@@ -97,19 +97,8 @@
 				</th>
 				<td>
 					<select name="searchCategory" class="form-control" required="required">
-						<option value="dba">DBA/데이터베이스</option>
-						<option value="network">네트워크/서버/보안</option>
-						<option value="developer">개발자</option>
-						<option value="pm">기획자/PM</option>
-						<option value="marketing">마케팅</option>
-						<option value="designer">디자이너</option>
-						<option value="contents">컨텐츠/사이트운영</option>
-						<option value="game">게임</option>
-						<option value="bigdata">빅데이터/AI</option>
-						<option value="videomaking">동영상제작/편집</option>
-						<option value="software">소프트웨어/하드웨어</option>
-						<option value="erp">ERP/시스템분석/설계</option>
-						<option value="edu">교육</option>
+						<option value="name">세미나</option>
+						<option value="content">공모전</option>
 					</select>
 				</td>
 			</tr>

@@ -47,7 +47,7 @@
 				
 				if(result)
 				{
-					location.replace("FreeBoard_write.jsp");
+					location.replace("Interview_write.jsp");
 				}
 			});
 	  
@@ -68,17 +68,17 @@
 		<br><br>
 		<nav>
 			<ul>
-				<li><a href="" class="selected">자유게시판</a></li>
+				<li><a href="">자유게시판</a></li>
 				<li><a href="">Q&A</a></li>
 				<li><a href="">기술정보공유</a></li>
 				<li><a href="">세미나/공모전</a></li>
-				<li><a href="">면접/코딩테스트</a></li>
+				<li><a href="" class="selected">면접/코딩테스트</a></li>
 			</ul>
 		</nav>
 	</div>
 	
 	<div class="content">
-		<p class="category">자유게시판 글 수정하기</p>
+		<p class="category">면접/코딩테스트 글 수정하기</p>
 		<br>
 		<form action="" method="post" name="myForm" role="form" class="form-inline">
 		<table class="table table-borderless" id="table">
