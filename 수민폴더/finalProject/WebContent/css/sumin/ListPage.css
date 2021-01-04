@@ -2,7 +2,7 @@
 
 /* 테이블 모양, 높이, 컬럼 넓이 및 페이징 위치 설정 */
 .tableDiv {min-height: 500px; }
-.table { width: calc(100% - 40px); height: 80%; border-collapse: collapse; margin: 20px; text-align: center;}
+.table { width: 90%; height: 80%; border-collapse: collapse; margin-left: auto; margin-right: auto; margin-top: 30px; text-align: center;}
 table tr:not(.first) {height: 50px;}
 .first {height: 30px;}
 .first th:nth-child(1){ width: 10%; }

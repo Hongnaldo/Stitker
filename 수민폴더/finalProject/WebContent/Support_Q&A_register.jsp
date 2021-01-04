@@ -11,11 +11,10 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="https://kit.fontawesome.com/5cdf4f755d.js" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
 
 <!-- 직접 설정한 CSS -->
 <link rel="stylesheet" href="css/sumin/Layout.css">
-<link rel="stylesheet" href="css/sumin/Q&A_register.css">
+<link rel="stylesheet" href="css/sumin/Support_write.css">
 
 <script type="text/javascript">
 
@@ -43,18 +42,19 @@
 		<div class="content">		
 			<p class="category">1:1 질문 작성하기</p>
 			<br>
+			<form action="">
 			<div class="tableDiv">
 				<table class="table table-borderless">
 					<tr>
 						<th>제목</th>
 						<td>
-							<input type="text" class="write" id="title" placeholder="제목을 입력하세요">
+							<input type="text" class="form-control write" id="title" placeholder="제목을 입력하세요" required>
 						</td>
 					</tr>
 					<tr>
-						<th>질문내용</th>
+						<th>질문</th>
 						<td>
-							<textarea rows="20" cols="80" id="content" class="write" placeholder="내용을 입력하세요."></textarea>
+							<textarea rows="20" cols="80" id="content" class="form-control write" placeholder="내용을 입력하세요." required></textarea>
 							<br><br>
 							<div class="buttons">
 								<button type="submit" class="btn btn-outline-primary">등록하기</button>
@@ -65,6 +65,7 @@
 					</tr>
 				</table>
 			</div>
+			</form>
 		</div>
 	</div>
 	<jsp:include page="footer.jsp" flush="false"/>

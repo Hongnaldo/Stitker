@@ -20,7 +20,7 @@
 
 <!-- 직접 설정한 CSS -->
 <link rel="stylesheet" href="css/sumin/Layout.css">
-<link rel="stylesheet" href="css/sumin/Q&A_register.css">
+<link rel="stylesheet" href="css/sumin/Support_write.css">
 
 <script type="text/javascript">
 
@@ -69,7 +69,7 @@
 					<tr>
 						<th>제목</th>
 						<td>
-							<input type="text" class="write" id="title" placeholder="제목을 입력하세요">
+							<input type="text" class="form-control write" id="title" placeholder="제목을 입력하세요">
 						</td>
 					</tr>
 					<tr>

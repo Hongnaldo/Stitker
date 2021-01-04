@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>footer.jsp</title>
+<title></title>
 </head>
 <body>
 

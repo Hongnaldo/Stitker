@@ -109,10 +109,8 @@
 			</div>
 			<br>
 			<div class="page">페이징처리필요 1 2 3 4 5 6 7 8 9 10 > >></div>
-			
+			<br><br>
 		</div>
-	
-	
 	</div>
 	<jsp:include page="footer.jsp" flush="false"/>
 </div>
