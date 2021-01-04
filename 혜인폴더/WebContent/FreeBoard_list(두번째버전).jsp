@@ -8,14 +8,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>IT기술정보공유</title>
+<title>자유게시판</title>
 
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/list.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="<%=cp %>/js/util.js"></script>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="css/bootstrap.css">
-<link href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
 <title>Mypage_evaluationComplete</title>
 <script src="https://kit.fontawesome.com/5cdf4f755d.js" crossorigin="anonymous"></script>
@@ -23,15 +23,14 @@
 
 #table2 th{text-align: center;}
 #table2 th:nth-child(1){width: 50px;}
-#table2 th:nth-child(2){width: 140px;}
-#table2 th:nth-child(3){width: 330px;}
-#table2 th:nth-child(4){width: 60px;}
-#table2 th:nth-child(5){width: 100px;}
-#table2 th:nth-child(6){width: 60px;}
-#table2 th:nth-child(7){width: 60px;}
+#table2 th:nth-child(2){width: 460px;}
+#table2 th:nth-child(3){width: 100px;}
+#table2 th:nth-child(4){width: 100px;}
+#table2 th:nth-child(5){width: 55px;}
+#table2 th:nth-child(6){width: 55px;}
 
 #table2 td{text-align: center;}
-#table2 td:nth-child(3){text-align: left;}
+#table2 td:nth-child(2){text-align: left;}
 
 </style>
 <script type="text/javascript">
@@ -63,25 +62,56 @@
  <jsp:include page="header.jsp" flush="false"/>
  <div class="main-content text-center"><br>
  
-	<div class="menu">
-	<br> 
-		<h1 class="text-center">정보공유</h1>
-		<br><br><br>
-		<nav>
-			<ul>
-				<li><a href="Board_inform_list.jsp" class="selected">IT기술정보공유</a></li>
-				<li><a href="Board_seminar_list.jsp">세미나 및 공모전</a></li>
-				<li><a href="Board_interview_list.jsp">면접/코딩테스트 후기</a></li>
-				<li><a href="Board_free_list.jsp">자유게시판</a></li>
-				<li><a href="Board_Q&A_list.jsp">Q&A</a></li>
-				<li><a href="Board_studyReview_list.jsp">스터디 후기</a></li>
-			</ul>
-		</nav>
+
+ 
+ 	<div id="BoardMenu">
+ 		<table id="tblTop">
+ 			<tr>
+ 				<td>
+					<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+					  <ol class="breadcrumb">
+					    <li class="breadcrumb-item"><a href="#">Home</a></li>
+					    <li class="breadcrumb-item"><a href="#">정보공유게시판</a></li>
+					    <li class="breadcrumb-item active" aria-current="page">자유게시판</li>
+					  </ol>
+					</nav>
+				</td>
+			</tr>
+		</table>
 	</div>
+	
+	<br>
+ 	 
+ 	<div id="BoardList_title">
+		자유게시판
+	</div><!-- #BoardList_title -->
+
+	 <div id="BoardType">
+			<ul>
+				<li>
+					<a>세미나 및 공모전</a>
+				</li>
+				<li>
+					<a>IT기술정보공유</a>
+				</li>
+				<li>
+					<a>Q&A</a>
+				</li>
+				<li>
+					<a>자유게시판</a>
+				</li>
+				<li>
+					<a>면접/코딩테스트 후기</a>
+				</li>
+				<li>
+					<a>스터디 후기</a>
+				</li>
+			</ul>
+	</div><!-- #BoardType -->
 
 	<div class="main">
 		<form action="" name="myForm">
-		<table id="table1" class="table">
+		<table id="table1">
 			<tr>
 				<td>
 					<select name="searchKey" class="selectFiled">
@@ -90,22 +120,6 @@
 						<option value="name">작성자</option>
 						<option value="content">내용</option>
 						<option value="titlecontent">제목+내용</option>
-					</select>
-					<select name="searchCategory" class="selectFiled">
-						<option value="all">전체</option>
-						<option value="dba">DBA/데이터베이스</option>
-						<option value="network">네트워크/서버/보안</option>
-						<option value="developer">개발자</option>
-						<option value="pm">기획자/PM</option>
-						<option value="marketing">마케팅</option>
-						<option value="designer">디자이너</option>
-						<option value="contents">컨텐츠/사이트운영</option>
-						<option value="game">게임</option>
-						<option value="bigdata">빅데이터/AI</option>
-						<option value="videomaking">동영상제작/편집</option>
-						<option value="software">소프트웨어/하드웨어</option>
-						<option value="erp">ERP/시스템분석/설계</option>
-						<option value="edu">교육</option>
 					</select>
 					<input type="text" name="searchValue" class="textField"
 					placeholder="검색어를 입력하세요." style="width: 200px;">
@@ -129,7 +143,6 @@
 		<table id="table2" class="table table-striped">
 			<tr>
 				<th>번호</th>
-				<th>말머리</th>
 				<th>제목</th>
 				<th>작성자</th>
 				<th>작성일</th>
@@ -138,7 +151,6 @@
 			</tr>
 			<tr>
 				<td>5</td>
-				<td>ERP/시스템분석/설계</td>
 				<td>게시판 테스트입니다.</td>
 				<td>이진주</td>
 				<td>2020-10-12</td>
@@ -147,7 +159,6 @@
 			</tr>
 			<tr>
 				<td>5</td>
-				<td>소프트웨어/하드웨어</td>
 				<td>게시판 테스트입니다.</td>
 				<td>이진주</td>
 				<td>2020-10-12</td>
@@ -156,7 +167,6 @@
 			</tr>
 			<tr>
 				<td>5</td>
-				<td>네트워크/서버/보안</td>
 				<td>게시판 테스트입니다.</td>
 				<td>이진주</td>
 				<td>2020-10-12</td>
@@ -165,7 +175,6 @@
 			</tr>
 			<tr>
 				<td>5</td>
-				<td>네트워크/서버/보안</td>
 				<td>게시판 테스트입니다.</td>
 				<td>이진주</td>
 				<td>2020-10-12</td>
@@ -174,7 +183,6 @@
 			</tr>
 			<tr>
 				<td>5</td>
-				<td>네트워크/서버/보안</td>
 				<td>게시판 테스트입니다.</td>
 				<td>이진주</td>
 				<td>2020-10-12</td>
@@ -183,7 +191,6 @@
 			</tr>
 			<tr>
 				<td>5</td>
-				<td>네트워크/서버/보안</td>
 				<td>게시판 테스트입니다.</td>
 				<td>이진주</td>
 				<td>2020-10-12</td>
@@ -192,13 +199,68 @@
 			</tr>
 			<tr>
 				<td>5</td>
-				<td>네트워크/서버/보안</td>
 				<td>게시판 테스트입니다.</td>
 				<td>이진주</td>
 				<td>2020-10-12</td>
 				<td>22</td>
 				<td>22</td>
 			</tr>
+			<tr>
+				<td>5</td>
+				<td>게시판 테스트입니다.</td>
+				<td>이진주</td>
+				<td>2020-10-12</td>
+				<td>22</td>
+				<td>22</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>게시판 테스트입니다.</td>
+				<td>이진주</td>
+				<td>2020-10-12</td>
+				<td>22</td>
+				<td>22</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>게시판 테스트입니다.</td>
+				<td>이진주</td>
+				<td>2020-10-12</td>
+				<td>22</td>
+				<td>22</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>게시판 테스트입니다.</td>
+				<td>이진주</td>
+				<td>2020-10-12</td>
+				<td>22</td>
+				<td>22</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>게시판 테스트입니다.</td>
+				<td>이진주</td>
+				<td>2020-10-12</td>
+				<td>22</td>
+				<td>22</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>게시판 테스트입니다.</td>
+				<td>이진주</td>
+				<td>2020-10-12</td>
+				<td>22</td>
+				<td>22</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>게시판 테스트입니다.</td>
+				<td>이진주</td>
+				<td>2020-10-12</td>
+				<td>22</td>
+				<td>22</td>
+			</tr>	
 		</table>
 		
 		<div id=btnSet>
@@ -206,17 +268,17 @@
 			<input type="button" value="새로고침" class="btn btn-primary" >	
 		</div>
 		
+		</form>
+	</div><!-- .main -->
+	
 		<div id="footer">
 		
 			<p> 1 Prev 21 22 23 24 25 26 27 28 29 30 Next 90 </p>
 
 		</div><!-- #footer -->
-	</div>	
-	
-		
 	
 
-	</form>
+	
    
   </div>
   
