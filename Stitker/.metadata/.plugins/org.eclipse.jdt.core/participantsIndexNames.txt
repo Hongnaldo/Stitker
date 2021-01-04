@@ -1,5 +1,0 @@
-INDEX VERSION 1.131
-C:\Stitker\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2089783116.index
-\Stitker\src
-C:\Stitker\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4221950589.index
-\Stitker\src
