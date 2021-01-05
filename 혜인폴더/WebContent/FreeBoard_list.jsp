@@ -16,7 +16,7 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/style.css">
+
 <title>Mypage_evaluationComplete</title>
 <script src="https://kit.fontawesome.com/5cdf4f755d.js" crossorigin="anonymous"></script>
 <style type="text/css">
@@ -109,7 +109,7 @@
 			</tr>
 		</table>
 		
-		<table id="table2" class="table table-striped">
+		<table id="table2" class="table table-striped table-hover">
 			<tr>
 				<th>번호</th>
 				<th>제목</th>

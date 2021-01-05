@@ -126,7 +126,7 @@
 			</tr>
 		</table>
 		
-		<table id="table2" class="table table-striped">
+		<table id="table2" class="table table-striped table-hover">
 			<tr>
 				<th>번호</th>
 				<th>말머리</th>

@@ -16,7 +16,6 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="css/bootstrap.css">
 <link href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/style.css">
 <title>Mypage_evaluationComplete</title>
 <script src="https://kit.fontawesome.com/5cdf4f755d.js" crossorigin="anonymous"></script>
 <style type="text/css">
@@ -53,52 +52,22 @@
  <jsp:include page="header.jsp" flush="false"/>
  <div class="main-content text-center"><br>
  
- 	<div id="BoardMenu">
- 		<table id="tblTop">
- 			<tr>
- 				<td>
-					<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-					  <ol class="breadcrumb">
-					    <li class="breadcrumb-item"><a href="#">Home</a></li>
-					    <li class="breadcrumb-item"><a href="#">정보공유게시판</a></li>
-					    <li class="breadcrumb-item"><a href="#">자유게시판</a></li>
-					    <li class="breadcrumb-item active" aria-current="page">어쩌구글</li>
-					  </ol>
-					</nav>
-				</td>
-			</tr>
-		</table>
+ 	<div class="menu">
+	<br> 
+		<h1 class="text-center">정보공유</h1>
+		<br><br><br>
+		<nav>
+			<ul>
+				<li><a href="Board_inform_list.jsp" >IT기술정보공유</a></li>
+				<li><a href="Board_seminar_list.jsp">세미나 및 공모전</a></li>
+				<li><a href="Board_interview_list.jsp">면접/코딩테스트 후기</a></li>
+				<li><a href="Board_free_list.jsp" class="selected">자유게시판</a></li>
+				<li><a href="Board_Q&A_list.jsp">Q&A</a></li>
+				<li><a href="Board_studyReview_list.jsp">스터디 후기</a></li>
+			</ul>
+		</nav>
 	</div>
 	
-	<br>
- 	 	
- 	<div id="BoardList_title">
-		자유게시판
-	</div><!-- #BoardList_title -->
-
-	 <div id="BoardType">
-			<ul>
-				<li>
-					<a>세미나 및 공모전</a>
-				</li>
-				<li>
-					<a>IT기술정보공유</a>
-				</li>
-				<li>
-					<a>Q&A</a>
-				</li>
-				<li>
-					<a>자유게시판</a>
-				</li>
-				<li>
-					<a>면접/코딩테스트 후기</a>
-				</li>
-				<li>
-					<a>스터디 후기</a>
-				</li>
-			</ul>
-	</div><!-- #BoardType -->
-
 	<div class="main">
 		<form action="" name="myForm">
 		<table id="table1" class="table">
@@ -120,14 +89,14 @@
 			</tr>
 			<tr>
 				<td colspan="8">
-					<div class="BoardDetail_noLine">
+					<div class="BoardDetail_pre">
 						이전글 : (1) 반갑습니다
 					</div><!-- .BoardDetail_noLine -->
 				</td>
 			</tr>
 			<tr>
 				<td colspan="8">
-					<div class="BoardDetail_noLine">
+					<div class="BoardDetail_next">
 						다음글 : (3) 개발자입니다
 					</div><!-- .BoardDetail_noLine -->
 				</td>
@@ -161,8 +130,8 @@
 						<input type="button" value="비추천" class="btn btn-outline-primary btn-sm">
 					</td>
 				</tr>
-				
 			</table>
+			
 		<table id="table2" class="table">
 				<tr>
 			 		<th>박혜인</th>
@@ -179,17 +148,29 @@
 			 		<td id="comment">안녕안녕</td>
 			 		<td><a>답글<a></a></td>
 			 	</tr>
-			</table>
-			<div id="commentFooter">
-				<p> 1 2 </p>
-			</div><!-- #commentFooter -->
+		</table>
+		
+		<div id="commentFooter">
+			<p> 1 2 </p>
+		</div><!-- #commentFooter -->
 			
-		<div class="BoardDetail_commentWrite">
-			<textarea id="commentBox" name="commentBox" cols="78" rows="3" 
-			class="commentBox" placeholder="댓글을 입력하세요."></textarea>
-			<div id="commentCnt">(0 / 300)</div>
-	   		<button type="button" class="btn btn-outline-primary btn-sm btn2">등록</button>		
-		</div><!-- .BoardDetail_commentWrite -->
+		<table id="commentWrite" class="table">
+			<tr>
+		 		<td colspan="2">
+		 			<textarea id="commentBox" name="commentBox" cols="" rows="" 
+						class="commentBox" placeholder="댓글을 입력하세요."></textarea>
+		 		</td>
+		 	</tr>
+		 	<tr>
+		 		<td>
+			 		<div id="commentCnt">(0 / 300)</div>
+			 	</td>
+			 	<td>
+	   				df<button type="button" class="btn btn-outline-primary btn-sm btn2">등록</button>	
+   				</td>
+		 	</tr>	
+		</table>
+			
 
 	</div><!-- .main -->
 	
