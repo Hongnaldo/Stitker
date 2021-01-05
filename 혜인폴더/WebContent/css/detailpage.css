@@ -1,35 +1,38 @@
 @charset "UTF-8";
- #table
+/* 메뉴와 컨텐트 레이아웃, 배경색 설정 */
+.menu {float: left; background-color: white; width: 20%; min-height: 800px; border-right: 1px solid black;}
+
+/* footer 설정 */
+.footer {clear: left;}
+
+/* 왼쪽네비게이션 설정 */
+.menu nav ul li { list-style: none; text-align: left; margin: 10px; height: 50px; }
+.menu a { text-decoration: none; font-size: 15px; font-weight: bold;}
+.menu a:not(.selected) {color: black; }
+.menu a:hover {color: SlateBlue;}
+.selected {color: SlateBlue;}
+
+.main-content
 {
-	width: 600px;
-	border: 1px solid black;
-	border-collapse: collapse;
+	min-height: 800px;
 }
 
-#table td
+.main
 {
-	border: 1px solid black;
-	font-size: 9pt;
+	width: 80%;
+	margin-left: 10px;
+ 	margin: 0px auto; 
 }
 
-#tblTop 
-{
-	width: 600px;
-	text-align: right;
-}
+.table {margin-left:auto; margin-right:auto;}
 
-#tblTop ol
-{
-	float: right;
-	text-align: right;
-
-}
 
 #table1
 {
-	width: 600px;
+	width: 80%;
 	font-size: 9pt;
 	margin-bottom: 10px;
+	border-bottom: 0px solid #ffffff;
 }
 
 #table1 th
@@ -40,7 +43,7 @@
 
 #table1 td
 {
-	width: 100px;
+	width: 200px;
 }
 
 
@@ -48,8 +51,9 @@
 
 #commentHeader
 {
-	width: 600px;
+	width: 80%;
 	font-size: 9pt;	
+	margin-bottom: 0px;
 }
 
 #commentHeader td
@@ -60,17 +64,16 @@
 #commentHeader td:nth-child(1){width: 100px; }
 #commentHeader td:nth-child(2){width: 100px; }
 #commentHeader td:nth-child(3){width: 100px; }
-#commentHeader td:nth-child(4){width: 300px; text-align: right;}
+#commentHeader td:nth-child(4){width: 500px; text-align: right;}
 
 
 #table2
 {
-	width: 600px;
+	width: 80%;
 	font-size: 9pt;
-	margin-bottom: 10px;
 }
 
-#table2 th{text-align: center; width: 100px;}
+#table2 th{text-align: center; width: 200px;}
 #table2 td:nth-child(2){width: 400px; }
 #table2 td:nth-child(3){width: 100px; text-align: right;}
 
@@ -81,39 +84,13 @@
 	margin-bottom: 30px;
 }
 
-.main
-{
-	width: 600px;
-	margin: 0px auto;
-}
 
-#BoardType
-{
-	float: left;
-}
-
-#BoardType li
-{
-	font-size: 10pt;   
-	border-bottom: 1px solid;   
-	padding-top: 10px;
-	padding-bottom: 10px;
-	font-weight: bold;
-	                    
-}
 
 ul
 {
 	list-style: none;
 	text-align: left;
 }
-
-#BoardMenu 
-{
-	padding-left: 300px;
-	width: 800px;
-	text-align: right;
-} 
 
 a
 {
@@ -129,85 +106,33 @@ a:hover, a:active
 	text-decoration: underline;
 }
 
-#BoardList_title
+#commentWrite tr
 {
-	width: 664px; /* 690 - (padding-left + border: 3px + border:3px) */
-	height: 40px;
-	text-align: left;
-	font-weight: bold;
-	line-height: 40px;
-	font-size: 20pt;
-	margin-bottom: 30px;
-	margin-left: 300px;
+	border: 1px solid #000000; 
 }
 
-#BoardList
+#commentWrite
 {
-	float: right;
-	width: 800px;
-	margin: 30px auto;
-	text-align: left;
-	padding-right: 250px;
-}
-#BoardList_header
-{
-	height: 27px;
-
-}
-
-#BoardList_header #leftHeader
-{
-
-
-	text-align: left;
-}
-
-#BoardList_header #rightHeader
-{
-
-	width: 150px;
-	text-align: right
-}
-
-#BoardList_header .selectField
-{
-	border: 1px solid;
-	border-color: #000000;
-	background-color: #ffffff;
-	font-family: '굴림';
-	font-size: 7pt;
-	height: 20px
-}
-
-#BoardList_header .textField
-{
-	border: 1px solid;
-	height: 13px;
-	padding: 2px 2px 2px 2px;
-	border-color: #000000;
-	background-color: #ffffff;
-	font-family: '굴림';
-	font-size: 9pt;
-}
-
-.BoardDetail_commentWrite
-{
-	border: 1px solid #000000;
-	width: 600px;
+	width: 80%;
 	height: 120px;
 	margin-bottom: 40px;
 }
 
+
+
+#commentWrite td:nth-child(1){text-align: right; width: 680px; border-top: 1px solid #000000;}
+#commentWrite td:nth-child(2){text-align: right; right; border-top: 1px solid #ffffff;}
+
 #commentCnt
 {
-	float: left;
-	margin-left: 480px;
+
+
 	font-size: 8pt;
 } 
 
 .btn2
 {
-	float: right;
+
 	margin-right: 10px;
 	
 } 
@@ -217,6 +142,9 @@ a:hover, a:active
 {
 	border: 0px solid #000000;
 	color: #000000;
+	width: 750px;
+	height: 100px;
+	font-size: 9pt;
 }
 
 

@@ -64,54 +64,25 @@
  <jsp:include page="header.jsp" flush="false"/>
  <div class="main-content text-center"><br>
  
- 	<div id="BoardMenu">
- 		<table id="tblTop">
- 			<tr>
- 				<td>
-					<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-					  <ol class="breadcrumb">
-					    <li class="breadcrumb-item"><a href="#">Home</a></li>
-					    <li class="breadcrumb-item"><a href="#">정보공유게시판</a></li>
-					    <li class="breadcrumb-item active" aria-current="page">세미나 및 공모전</li>
-					  </ol>
-					</nav>
-				</td>
-			</tr>
-		</table>
-	</div>
-	
-	<br>
- 	 	
- 	<div id="BoardList_title">
-		세미나 및 공모전
-	</div><!-- #BoardList_title -->
-
-	 <div id="BoardType">
+ 	<div class="menu">
+	<br> 
+		<h1 class="text-center">정보공유</h1>
+		<br><br><br>
+		<nav>
 			<ul>
-				<li>
-					<a>세미나 및 공모전</a>
-				</li>
-				<li>
-					<a>IT기술정보공유</a>
-				</li>
-				<li>
-					<a>Q&A</a>
-				</li>
-				<li>
-					<a>자유게시판</a>
-				</li>
-				<li>
-					<a>면접/코딩테스트 후기</a>
-				</li>
-				<li>
-					<a>스터디 후기</a>
-				</li>
+				<li><a href="Board_inform_list.jsp">IT기술정보공유</a></li>
+				<li><a href="Board_seminar_list.jsp" class="selected">세미나 및 공모전</a></li>
+				<li><a href="Board_interview_list.jsp">면접/코딩테스트 후기</a></li>
+				<li><a href="Board_free_list.jsp">자유게시판</a></li>
+				<li><a href="Board_Q&A_list.jsp">Q&A</a></li>
+				<li><a href="Board_studyReview_list.jsp">스터디 후기</a></li>
 			</ul>
-	</div><!-- #BoardType -->
+		</nav>
+	</div>
 
 	<div class="main">
 		<form action="" name="myForm">
-		<table id="table1">
+		<table id="table1" class="table">
 			<tr>
 				<td>
 					<select name="searchKey" class="selectFiled">
@@ -145,7 +116,7 @@
 			</tr>
 		</table>
 		
-		<table id="table2" class="table table-striped">
+		<table id="table2" class="table table-striped table-hover">
 			<tr>
 				<th>번호</th>
 				<th>말머리</th>
@@ -212,13 +183,15 @@
 			<input type="button" value="글쓰기" class="btn btn-primary">
 			<input type="button" value="새로고침" class="btn btn-primary" >	
 		</div>
-	</div>	
-	
+		
 		<div id="footer">
 		
 			<p> 1 Prev 21 22 23 24 25 26 27 28 29 30 Next 90 </p>
 
 		</div><!-- #footer -->
+	</div>	
+	
+	
 	
 
 	</form>

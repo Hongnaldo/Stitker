@@ -69,9 +69,9 @@
 		<br><br><br>
 		<nav>
 			<ul>
-				<li><a href="Board_inform_list.jsp" class="selected">IT기술정보공유</a></li>
+				<li><a href="Board_inform_list.jsp" >IT기술정보공유</a></li>
 				<li><a href="Board_seminar_list.jsp">세미나 및 공모전</a></li>
-				<li><a href="Board_interview_list.jsp">면접/코딩테스트 후기</a></li>
+				<li><a href="Board_interview_list.jsp" class="selected">면접/코딩테스트 후기</a></li>
 				<li><a href="Board_free_list.jsp">자유게시판</a></li>
 				<li><a href="Board_Q&A_list.jsp">Q&A</a></li>
 				<li><a href="Board_studyReview_list.jsp">스터디 후기</a></li>
@@ -126,7 +126,7 @@
 			</tr>
 		</table>
 		
-		<table id="table2" class="table table-striped">
+		<table id="table2" class="table table-striped table-hover">
 			<tr>
 				<th>번호</th>
 				<th>말머리</th>
