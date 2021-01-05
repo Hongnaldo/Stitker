@@ -1,0 +1,23 @@
+--○ 스터디원 신고 등록 시퀀스
+CREATE SEQUENCE MEM_RR_SEQ
+NOCACHE;
+
+--○ 스터디원 신고 카테고리 시퀀스
+CREATE SEQUENCE MEM_RC_SEQ
+NOCACHE;
+
+--○ 스터디원 신고 처리 시퀀스
+CREATE SEQUENCE MEM_RH_SEQ
+NOCACHE;
+
+--○ 스터디원 신고 처리 결과 시퀀스
+CREATE SEQUENCE MEM_RHR_SEQ
+NOCACHE;
+
+--○ 내보내기 등록 시퀀스
+CREATE SEQUENCE MEM_KR_SEQ
+NOCACHE;
+
+--○ 내보내기 처리 시퀀스
+CREATE SEQUENCE MEM_KH_SEQ
+NOCACHE;

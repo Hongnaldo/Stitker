@@ -1,8 +1,9 @@
 --■■■ 시퀀스(SEQUENCE) 생성 ■■■--
 --※시퀀스이름 : 테이블명간단히_SEQ
---※PK 자료형 확인 후 만들기
---  영어 두자리 + 나머지 숫자
---  겹쳐서 에러나면 영어 두자리 다른 글자로 변경해서 시도하기 
+
+-- 시퀀스 조회
+SELECT *
+FROM USER_SEQUENCES;
 
 
 --○ IT기술정보공유 테이블
@@ -101,6 +102,7 @@ NOCACHE;
 CREATE SEQUENCE RPT_RG_INFORM_SEQ
 NOCACHE;
 
+<<<<<<< HEAD
 --○ 면접/코딩테스트 후기  신고등록 테이블
 CREATE SEQUENCE RPT_RG_INTERVIEW_SEQ
 NOCACHE;
@@ -185,3 +187,6 @@ NOCACHE;
 
 
  
+=======
+ 
+>>>>>>> 682c9784b3ceb50078ca501bc2b4c3726dec0fc4
