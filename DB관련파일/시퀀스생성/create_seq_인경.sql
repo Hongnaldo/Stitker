@@ -1,0 +1,41 @@
+--■■■ 시퀀스(SEQUENCE) 생성 ■■■--
+--※시퀀스이름 : 테이블명간단히_SEQ
+
+-- 시퀀스 조회
+SELECT *
+FROM USER_SEQUENCES;
+
+
+--○ 회원 코드 생성 테이블
+CREATE SEQUENCE USER_CODE_CRE_SEQ
+NOCACHE;
+
+--○ 회원 등록 테이블 
+CREATE SEQUENCE USER_REG_SEQ
+NOCACHE;
+
+--○ 비밀번호 찾기 질문 테이블
+CREATE SEQUENCE PW_SRCH_QUE_SEQ
+NOCACHE;
+
+--○ 현재 직업 대분류 테이블
+CREATE SEQUENCE JOB_LC_SEQ
+NOCACHE;
+
+--○ 현재 직업 중분류 테이블
+CREATE SEQUENCE JOB_LC_SEQ
+NOCACHE;
+
+--○ 계정 정지 등록 테이블
+CREATE SEQUENCE ACCT_SUS_SEQ
+NOCACHE;
+
+--○ 탈퇴 기록 및 개인정보 보관 테이블
+CREATE SEQUENCE WDL_INFO_SEQ
+NOCACHE;
+
+--○ 탈퇴 카테고리 테이블
+CREATE SEQUENCE WDL_CTG_SEQ
+NOCACHE;
+
+
