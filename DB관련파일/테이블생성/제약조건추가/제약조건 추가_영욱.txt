@@ -1,0 +1,4 @@
+--○ 욕설 테이블 UK 추가
+ALTER TABLE TBL_CURSE
+ADD CONSTRAINT CURSE_CK_UK UNIQUE (CURSE_KIND);
+--==>> 실행 된 상태
