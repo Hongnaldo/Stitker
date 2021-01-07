@@ -13,38 +13,60 @@ END;
 select * from user_sequences;
 
 SET SERVEROUTPUT ON;
---=============================================== 여기서 부터 복붙해주세요~~
+--=============================================== 여기서 부터 
 
 
 --○ 스터디 진행에 인스트됐을 때 -> 출석부 + 일정관리(리더 출석부코드만)에 미리 데이터 인서트
-CREATE OR REPLACE PROCEDURE PRC_AC_INSERT(
- -- 선언부
- 
-)
+-- 스터디 시작날짜 , 스터디 종료날짜 
+-- 스터디 리더의 사용자 코드. 
+-- 출석부코드가 리더의 출석부코드이면 스터디 일정관리 테이블에 인서트
+CREATE OR REPLACE PROCEDURE PRC_SP_INSERT
 IS
-
-
+    V_PARTI_CODE TBL_STUDY_PARTICEPANT.PARTI_CODE%TYPE  -- 스터디 진행 코드
+    V_APPLY_CODE TBL_STUDY_PARTICIPANT.APPLY_CODE%TYPE  -- 스터디 참자가 코드
+    V_ATTEND_CODE TBL_STUDY_ATTEND.ATTEND_CODE%TYPE;    -- 출석부 코드
+    CLOCK_IN TBL_STUDY_ATTEND.CLOCK_IN%TYPE;            -- 입실 시간
+    CLOCK_OUT TBL_STUDY_ATTEND.CLOCK_OUT%TYPE;          -- 퇴실 시간
+    SCHEDULE TBL_STUDY_SCHEDULE.SCHEDULE%TYPE;          -- 스터디 일정관리 
+    V_STUDY_CODE TBL_STUDY_APPLY.STUDY_CODE&TYPE;       -- 스터디 코드
 
 BEGIN
-
-
+    
+    SELECT STUDY_CODE
+    FTOM TBL_STUDY_APPLY
+    WHERE APPLY_CODE = (SELECT APPLY_CODE
+                        FROM TBL_STUDY_PARTICIPANT);
+    SELECT START_DATE 
+        INTO V_START_DATE
+    FROM TBL_STUDY_OPEN
+    WHERE STUDY_CODE = ;
+    V_ATTEND_CODE
+    -- 스터디 일정관리 테이블에 데이터 입력
+    INSERT INTO TBL_STUDY_SCHEDULE(ATTEND_CODE, SCHEDULE)
+    VALUES();
+    
+    -- 출석부 테이블에 데이터 입력
+    INSERT INTO TBL_STUDY_ATTEND(ATTEND_CODE, PARTI_CODE, ATTEND_DATE,CLOCK_IN,CLOCK_OUT)
+    VALUES();
 
 END;
 
 
---○ 스터디 시작날짜에 진행에 인서트 되지 않은 사람들 -> 취소 테이블에 인서트
+--○ 스터디 시작날짜에 진행테이블에 인서트 되지 않은 사람들 -> 취소 테이블에 인서트
+
 -- 조건
 -- 1. 현재 날짜가 스터디 시작 날짜이다.
--- 2. TBL_STUDY_APPLY에는 APPLY_CODE가 있는데 TBL_STUDY_PARTICIPANT에 APPLY_CODE가 없다.
+-- 2. TBL_STUDY_APPLY에는 APPLY_CODE가 있는데 TBL_STUDY_PARTICIPANT 에 APPLY_CODE가 없다.
 
 
 CREATE OR REPLACE PROCEDURE PRC_SC_INSERT
 IS
     V_START_DATE TBL_STUDY_OPEN.START_DATE%TYPE;     -- 스터디 시작일
     V_APPLY_CODE TBL_STUDY_APPLY.APPLY_CODE%TYPE;    -- 스터디 참가 코드
+    V_STUDY_CODE TBL_STUDY_OPEN.STUDY_CODE%TYPE;     -- 해당 스터디 코드
     V_CALCEL_DATE TBL_STUDY_CALCEL.CANCEL_DATE%TYPE; -- 취소 처리된 날짜
     V_CANCEL_CODE TBL_STUDY_CALCEL.CANCEL_CODE%TYPE; -- 스터디 취소 코드
-    V_STUDY_CODE TBL_STUDY_OPEN.STUDY_CODE%TYPE;     -- 해당 스터디 코드
+   
     V_TODAY DATE;                                    -- 오늘 날짜 
 
 BEGIN
@@ -61,6 +83,7 @@ BEGIN
 
     V_TODAY := CURRENT_DATE(); -- 오늘 날짜
     
+    
     LOOP
     IF (V_START_DATE = V_TODAY) AND (SELECT COUNT(*)
                                   FROM TBL_STUDY_PARTICIPANT
@@ -73,7 +96,7 @@ BEGIN
 END;
 
 
---○ 회원가입시 회원코드생성 + 회원등록 
+--○ 회원가입시 회원 코드 생성 + 회원 등록 
 CREATE OR REPLACE PROCEDURE PRC_UC_REG_INSERT(                      -- 사용자한테 받아오는 값
   V_ID IN TBL_USER_REGISTER.ID%TYPE                                 -- ID
  ,V_PW IN TBL_USER_REGISTER.PW%TYPE                                 -- PW
@@ -107,7 +130,11 @@ BEGIN
     
 END;
 
-/*-- TEST
+--==>> Procedure PRC_UC_REG_INSERT이(가) 컴파일되었습니다.
+
+
+--====================== TEST
+
 SELECT *
 FROM TAB;
 
@@ -116,7 +143,6 @@ FROM TBL_CURSE;
 
 SELECT *
 FROM TBL_CURSE;
-*/
 
 SELECT *
 FROM USER_SEQUENCES;
