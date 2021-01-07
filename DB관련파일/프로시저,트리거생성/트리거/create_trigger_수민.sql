@@ -1,0 +1,186 @@
+--■■■ 트리거(TRIGGER) 생성 ■■■--
+/*
+"경고3회 -> 계정정지에 데이터없음 :  계정정지에 인서트
+                  계정정지에 데이터 있음 : 가장 최근 계정정지코드의 계정정지날짜가 1년이 지났음 -> 계정정지에 인서트
+                                                           가장 최근 계정정지코드의 계정정지날짜 sysdate로 업데이트"
+"취소처리에 인서트 -> 최소인원미만 -> 스터디종료날짜를 오늘로 지정(업데이트)
+                                                          -> (진행중인 스터디) 스터디종료된 상태가 됨. 
+                                                               (진행전) 취소처리-자동으로됨.
+                                   (진행중인스터디,자발적) 패널티 -100(개설자아님), -200(개설자)
+                                   (확정기간 4,5일차,자발적) 패널티 -30점(개설자아님), -100(개설자)
+                                   (진행중/진행전, 자발적아님) 패널티없음.
+                                   (진행전, 자발적) 리더 제외한 나머지 사람 신청날짜 null로 업데이트(함수/프로시저 호출)"
+"스터디업데이트 -> (sysdate 스터디시작날짜보다 미래)  출석부,일정관리 지우기(종료시점보다 미래의 데이터들만 모두 삭제)
+                               (아직시작안됨) -> 리더 제외한 스터디원 모두 신청날짜 null로 업데이트(함수/프로시저 호출)"
+*/
+
+
+-- 경고 받을 때 마다 경고 수 세서 3개 이상이면 계정정지 / 유효기간 늘리기
+CREATE OR REPLACE TRIGGER AFTER_INSERT_WARNING_TRG
+    AFTER
+    INSERT ON TBL_WARNING
+    FOR EACH ROW 
+    DECLARE
+        -- 총 경고 개수 / 계정정지 이후 받은 경고 개수
+        V_WARNING_COUNT   NUMBER;
+        -- 가장 최근 계정정지 받은 경고 코드
+        V_WARNING_CODE    VARCHAR2(15);
+        -- 가장 최근 계정정지 받은 경고 날짜
+        V_WARNING_DATE    DATE;
+        -- 계정정지 개수
+        V_SUSPEND_COUNT   NUMBER;
+        -- 가장 최근 계정정지 코드
+        V_SUSPEND_CODE    VARCHAR2(10);
+        -- 가장 최근 계정정지 날짜
+        V_SUSPEND_DATE    DATE;
+        
+    BEGIN  
+        -- 경고 개수 저장하기
+        SELECT COUNT(*) INTO V_WARNING_COUNT
+        FROM TBL_WARNING 
+        WHERE USER_CODE = :NEW.USER_CODE;
+        
+        -- 경고가 3회 이상이면
+        IF(WARNING_COUNT >= 3)
+        
+        THEN
+            -- 계정정지 개수 저장하기
+            SELECT COUNT(*) INTO V_SUSPEND_COUNT
+            FROM TBL_WARNING W LEFT JOIN TBL_ACOUNT_SUSPEND S
+                ON W.WARNING_CODE = S.WARNING_CODE
+            WHERE W.USER_CODE = :NEW.USER_CODE AND S.ACCT_SUS_CODE IS NOT NULL;
+            
+            -- 계정정지 이력이 존재하면 최근 계정정지 이후 경고수 세기
+            IF (V_SUSPEND_COUNT > 0)
+            THEN
+                -- 가장 최근 계정정지 코드 저장
+                SELECT MAX(S.ACCT_SUS_CODE) INTO V_SUSPEND_CODE
+                FROM TBL_WARNING W LEFT JOIN TBL_ACOUNT_SUSPEND S
+                    ON W.WARNING_CODE = S.WARNING_CODE
+                WHERE W.USER_CODE = :NEW.USER_CODE;
+                
+                -- 가장 최근 계정정지와 이어진 경고코드 저장, 해당 경고코드 날짜 저장
+                SELECT S.WARNING_CODE, W.WARNING_DATE INTO V_WARNING_CODE, V_WARNING_DATE
+                FROM TBL_ACCOUNT_SUSPEND S JOIN TBL_WARNING W
+                    ON W.WARNING_CODE = S.WARNING_CODE
+                WHERE S.ACCT_SUS_CODE = V_SUSPEND_CODE;
+                
+                -- 최근 계정정지 이후의 경고수 세기
+                SELECT COUNT(*) INTO V_WARNING_COUNT
+                FROM TBL_WARNING
+                WHERE USER_CODE=:NEW.USER_CODE AND WARNING_DATE > V_WARNING_DATE;
+                
+                -- 현재 유효한 경고수가 3개 이상이면
+                IF (V_WARNING_COUNT >= 3)
+                THEN 
+                    -- 해당 계정정지 코드의 날짜 저장
+                    SELECT ACCT_SUS_DATE INTO V_SUSPEND_DATE
+                    FROM TBL_ACCOUNT_SUSPEND
+                    WHERE ACCT_SUS_CODE = V_SUSPEND_CODE;
+                    
+                    -- 종료됐으면 새로 계정정지 시키기
+                    IF (ADD_MONTHS(V_SUSPEND_DATE, 12) < SYSDATE)
+                    THEN
+                        INSERT INTO TBL_ACCOUNT_SUSPEND(ACCT_SUS_CODE, ACCT_SUS_DATE, WARNING_CODE)
+                        VALUES ('AS'||ACCT_SUS_SEQ.NEXTVAL, SYSDATE, :NEW.WARNING_CODE);
+                        
+                    --종료안됐으면 업데이트 시키기    
+                    ELSE
+                        UPDATE TBL_ACCOUNT_SUSPEND
+                        SET ACCT_SUS_DATE = SYSDATE
+                        WHERE ACCT_SUS_CODE = V_SUSPEND_CODE;
+                    END IF;
+                END IF;    
+            
+            -- 계정정지 이력이 존재하지 않으면 새로 계정 정지에 등록
+            ELSE
+                INSERT INTO TBL_ACCOUNT_SUSPEND(ACCT_SUS_CODE, ACCT_SUS_DATE, WARNING_CODE)
+                VALUES ('AS'||ACCT_SUS_SEQ.NEXTVAL, SYSDATE, :NEW.WARNING_CODE);
+            END IF;
+            
+        END IF;        
+    END;    
+    
+    
+/*
+"스터디업데이트 -> (sysdate 스터디종료날짜보다 미래)  출석부,일정관리 지우기(종료시점보다 미래의 데이터들만 모두 삭제)
+                               (아직시작안됨) -> 리더 제외한 스터디원 모두 신청날짜 null로 업데이트(함수/프로시저 호출)"
+*/    
+CREATE OR REPLACE TRIGGER AFTER_UPDATE_STUDY_TRG
+    AFTER 
+    UPDATE ON TBL_STUDY_OPEN
+    FOR EACH ROW
+    DECLARE
+    
+    BEGIN
+        --종료 날짜가 현재이하로 업데이트됐다면 출석부/일정관리 남은것 지우기
+        IF (:OLD.END_DATE != :NEW.END_DATE AND :NEW.END_DATE <= SYSDATE)
+        THEN
+            -- 일정관리 지우기
+            DELETE
+            FROM TBL_STUDY_SCHEDULE S 
+            WHERE EXISTS(
+                SELECT *
+                FROM TBL_STUDY_ATTEND A
+                WHERE A.ATTEND_CODE = S.ATTEND_CODE
+                 AND A.ATTEND_DATE > :NEW.END_DATE
+            );
+            
+            -- 출석부 지우기
+            DELETE
+            FROM TBL_STUDY_ATTEND
+            WHERE ATTEND_DATE > :NEW.END_DATE;
+            
+        -- 시작날짜가 현재보다 이전이면(아직 시작 안함) 리더 제외한 스터디원 모두 신청날짜 NULL로 업데이트
+        ELSIF (:NEW.START_DATE < SYSDATE)
+            THEN 
+        END IF;
+    
+    
+    END;
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
