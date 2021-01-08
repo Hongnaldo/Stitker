@@ -1,4 +1,3 @@
---시퀀스에 문자 넣는 것이 안됨..
 
 --○ 스터디 신고 등록 테이블
 INSERT INTO TBL_STUDY_ACCUSE(ACCUSE_CODE, STUDY_CODE, USER_CODE
