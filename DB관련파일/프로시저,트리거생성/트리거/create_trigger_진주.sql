@@ -10,16 +10,16 @@ DECLARE
     V_STUDY_CODE TBL_STUDY_OPEN.STUDY_CODE%TYPE;
     V_CLOSE_DATE TBL_STUDY_OPEN.CLOSE_DATE%TYPE;
 BEGIN
-    SELECT STUDY_CODE INTO V_STUDY_CODE
+    SELECT A.STUDY_CODE INTO V_STUDY_CODE
     FROM TBL_STUDY_PARTICIPANT P, TBL_STUDY_APPLY A
     WHERE P.APPLY_CODE = A.APPLY_CODE
-      AND A.POSITION_CODE = 1;
+      AND A.POSITION_CODE = 1; 
       
     SELECT CLOSE_DATE INTO V_CLOSE_DATE
     FROM TBL_STUDY_OPEN
     WHERE STUDY_CODE = V_STUDY_CODE;
     
-    IF ( SYSDATE < V_CLOSE_DATE )
+    IF ( TO_DATE(SYSDATE, 'YYYY-MM-DD') <= TO_DATE(V_CLOSE_DATE, 'YYYY-MM-DD') )  -- <=?
         THEN UPDATE TBL_STUDY_OPEN
              SET CLOSE_DATE = SYSDATE
              WHERE STUDY_CODE = V_STUDY_CODE;
@@ -27,11 +27,10 @@ BEGIN
     END IF;
 END;
 
---==>> Trigger TRG_STD_PARTI_INSERT이(가) 컴파일되었습니다.
 
 
-
---○ 스터디 개설 테이블에 INSERT 수행 전 -> MAX_MEM이 MIN_MEM 이상인지 체크 -> MIN_MEM보다 작으면 에러 발생시킴(미완)
+--○ 스터디 개설 테이블에 INSERT 수행 전 -> 
+--  MAX_MEM이 MIN_MEM 이상인지 체크 -> MIN_MEM보다 작으면 에러 발생시킴(미완)
 CREATE OR REPLACE TRIGGER TRG_STD_OPEN_INSERT
     BEFORE
     INSERT ON TBL_STUDY_OPEN
@@ -42,25 +41,113 @@ DECLARE
 BEGIN 
     SELECT M.MEMNUM AS MIN_MEM INTO V_MIN_MEM
     FROM TBL_STUDY_OPEN O, TBL_MEMNUM M
-    WHERE STUDY_CODE = INSERT될 스터디코드
+    WHERE STUDY_CODE = :NEW.STUDY_CODE
       AND O.MIN_MEM_CODE = M.MEMNUM_CODE;
       
     SELECT M.MEMNUM AS MAX_MEM INTO V_MAX_MEM
     FROM TBL_STUDY_OPEN O, TBL_MEMNUM M
-    WHERE STUDY_CODE = INSERT될 스터디코드 -- :NEW.STUDY_CODE 안됨.
+    WHERE STUDY_CODE = :NEW.STUDY_CODE
       AND O.MAX_MEM_CODE = M.MEMNUM_CODE;  
       
     IF ( V_MAX_MEM < V_MIN_MEM )
         THEN RAISE_APPLICATION_ERROR(-20003, '최대 인원수는 최소 인원수 이상이어야 합니다.');
     END IF;
 END;
+--==>> Trigger TRG_STD_OPEN_INSERT이(가) 컴파일되었습니다.
+
+
+
+--○ 탈퇴 테이블에 INSERT 수행 후 -> 회원 등록 테이블에서 정보 삭제
+CREATE OR REPLACE TRIGGER TRG_WDL_INSERT
+    AFTER
+    INSERT ON TBL_WITHDRAWAL_INFO
+    FOR EACH ROW
+DECLARE
+BEGIN
+    DELETE
+    FROM TBL_USER_REGISTER
+    WHERE USER_CODE = :NEW.USER_CODE;
+END;
+--==>> Trigger TRG_WDL_INSERT이(가) 컴파일되었습니다.
 
 
 
 
+--○ 취소테이블에 INSERT 후 		■ 미 완 ■
+-- -> 진행중인지(START_DATE 이전인지 이후인지)체크
+-- -> 리더(작성자)인지 체크 
+-- -> 리더면 진행테이블에 남아있는 사람들 중 점수가 가장 높은 사람의 직책을 리더로 업데이트
 
+CREATE OR REPLACE TRIGGER TRG_STD_CANC_INSERT
+    AFTER
+    INSERT ON TBL_STUDY_CANCEL
+    FOR EACH ROW
+DECLARE
+    V_POSITION_CODE TBL_STUDY_POSITION.POSITION_CODE%TYPE;    -- 취소한 사용자의 POSITION_CODE
+    V_USER_CODE     TBL_USER_CODE_CREATE.USER_CODE%TYPE; -- 취소한 사용자의 USER_CODE
+    V_STUDY_CODE    TBL_STUDY_OPEN.STUDY_CODE%TYPE;     -- 취소한 STUDY_CODE
+    V_WRITER_CODE   TBL_USER_CODE_CREATE.USER_CODE%TYPE; -- 취소한 스터디 작성자 USER_CODE
+    V_MAX_SCORE     TBL_SCORE.SCORE%TYPE;               -- 스터디에 남아있는 사용자들의 점수 중 가장 높은 점수
+    V_NEW_LEADER    TBL_USER_CODE_CREATE.USER_CODE%TYPE; -- 가장 높은 점수인 사용자의 USER_CODE
+BEGIN
 
-
+    -- V_POSITION_CODE, V_USER_CODE 
+    SELECT POSITION_CODE, USER_CODE INTO V_POSITION_CODE, V_USER_CODE
+    FROM TBL_STUDY_APPLY
+    WHERE APPLY_CODE = :NEW.APPLY_CODE;
+    
+    -- V_STUDY_CODE 
+    SELECT STUDY_CODE INTO V_STUDY_CODE
+    FROM TBL_STUDY_APPLY
+    WHERE APPLY_CODE = :NEW.APPLY_CODE;
+    
+    -- V_WRITER_CODE
+    SELECT USER_CODE INTO V_WRITER_CODE
+    FROM TBL_STUDY_OPEN
+    WHERE STUDY_CODE = V_STUDY_CODE;
+    
+    -- V_MAX_SCORE
+    SELECT MAX(SCORESUM) INTO V_MAX_SCORE
+    FROM ( SELECT USER_CODE, SUM(SCORE) AS SCORESUM
+           FROM TBL_STUDY_APPLY A, TBL_SCORE S
+           WHERE STUDY_CODE = V_STUDY_CODE
+             AND A.USER_CODE = S.USER_CODE
+           GROUP BY USER_CODE);
+    
+    -- V_NEW_LEADER
+    SELECT USER_CODE INTO V_NEW_LEADER
+    FROM ( SELECT USER_CODE, SUM(SCORE) AS SCORESUM
+           FROM TBL_STUDY_APPLY A, TBL_SCORE S
+           WHERE STUDY_CODE = V_STUDY_CODE
+             AND A.USER_CODE = S.USER_CODE
+           GROUP BY USER_CODE)
+    WHERE SCORESUM = V_MAX_SCORE;
+    
+    
+    -- 모집중
+    IF ( TO_DATE(SYSDATE, 'YYYY-MM-DD') < TO_DATE(V_START_DATE, 'YYYY-MM-DD') )  --■ <= ??
+        THEN            
+        -- 신청 테이블에 있는 사람들 중에 가장 높은 점수를 가진 사람이 뉴리더
+        IF ( V_USER_CODE = V_WRITER_CODE ) -- 취소한 사람이 작성자면
+            THEN UPDATE TBL_STUDY_APPLY
+                 SET POSITION_CODE = 1
+                 WHERE USER_CODE = V_NEW_LEADER
+                   AND STUDY_CODE = V_STUDY_CODE;
+        ELSIF ( V_POSITION_CODE = 1 ) -- 취소한 사람이 리더이면
+            THEN UPDATE TBL_STUDY_APPLY
+                 SET POSITION_CODE = 1
+                 WHERE USER_CODE = V_NEW_LEADER
+                 AND STUDY_CODE = V_STUDY_CODE;
+        END IF;
+        
+    ELSIF ( TO_DATE(SYSDATE, 'YYYY-MM-DD') > TO_DATE(V_START_DATE, 'YYYY-MM-DD) )
+            THEN 
+            
+              -- 진행 테이블, 신청테이블에 둘다 있는 사람들 중에 가장 높은 점수를 가진 사람이 뉴리더
+            
+    END IF;
+    
+END;
 
 
 
@@ -92,15 +179,17 @@ BEGIN
     -- V_REG_CNT 초기화
     SELECT COUNT(*) AS CNT INTO V_REG_CNT
     FROM TBL_REPORT_REG_INFORM
-    WHERE POST_CODE = :NEW.POST_CODE
+    WHERE POST_CODE = :NEW.POST_CODE;
     
-    -- 신고가 5회 쌓였는지(5의 배수) 체크후 처리
-    IF ( TRUNC(V_REG_CNT/5) = 0) -- 그냥 V_REG_CNT = 0 라고만??
+    -- 신고가 5회 쌓였는지 체크후 처리
+    IF ( V_REG_CNT = 5) 
         THEN 
-        INSERT INTO TBL_REPORT_HANDLE_INFORM (신고처리코드, 신고등록코드, 처리결과) 
-                    VALUES (신고처리코드SEQ, 신고등록코드, 처리결과); -- 처리결과는 '처리전'같은 의미로 넣어야할거같음
+        INSERT INTO TBL_REPORT_HANDLE_INFORM (REPORT_HANDLE_CODE, POST_REPORT_CODE, HANDLE_RESULT_CODE) 
+                    VALUES ('HI'||RPT_HD_INFORM_SEQ.NEXTVAL, :NEW.POST_REPORT_CODE, NULL); -- 처리결과코드는 NULL, 처리일자는 디폴트 SYSDATE
     END IF;
 END;
+--==>> Trigger TRG_RPT_REG_INFOM_INSERT이(가) 컴파일되었습니다.
+
 
 
 --○ 면접,코딩테스트 게시판 신고 등록 테이블에 INSERT 후 -> 5회 쌓였는지 체크 -> 맞으면 신고처리에 인서트
@@ -114,15 +203,17 @@ BEGIN
     -- V_REG_CNT 초기화
     SELECT COUNT(*) AS CNT INTO V_REG_CNT
     FROM TBL_REPORT_REG_INTERVIEW
-    WHERE POST_CODE = :NEW.POST_CODE
+    WHERE POST_CODE = :NEW.POST_CODE;
     
-    -- 신고가 5회 쌓였는지(5의 배수) 체크후 처리
-    IF ( TRUNC(V_REG_CNT/5) = 0)
+    -- 신고가 5회 쌓였는지 체크후 처리
+    IF ( V_REG_CNT = 5) 
         THEN 
-        INSERT INTO TBL_REPORT_HANDLE_INTERVIEW (신고처리코드, 신고등록코드, 처리결과) 
-                    VALUES (신고처리코드SEQ, 신고등록코드, 처리결과); 
+        INSERT INTO TBL_REPORT_HANDLE_INTERVIEW (REPORT_HANDLE_CODE, POST_REPORT_CODE, HANDLE_RESULT_CODE) 
+                    VALUES ('HV'||RPT_HD_INTERVIEW_SEQ.NEXTVAL, :NEW.POST_REPORT_CODE, NULL); 
     END IF;
 END;
+--==>> Trigger TRG_RPT_REG_INTEV_INSERT이(가) 컴파일되었습니다.
+
 
 
 --○ 공모전/세미나 게시판 신고 등록 테이블에 INSERT 후 -> 5회 쌓였는지 체크 -> 맞으면 신고처리에 인서트
@@ -136,15 +227,17 @@ BEGIN
     -- V_REG_CNT 초기화
     SELECT COUNT(*) AS CNT INTO V_REG_CNT
     FROM TBL_REPORT_REG_SEMINAR
-    WHERE POST_CODE = :NEW.POST_CODE
+    WHERE POST_CODE = :NEW.POST_CODE;
     
-    -- 신고가 5회 쌓였는지(5의 배수) 체크후 처리
-    IF ( TRUNC(V_REG_CNT/5) = 0)
+    -- 신고가 5회 쌓였는지 체크후 처리
+    IF ( V_REG_CNT = 5) 
         THEN 
-        INSERT INTO TBL_REPORT_HANDLE_SEMINAR (신고처리코드, 신고등록코드, 처리결과) 
-                    VALUES (신고처리코드SEQ, 신고등록코드, 처리결과); 
+        INSERT INTO TBL_REPORT_HANDLE_SEMINAR (REPORT_HANDLE_CODE, POST_REPORT_CODE, HANDLE_RESULT_CODE)  
+                    VALUES ('HS'||RPT_HD_SEMINAR_SEQ.NEXTVAL, :NEW.POST_REPORT_CODE, NULL); 
     END IF;
 END;
+--==>> Trigger TRG_RPT_REG_SEMIN_INSERT이(가) 컴파일되었습니다.
+
 
 
 --○ 자유 게시판 신고 등록 테이블에 INSERT 후 -> 5회 쌓였는지 체크 -> 맞으면 신고처리에 인서트
@@ -158,18 +251,20 @@ BEGIN
     -- V_REG_CNT 초기화
     SELECT COUNT(*) AS CNT INTO V_REG_CNT
     FROM TBL_REPORT_REG_FREE
-    WHERE POST_CODE = :NEW.POST_CODE
+    WHERE POST_CODE = :NEW.POST_CODE;
     
-    -- 신고가 5회 쌓였는지(5의 배수) 체크후 처리
-    IF ( TRUNC(V_REG_CNT/5) = 0)
+    -- 신고가 5회 쌓였는지 체크후 처리
+    IF ( V_REG_CNT = 5)
         THEN 
-        INSERT INTO TBL_REPORT_HANDLE_FREE (신고처리코드, 신고등록코드, 처리결과) 
-                    VALUES (신고처리코드SEQ, 신고등록코드, 처리결과); 
+        INSERT INTO TBL_REPORT_HANDLE_FREE (REPORT_HANDLE_CODE, POST_REPORT_CODE, HANDLE_RESULT_CODE) 
+                    VALUES ('HF'||RPT_HD_FREE_SEQ.NEXTVAL, :NEW.POST_REPORT_CODE, NULL); 
     END IF;
 END;
+--==>> Trigger TRG_RPT_REG_FREE_INSERT이(가) 컴파일되었습니다.
 
 
---○ 답변 게시판 신고 등록 테이블에 INSERT 후 -> 5회 쌓였는지 체크 -> 맞으면 신고처리에 인서트
+
+--○ 질문 게시판 신고 등록 테이블에 INSERT 후 -> 5회 쌓였는지 체크 -> 맞으면 신고처리에 인서트
 CREATE OR REPLACE TRIGGER TRG_RPT_REG_QUE_INSERT
     AFTER
     INSERT ON TBL_REPORT_REG_QUESTION
@@ -180,18 +275,20 @@ BEGIN
     -- V_REG_CNT 초기화
     SELECT COUNT(*) AS CNT INTO V_REG_CNT
     FROM TBL_REPORT_REG_QUESTION
-    WHERE POST_CODE = :NEW.POST_CODE
+    WHERE POST_CODE = :NEW.POST_CODE;
     
-    -- 신고가 5회 쌓였는지(5의 배수) 체크후 처리
-    IF ( TRUNC(V_REG_CNT/5) = 0)
+    -- 신고가 5회 쌓였는지 체크후 처리
+    IF ( V_REG_CNT = 5)
         THEN 
-        INSERT INTO TBL_REPORT_HANDLE_QUESTIONE (신고처리코드, 신고등록코드, 처리결과) 
-                    VALUES (신고처리코드SEQ, 신고등록코드, 처리결과); 
+        INSERT INTO TBL_REPORT_HANDLE_QUESTION (REPORT_HANDLE_CODE, POST_REPORT_CODE, HANDLE_RESULT_CODE) 
+                    VALUES ('HQ'||RPT_HD_QUESTION_SEQ.NEXTVAL, :NEW.POST_REPORT_CODE, NULL); 
     END IF;
 END;
+--==>> Trigger TRG_RPT_REG_QUE_INSERT이(가) 컴파일되었습니다.
 
 
---○ 질문 게시판 신고 등록 테이블에 INSERT 후 -> 5회 쌓였는지 체크 -> 맞으면 신고처리에 인서트
+
+--○ 답변 게시판 신고 등록 테이블에 INSERT 후 -> 5회 쌓였는지 체크 -> 맞으면 신고처리에 인서트
 CREATE OR REPLACE TRIGGER TRG_RPT_REG_ANS_INSERT
     AFTER
     INSERT ON TBL_REPORT_REG_ANSWER
@@ -202,15 +299,17 @@ BEGIN
     -- V_REG_CNT 초기화
     SELECT COUNT(*) AS CNT INTO V_REG_CNT
     FROM TBL_REPORT_REG_ANSWER
-    WHERE POST_CODE = :NEW.POST_CODE
+    WHERE POST_CODE = :NEW.POST_CODE;
     
-    -- 신고가 5회 쌓였는지(5의 배수) 체크후 처리
-    IF ( TRUNC(V_REG_CNT/5) = 0)
+    -- 신고가 5회 쌓였는지 체크후 처리
+    IF ( V_REG_CNT = 5)
         THEN 
-        INSERT INTO TBL_REPORT_HANDLE_ANSWER (신고처리코드, 신고등록코드, 처리결과) 
-                    VALUES (신고처리코드SEQ, 신고등록코드, 처리결과); 
+        INSERT INTO TBL_REPORT_HANDLE_ANSWER (REPORT_HANDLE_CODE, POST_REPORT_CODE, HANDLE_RESULT_CODE) 
+                    VALUES ('HA'||RPT_HD_ANSWER_SEQ.NEXTVAL, :NEW.POST_REPORT_CODE, NULL); 
     END IF;
 END;
+--==>> Trigger TRG_RPT_REG_ANS_INSERT이(가) 컴파일되었습니다.
+
 
 
 --○ 스터디 후기 게시판 신고 등록 테이블에 INSERT 후 -> 5회 쌓였는지 체크 -> 맞으면 신고처리에 인서트
@@ -224,15 +323,17 @@ BEGIN
     -- V_REG_CNT 초기화
     SELECT COUNT(*) AS CNT INTO V_REG_CNT
     FROM TBL_REPORT_REG_STUDYREVIEW
-    WHERE POST_CODE = :NEW.POST_CODE
+    WHERE POST_CODE = :NEW.POST_CODE;
     
-    -- 신고가 5회 쌓였는지(5의 배수) 체크후 처리
-    IF ( TRUNC(V_REG_CNT/5) = 0)
+    -- 신고가 5회 쌓였는지 체크후 처리
+    IF ( V_REG_CNT = 5)
         THEN 
-        INSERT INTO TBL_REPORT_HANDLE_STUDYREVIEW (신고처리코드, 신고등록코드, 처리결과) 
-                    VALUES (신고처리코드SEQ, 신고등록코드, 처리결과); 
+        INSERT INTO TBL_REPORT_HANDLE_STUDYREVIEW (REPORT_HANDLE_CODE, POST_REPORT_CODE, HANDLE_RESULT_CODE) 
+                    VALUES ('HR'||RPT_HD_STUDYREVIEW_SEQ.NEXTVAL, :NEW.POST_REPORT_CODE, NULL); 
     END IF;
 END;
+--==>> Trigger TRG_RPT_REG_STDREV_INSERT이(가) 컴파일되었습니다.
+
 
 
 --○ 스터디 개설 게시판 신고 등록 테이블에 INSERT 후 -> 5회 쌓였는지 체크 -> 맞으면 신고처리에 인서트
@@ -246,12 +347,22 @@ BEGIN
     -- V_REG_CNT 초기화
     SELECT COUNT(*) AS CNT INTO V_REG_CNT
     FROM TBL_STUDY_ACCUSE
-    WHERE POST_CODE = :NEW.POST_CODE
+    WHERE STUDY_CODE = :NEW.STUDY_CODE;
     
-    -- 신고가 5회 쌓였는지(5의 배수) 체크후 처리
-    IF ( TRUNC(V_REG_CNT/5) = 0)
+    -- 신고가 5회 쌓였는지 체크후 처리
+    IF ( V_REG_CNT = 5)
         THEN 
-        INSERT INTO TBL_STUDY_ACCUSE_HANDLE (신고처리코드, 신고등록코드, 처리결과) 
-                    VALUES (신고처리코드SEQ, 신고등록코드, 처리결과); 
+        INSERT INTO TBL_STUDY_ACCUSE_HANDLE (ACCUSE_HANDLE_CODE, ACCUSE_CODE, HANDLE_RESULT_CODE) 
+                    VALUES ('AH'||STUDY_ACC_HAN_SEQ.NEXTVAL, :NEW.ACCUSE_CODE, NULL); 
     END IF;
 END;
+--==>> Trigger TRG_STD_ACCU_INSERT이(가) 컴파일되었습니다.
+
+
+
+
+
+
+
+
+
