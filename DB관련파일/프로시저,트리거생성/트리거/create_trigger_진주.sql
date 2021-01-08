@@ -31,7 +31,8 @@ END;
 
 
 
---○ 스터디 개설 테이블에 INSERT 수행 전 -> MAX_MEM이 MIN_MEM 이상인지 체크 -> MIN_MEM보다 작으면 에러 발생시킴(미완)
+--○ 스터디 개설 테이블에 INSERT 수행 전 -> 
+--  MAX_MEM이 MIN_MEM 이상인지 체크 -> MIN_MEM보다 작으면 에러 발생시킴(미완)
 CREATE OR REPLACE TRIGGER TRG_STD_OPEN_INSERT
     BEFORE
     INSERT ON TBL_STUDY_OPEN
