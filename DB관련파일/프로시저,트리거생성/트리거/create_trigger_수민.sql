@@ -154,6 +154,8 @@ FROM TBL_STUDY_APPLY A JOIN TBL_STUDY_OPEN O
                     ON A.POSITION_CODE = P.POSITION_CODE;
 --==>> View STUDY_CANCEL_VIEW이(가) 생성되었습니다.
 
+SELECT *
+FROM STUDY_CANCEL_VIEW;
 
 -- 스터디취소처리 인서트 트리거
 CREATE OR REPLACE TRIGGER TRG_AFTER_INSERT_CANCEL
@@ -237,4 +239,90 @@ BEGIN
 END;
 --==>> Trigger TRG_AFTER_INSERT_CANCEL이(가) 컴파일되었습니다.
 
+SELECT *
+FROM TBL_STUDY_CANCEL;
 
+CREATE OR REPLACE PROCEDURE PRC_INSERT_CANCEL
+( V_APPLY_CODE    IN TBL_STUDY_APPLY.APPLY_CODE%TYPE
+, V_CANCEL_DATE   IN TBL_STUDY_CANCEL.CANCEL_DATE%TYPE
+, V_AUTO_CANCEL   IN TBL_STUDY_CANCEL.AUTO_CANCEL%TYPE
+)
+IS
+    V_CANCEL_CODE   TBL_STUDY_CANCEL.CANCEL_CODE%TYPE;
+    V_STUDY TBL_STUDY_OPEN.STUDY_CODE%TYPE;
+    V_LEFT  NUMBER;
+    V_MIN   TBL_MEMNUM.MEMNUM%TYPE;
+    V_START_DATE TBL_STUDY_OPEN.START_DATE%TYPE;
+    V_END_DATE   TBL_STUDY_OPEN.END_DATE%TYPE;
+    V_USER_CODE     TBL_USER_CODE_CREATE.USER_CODE%TYPE;
+    V_FIRSTLEADER   TBL_USER_CODE_CREATE.USER_CODE%TYPE;
+BEGIN
+    V_CANCEL_CODE := 'SC'|| STUDY_CANC_SEQ.NEXTVAL;
+    INSERT INTO TBL_STUDY_CANCEL(CANCEL_CODE, APPLY_CODE, CANCEL_DATE, AUTO_CANCEL)
+    VALUES(V_CANCEL_CODE, V_APPLY_CODE, TO_DATE('2020-12-14', 'YYYY-MM-DD'), V_AUTO_CANCEL);
+    
+    -- 스터디 코드 가져오기
+    SELECT STUDY_CODE INTO V_STUDY
+    FROM STUDY_CANCEL_VIEW
+    WHERE CANCEL_CODE = V_CANCEL_CODE;
+    
+    -- 해당 스터디에 남은 사람 세기
+    SELECT COUNT(*) INTO V_LEFT
+    FROM TBL_STUDY_APPLY A LEFT JOIN TBL_STUDY_CANCEL C
+        ON A.APPLY_CODE = C.APPLY_CODE
+    WHERE CANCEL_CODE IS NULL;
+    
+    -- 최소인원, 시작날짜, 종료날짜, 자동취소처리여부, 사용자코드 가져오기
+    SELECT MINNUM, START_DATE, USER_CODE, FIRSTLEADER
+        INTO V_MIN, V_START_DATE, V_USER_CODE, V_FIRSTLEADER
+    FROM STUDY_CANCEL_VIEW
+    WHERE APPLY_CODE = V_APPLY_CODE;
+        
+    -- 최소인원보다 적게 남은 경우
+    IF (V_LEFT < V_MIN)
+    THEN 
+        -- 스터디가 진행중인지 확인
+        IF (V_START_DATE < SYSDATE)
+        THEN
+            -- ▶최소인원미만, 진행중 : 스터디 종료시킴.(종료날짜 오늘로.)
+            UPDATE TBL_STUDY_OPEN
+            SET END_DATE = SYSDATE
+            WHERE STUDY_CODE = V_STUDY;
+        END IF;
+    
+    -- 최소인원보다 많이 남은 경우 자발적인 것인지 확인(자발적이면 NULL, 자동취소면 1)
+    ELSIF (V_AUTO_CANCEL IS NULL)
+    THEN
+        -- 스터디가 진행중인지 확인
+        IF (V_START_DATE < SYSDATE)
+        THEN 
+            -- ▶진행중, 개설자, 자발적 : -200
+            IF (V_FIRSTLEADER = V_USER_CODE)
+            THEN
+            INSERT INTO TBL_SCORE VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, V_USER_CODE, -200, SYSDATE);
+            
+            -- ▶진행중, 개설자X, 자발적 : -100
+            ELSE
+            INSERT INTO TBL_SCORE VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, V_USER_CODE, -100, SYSDATE);
+            
+            END IF;
+        ELSE
+            -- ▶최소인원이상, 진행중X : 리더제외 NULL로 만듦
+            PRC_UPDATE_DATE_NULL(V_STUDY); 
+            
+            -- 확정기간 마지막 2일인지 확인
+            IF (SYSDATE BETWEEN V_START_DATE-1 AND V_START_DATE-2)
+            THEN
+                -- ▶확정기간 마지막2일, 개설자, 자발적 : -100
+                IF (V_FIRSTLEADER = V_USER_CODE)
+                THEN
+                    INSERT INTO TBL_SCORE VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, V_USER_CODE, -100, SYSDATE);
+                    
+                -- ▶확정기간 마지막2일, 개설자X, 자발적 : -30    
+                ELSE
+                    INSERT INTO TBL_SCORE VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, V_USER_CODE, -30, SYSDATE);
+                END IF;
+            END IF;            
+        END IF;
+    END IF;   
+END;
