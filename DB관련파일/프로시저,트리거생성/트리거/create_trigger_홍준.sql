@@ -58,7 +58,8 @@ END;
 
 
 
---○ 매일체크: 스터디 종료날짜로부터 2주 후인지 체크 -> (스터디원평가등록에 데이터 있는 사람만 + 스터디원평가결과 점수가 음수인 사람) 에게 점수 적용. + 리더는 100점 추가적용
+--○ 매일체크: 스터디 종료날짜로부터 2주 후인지 체크 -> (스터디원평가등록에 데이터 있는 사람만 + 스터디원평가결과 점수가 음수인 사람) 에게 점수 적용. 
+-- 리더는 100점 추가적용
 -- 스터디 총인원수
 -- 평가를 총인원-1를 했느냐
 
@@ -105,42 +106,42 @@ BEGIN
     
     IF(NDATE > FDATE+14)        -- 2주가 지났을때
     THEN
-        IF(APOSITION = '스터디리더')                     --스터디리더일경우 100점 추가(평가를 하든 하지않든 상관없음)
+        IF(APOSITION = 1)                     --스터디리더일경우 100점 추가(평가를 하든 하지않든 상관없음)
         THEN
             INSERT INTO TBL_SCORE(SCORE_CODE, USER_CODE, SCORE)
-            VALUES(STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, 100);
+            VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, 100);
         END IF;
         IF(TO_NUMBER(MEM_CNT) = TO_NUMBER(ASS_CNT)+1)   -- 나를 제외한 모든 스터디원평가를 완료하였을때
         THEN
             IF(TO_NUMBER(AVG_ASS)>=90)
             THEN
                 INSERT INTO TBL_SCORE(SCORE_CODE, USER_CODE, SCORE)
-                VALUES(STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, 100);
+                VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, 100);
             ELSIF(TO_NUMBER(AVG_ASS)>=80)
             THEN
                 INSERT INTO TBL_SCORE(SCORE_CODE, USER_CODE, SCORE)
-                VALUES(STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, 50);
+                VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, 50);
             ELSIF(TO_NUMBER(AVG_ASS)>=70)
             THEN
                 INSERT INTO TBL_SCORE(SCORE_CODE, USER_CODE, SCORE)
-                VALUES(STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, 0);
+                VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, 0);
             ELSIF(TO_NUMBER(AVG_ASS)>=60)
             THEN
                 INSERT INTO TBL_SCORE(SCORE_CODE, USER_CODE, SCORE)
-                VALUES(STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, -50);
+                VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, -50);
             ELSE
                 INSERT INTO TBL_SCORE(SCORE_CODE, USER_CODE, SCORE)
-                VALUES(STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, -100);
+                VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, -100);
             END IF;
         ELSE                                                        -- 평가를 하진않았지만 내점수가 음수
             IF(TO_NUMBER(AVG_ASS)<60)
             THEN
                 INSERT INTO TBL_SCORE(SCORE_CODE, USER_CODE, SCORE)
-                VALUES(STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, -100);
+                VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, -100);
             ELSIF(TO_NUMBER(AVG_ASS)<70)
             THEN
                 INSERT INTO TBL_SCORE(SCORE_CODE, USER_CODE, SCORE)
-                VALUES(STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, -50);
+                VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, AUSER_CODE, -50);
             END IF;
         END IF;
     
@@ -156,14 +157,7 @@ END;
 
 
 --○ 매일체크: 계정정지 1년 후 점수 +300점으로 업데이트
-CREATE OR REPLACE PROCEDURE PR_YEAR_CHK
-( NDATE DATE
-)
-IS
 
-BEGIN
-    
-END;
 
 DECLARE
     C_ACCT_SUS_DATE  TBL_ACCOUNT_SUSPEND.ACCT_SUS_DATE%TYPE;
@@ -175,7 +169,7 @@ DECLARE
     IS
     SELECT S.ACCT_SUS_DATE, W.USER_CODE
     FROM TBL_ACCOUNT_SUSPEND S, TBL_WARNING W
-    WHERE S.WARNING_CODE = W.WARNING_CODE;
+    WHERE S.WARNING_CODE = W.WARNING_CODE AND S.ACCT_SUS_DATE+365 = SYSDATE;
     
 BEGIN
     -- 커서 오픈
@@ -194,11 +188,9 @@ BEGIN
         -- 커서에서 더이상 데이터가 쏟아져 나오지 않는 상태...NOTFOUND
         EXIT WHEN CUR_YEAR_CHK%NOTFOUND;
         
-        IF(SYSDATE < C_ACCT_SUS_DATE)
-        THEN
-            INSERT INTO TBL_SCORE(SCORE_CODE,USER_CODE,SCORE)
-            VALUES(STUDY_SCOR_SEQ.NEXTVAL, AUSER, -TOT_SCORE+300);     --원래 점수를 빼고난뒤 300점을 더하면 300점이된다.
-        END IF;
+        INSERT INTO TBL_SCORE(SCORE_CODE,USER_CODE,SCORE)
+        VALUES(STUDY_SCOR_SEQ.NEXTVAL, AUSER, -TOT_SCORE+300);     --원래 점수를 빼고난뒤 300점을 더하면 300점이된다.
+        
     END LOOP;
     
     -- 커서 클로즈
