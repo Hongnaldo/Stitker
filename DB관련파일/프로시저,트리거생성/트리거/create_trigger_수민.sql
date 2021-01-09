@@ -3,7 +3,7 @@
 "경고3회 -> 계정정지에 데이터없음 :  계정정지에 인서트
             계정정지에 데이터 있음 : 가장 최근 계정정지코드의 계정정지날짜가 1년이 지났음 -> 계정정지에 인서트
                                      가장 최근 계정정지코드의 계정정지날짜 sysdate로 업데이트"
-"취소처리에 인서트 -> 최소인원미만 -> 스터디종료날짜를 오늘로 지정(업데이트) : 종료만 수정가능함.
+"취소처리에 인서트 -> 최소인원미만 -> 스터디종료날짜를 오늘로 지정(업데이트) : 종료만 수정가능함. / 출석부 삭제..
                                                           -> (진행중인 스터디) 스터디종료된 상태가 됨. 
                                                                (진행전) 취소처리-자동으로됨.
                                    (진행중인스터디,자발적) 패널티 -100(개설자아님), -200(개설자)
@@ -102,32 +102,8 @@ BEGIN
 END;      
 --==>> Trigger TRG_AFTER_INSERT_WARNING이(가) 컴파일되었습니다.
     
-
--- 환경이 바뀌었을 때, 리더를 제외한 모든 스터디원의 참여날짜 NULL로 업데이트
-CREATE OR REPLACE PROCEDURE PRC_UPDATE_DATE_NULL
-(   -- 스터디코드 받아오기
-    V_STUDY_CODE IN TBL_STUDY_OPEN.STUDY_CODE%TYPE
-)
-IS
-BEGIN
-    -- 스터디코드가 받아온 코드와 같으면서, 직책이 2(스터디원)인 모든 데이터 
-    -- 참여날짜 NULL로 업데이트하기
-    UPDATE TBL_STUDY_APPLY
-    SET APPLY_DATE = NULL
-    WHERE STUDY_CODE = V_STUDY_CODE AND POSITION_CODE = 2;
     
-    -- 예외발생시 롤백
-    EXCEPTION
-    WHEN OTHERS THEN ROLLBACK; 
-    
-    -- 커밋
-    COMMIT;
-END;
---==>> Procedure PRC_UPDATE_DATE_NULL이(가) 컴파일되었습니다.
 
-
-
--- 스터디가 조기종료된 경우, 남은 출석부와 일정관리 데이터 삭제
 -- 스터디 시작 전 업데이트된 경우 리더제외 모든 스터디원 참여날짜 NULL로 업데이트
 CREATE OR REPLACE TRIGGER TRG_AFTER_UPDATE_STUDY
 AFTER 
@@ -135,25 +111,26 @@ UPDATE ON TBL_STUDY_OPEN
 FOR EACH ROW
 DECLARE    
 BEGIN
-    --종료 날짜가 현재이하로 업데이트됐다면 출석부/일정관리 남은것 지우기
-    IF (:OLD.END_DATE != :NEW.END_DATE AND :NEW.END_DATE <= SYSDATE)
-    THEN
-        -- 일정관리 지우기
-        DELETE
-        FROM TBL_STUDY_SCHEDULE S 
-        WHERE EXISTS(
-            SELECT *
-            FROM TBL_STUDY_ATTEND A
-            WHERE A.ATTEND_CODE = S.ATTEND_CODE
-             AND A.ATTEND_DATE > :NEW.END_DATE
-        );
-        -- 출석부 지우기
-        DELETE
-        FROM TBL_STUDY_ATTEND
-        WHERE ATTEND_DATE > :NEW.END_DATE;
+--
+--    --종료 날짜가 현재이하로 업데이트됐다면 출석부/일정관리 남은것 지우기
+--    IF (:OLD.END_DATE != :NEW.END_DATE AND :NEW.END_DATE <= SYSDATE)
+--    THEN
+--        -- 일정관리 지우기
+--        DELETE
+--        FROM TBL_STUDY_SCHEDULE S 
+--        WHERE EXISTS(
+--            SELECT *
+--            FROM TBL_STUDY_ATTEND A
+--            WHERE A.ATTEND_CODE = S.ATTEND_CODE
+--             AND A.ATTEND_DATE > :NEW.END_DATE
+--        );
+--        -- 출석부 지우기
+--        DELETE
+--        FROM TBL_STUDY_ATTEND
+--        WHERE ATTEND_DATE > :NEW.END_DATE;
         
     -- 시작날짜가 현재보다 이전이면(아직 시작 안함) 리더 제외한 스터디원 모두 신청날짜 NULL로 업데이트
-    ELSIF (:NEW.START_DATE < SYSDATE)
+    IF (:NEW.START_DATE < SYSDATE)
         THEN PRC_UPDATE_DATE_NULL(:NEW.STUDY_CODE); 
     END IF;
 END;
@@ -163,7 +140,7 @@ END;
 -- 뷰 생성
 CREATE OR REPLACE VIEW STUDY_CANCEL_VIEW
 AS
-SELECT C.CANCEL_CODE, C.AUTO_CANCEL, A.APPLY_CODE, A.USER_CODE, P.POSITION_CODE
+SELECT C.CANCEL_CODE, C.AUTO_CANCEL, A.APPLY_CODE, O.USER_CODE AS FIRSTLEADER, A.USER_CODE, P.POSITION_CODE
      , O.START_DATE, O.STUDY_CODE, O.END_DATE, M.MEMNUM AS MINNUM, O.WRITE_DATE
 FROM TBL_STUDY_APPLY A JOIN TBL_STUDY_OPEN O
     ON A.STUDY_CODE = O.STUDY_CODE
@@ -191,7 +168,7 @@ DECLARE
     V_END_DATE   TBL_STUDY_OPEN.END_DATE%TYPE;
     V_AUTO_CANCEL   TBL_STUDY_CANCEL.AUTO_CANCEL%TYPE;
     V_USER_CODE     TBL_USER_CODE_CREATE.USER_CODE%TYPE;
-    V_POSITION      TBL_STUDY_POSITION.POSITION%TYPE;
+    V_FIRSTLEADER   TBL_USER_CODE_CREATE.USER_CODE%TYPE;
 BEGIN
     -- 스터디 코드 가져오기
     SELECT STUDY_CODE INTO V_STUDY
@@ -205,8 +182,8 @@ BEGIN
     WHERE CANCEL_CODE IS NULL;
     
     -- 최소인원, 시작날짜, 종료날짜, 자동취소처리여부, 사용자코드 가져오기
-    SELECT MINNUM, START_DATE, AUTO_CANCEL, USER_CODE, POSITION_CODE
-        INTO V_MIN, V_START_DATE, V_AUTO_CANCEL, V_USER_CODE, V_POSITION
+    SELECT MINNUM, START_DATE, AUTO_CANCEL, USER_CODE, FIRSTLEADER
+        INTO V_MIN, V_START_DATE, V_AUTO_CANCEL, V_USER_CODE, V_FIRSTLEADER
     FROM STUDY_CANCEL_VIEW
     WHERE APPLY_CODE = :NEW.APPLY_CODE;
         
@@ -229,7 +206,7 @@ BEGIN
         IF (V_START_DATE < SYSDATE)
         THEN 
             -- ▶진행중, 개설자, 자발적 : -200
-            IF (V_POSITION = 1)
+            IF (V_FIRSTLEADER = V_USER_CODE)
             THEN
             INSERT INTO TBL_SCORE VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, V_USER_CODE, -200, SYSDATE);
             
@@ -246,7 +223,7 @@ BEGIN
             IF (SYSDATE BETWEEN V_START_DATE-1 AND V_START_DATE-2)
             THEN
                 -- ▶확정기간 마지막2일, 개설자, 자발적 : -100
-                IF (V_POSITION = 1)
+                IF (V_FIRSTLEADER = V_USER_CODE)
                 THEN
                     INSERT INTO TBL_SCORE VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, V_USER_CODE, -100, SYSDATE);
                     
@@ -261,38 +238,3 @@ END;
 --==>> Trigger TRG_AFTER_INSERT_CANCEL이(가) 컴파일되었습니다.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    

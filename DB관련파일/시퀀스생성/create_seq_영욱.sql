@@ -32,3 +32,25 @@ NOCACHE;
 -- ○ 관리자 테이블
 CREATE SEQUENCE ADMIN_SEQ
 NOCACHE;
+--==>>
+/*
+Sequence STUDY_ACC_SEQ이(가) 생성되었습니다.
+
+
+Sequence STUDY_ACC_HAN_SEQ이(가) 생성되었습니다.
+
+
+Sequence STUDY_WAR_SEQ이(가) 생성되었습니다.
+
+
+Sequence CURSE_SEQ이(가) 생성되었습니다.
+
+
+Sequence ASK_SEQ이(가) 생성되었습니다.
+
+
+Sequence NOTICE_SEQ이(가) 생성되었습니다.
+
+
+Sequence ADMIN_SEQ이(가) 생성되었습니다.
+*/
