@@ -22,6 +22,7 @@ DESC TBL_STUDY_MEETDAY;
 ---------------------------------------------------------------*/
 
 -- 스터디 오픈 테이블에 인서트
+-- EXEC STD_OPEN_INSERT('테스트스터디개설', '테스트용입니다', 'IM7', 'ST3', SYSDATE+12, SYSDATE+30, 'LM1', 'MN1', 'MN6', 'UR4', 'UC3');
 CREATE OR REPLACE PROCEDURE STD_OPEN_INSERT
 ( V_STUDY_NAME              IN TBL_STUDY_OPEN.STUDY_NAME%TYPE       -- 스터디 이름
 , V_STUDY_DESC              IN TBL_STUDY_OPEN.STUDY_DESC%TYPE       -- 스터디 목적
@@ -33,7 +34,7 @@ CREATE OR REPLACE PROCEDURE STD_OPEN_INSERT
 , V_MIN_MEM_CODE            IN TBL_STUDY_OPEN.MIN_MEM_CODE%TYPE     -- 최소 인원
 , V_MAX_MEM_CODE            IN TBL_STUDY_OPEN.MAX_MEM_CODE%TYPE     -- 최대 인원
 , V_MIN_RANK                IN TBL_STUDY_OPEN.MIN_RANK%TYPE         -- 참여최소등급
-, V_USER_CODE               IN TBL_USER_REGISTER.USER_CODE%TYPE     -- 사용자 코드
+, V_USER_CODE               IN TBL_USER_CODE_CREATE.USER_CODE%TYPE     -- 사용자 코드
 )
 IS
     --변수 선언
@@ -66,6 +67,7 @@ END;
 
 
 -- 진행요일에 인서트
+-- EXEC STD_MEETDAY_INSERT('SO6', 'WD5','13:00', '15:00');
 CREATE OR REPLACE PROCEDURE STD_MEETDAY_INSERT
 ( V_STUDY_CODE              IN TBL_STUDY_OPEN.STUDY_CODE%TYPE       -- 스터디 개설의 스터디 코드
 , V_WEEKDAY_CODE            IN TBL_STUDY_MEETDAY.WEEKDAY_CODE%TYPE  -- 요일 코드
@@ -91,9 +93,10 @@ BEGIN
 END;
 
 
+
 -- 점수 인서트 -> 결과가 0 이하이면 0까지만 인서트 -> 계정정지에 인서트 
 --                                       18600 초과면 18600까지만 인서트
--- 테스트 완료
+-- EXEC STD_SCORE_INSERT('UC2', 3000);
 
 CREATE OR REPLACE PROCEDURE STD_SCORE_INSERT
 ( V_USER_CODE   IN TBL_USER_REGISTER.USER_CODE%TYPE     -- 사용자 코드
