@@ -211,50 +211,52 @@ VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '서초구/강남구', 'LL1');
 INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
 VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '송파구/강동구', 'LL1');
 --==>> 1 행 이(가) 삽입되었습니다. * 9
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '수원시', 'LL2');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '고양시', 'LL2');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '용인시', 'LL2');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '성남시', 'LL2');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '부천시', 'LL2');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '화성시', 'LL2');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '남양주시', 'LL2');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '안산시', 'LL2');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '안양시', 'LL2');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '기타', 'LL2');
+--==>> 1 행 이(가) 삽입되었습니다.
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '충청도', 'LL3');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '경상도', 'LL3');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '전라도', 'LL3');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '강원도', 'LL3');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '인천', 'LL3');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '대전', 'LL3');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '광주', 'LL3');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '대구', 'LL3');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '울산', 'LL3');
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '부산', 'LL3');
+--==>> 1 행 이(가) 삽입되었습니다.
 
 
 
-
-
-
-
---■ 아직 인서트문 실행 안함 ■--
-
--- 모임 요일 테이블 인서트
-INSERT INTO TBL_STUDY_MEETDAY (MEETDAY_CODE, WEEKDAY_CODE, STUDY_CODE, START_TIME, END_TIME)
-VALUES ('MD'|| STD_MEETDAY_SEQ.NEXTVAL, 'WD1', 'SO1', 18, 20);
-
-
--- 스터디 개설 테이블 데이터 입력
-INSERT INTO TBL_STUDY_OPEN
-( STUDY_CODE, USER_CODE
-, STUDY_TYPE_CODE, INTEREST_MC_CODE
-, START_DATE, END_DATE
-, MIN_MEM_CODE, MAX_MEM_CODE
-, STUDY_NAME, MIN_RANK, CLOSE_DATE
-, STUDY_DESC, LOC_MC_CODE)
-VALUES
-( 'SO'||STD_OPEN_SEQ.NEXTVAL, 유저코드 --> 유저코드 수정하고 인서트 해야함!!!
-, 'ST1', 'IM1'
-, TO_DATE('2021-01-17', 'YYYY-MM-DD'), TO_DATE('2021-03-17', 'YYYY-MM-DD')
-, 'MN1', 'MN4'
-, '카카오톡 개발자 공채 면접 준비', 4, TO_DATE('2021-02-01', 'YYYY-MM-DD')
-, '함께 카카오 면접 준비하실분!!!', 'LM1');
-
-
-
-
-
-
--- 2021-01-09 회의에 쓸것 
---■ 아직 인서트문 실행 안함 ■--
-
-
-
-
-
---더미데이터 입력 스터디 개설
--- 스터디1, 종료된 것
+--○ 스터디1, 종료된 것
 -- 진행 요일 : 월 3~5,수 7~9
 INSERT INTO TBL_STUDY_OPEN
 ( STUDY_CODE, USER_CODE
@@ -272,32 +274,22 @@ VALUES
 , TO_DATE('2020-12-16', 'YYYY-MM-DD')   -- 시작일
 , TO_DATE('2020-12-30', 'YYYY-MM-DD')   -- 종료일
 , 'MN1', 'MN2'                          -- 3~4명
-, 4, TO_DATE('2020-12-16', 'YYYY-MM-DD')
+, 'UR4', TO_DATE('2020-12-16', 'YYYY-MM-DD')
 , '카카오톡 개발자 공채 면접 준비', '함께 면접 준비하실분!!!'
 , 'LM1'                                -- 은평구/서대문구/마포구
 );   
 
 -- 진행요일
-INSERT INTO TBL_STUDY_MEETDAY
-( MEETDAY_CODE
-, WEEKDAY_CODE
-, STUDY_CODE
-, START_TIME
-, END_TIME
-)                                     --월   스터디1  3~5시
-VALUES ('MD'|| STD_MEETDAY_SEQ.NEXTVAL,'WD2', 'SO1', 15, 17);
+INSERT INTO TBL_STUDY_MEETDAY (MEETDAY_CODE, WEEKDAY_CODE, STUDY_CODE, START_TIME, END_TIME)
+VALUES ('MD'|| STD_MEETDAY_SEQ.NEXTVAL,'WD2', 'SO1', '15:00', '17:00');
+                                    -- 월   스터디1   오후 3 ~ 5시
 
-INSERT INTO TBL_STUDY_MEETDAY
-( MEETDAY_CODE
-, WEEKDAY_CODE
-, STUDY_CODE
-, START_TIME
-, END_TIME
-)                                     --수   스터디1  3~5시                                 
-VALUES ('MD'|| STD_MEETDAY_SEQ.NEXTVAL,'WD4', 'SO1', 19, 21);
+INSERT INTO TBL_STUDY_MEETDAY (MEETDAY_CODE, WEEKDAY_CODE, STUDY_CODE, START_TIME, END_TIME) 
+VALUES ('MD'|| STD_MEETDAY_SEQ.NEXTVAL,'WD4', 'SO1', '19:00', '21:00');
+                                    -- 수   스터디1   오후 7 ~ 9시                                 
 
 
--- 스터디2, 현재 진행 중인 것
+--○ 스터디2, 현재 진행 중인 것
 -- 진행 요일 : 화 8~9
 INSERT INTO TBL_STUDY_OPEN
 ( STUDY_CODE, USER_CODE
@@ -316,23 +308,19 @@ VALUES
 , TO_DATE('2021-01-04', 'YYYY-MM-DD')   -- 시작일
 , TO_DATE('2021-01-18', 'YYYY-MM-DD')   -- 종료일
 , 'MN1', 'MN3'                          -- 3~5명
-, 4, TO_DATE('2021-01-04', 'YYYY-MM-DD')
+, 'UR4', TO_DATE('2021-01-04', 'YYYY-MM-DD')
 , '정보처리기사 자격증 취득 스터디', '스터디로 정처기 박살내실분들!! 성실하신분 환영'
 , 'LM2'                                 -- 종로구/중구/용산구
 );
 
 -- 진행요일
-INSERT INTO TBL_STUDY_MEETDAY
-( MEETDAY_CODE
-, WEEKDAY_CODE
-, STUDY_CODE
-, START_TIME
-, END_TIME
-)                                     --화   스터디2  3~5시                                 
-VALUES ('MD'|| STD_MEETDAY_SEQ.NEXTVAL,'WD3', 'SO2', 20, 21);
+INSERT INTO TBL_STUDY_MEETDAY (MEETDAY_CODE, WEEKDAY_CODE, STUDY_CODE, START_TIME, END_TIME) 
+VALUES ('MD'|| STD_MEETDAY_SEQ.NEXTVAL,'WD3', 'SO2', '20:00', '21:00');
+--                                     화   스터디2  오후 8 ~ 9시
 
 
--- 스터디 ③, 광고 글
+--○ 스터디3, 광고 글
+-- 진행 요일 : 금 오후 6 ~ 8시
 INSERT INTO TBL_STUDY_OPEN
 ( STUDY_CODE, USER_CODE
 , WRITE_DATE
@@ -350,20 +338,40 @@ VALUES
 , TO_DATE('2021-01-18', 'YYYY-MM-DD')   -- 시작일
 , TO_DATE('2021-02-01', 'YYYY-MM-DD')   -- 종료일
 , 'MN1', 'MN6'                          -- 3~8명
-, 4, TO_DATE('2021-01-18', 'YYYY-MM-DD')-- 마감일
+, 'UR4', TO_DATE('2021-01-18', 'YYYY-MM-DD')-- 마감일
 , '@ㄷh박ㄴr는 ㅋrㅈi노ㅂr다2ya기@', '쪽^박n0!!ㄷh박go_수입@보장!!@'
 , 'LM3'                                 -- 도봉구/강북구/성북구/노원구
 );
-
 -- 진행요일
-INSERT INTO TBL_STUDY_MEETDAY
-( MEETDAY_CODE
-, WEEKDAY_CODE
-, STUDY_CODE
-, START_TIME
-, END_TIME
-)                                     --금   스터디2  6~8시                                 
-VALUES ('MD'|| STD_MEETDAY_SEQ.NEXTVAL,'WD6', 'SO3', 18, 20);
+INSERT INTO TBL_STUDY_MEETDAY (MEETDAY_CODE, WEEKDAY_CODE, STUDY_CODE, START_TIME, END_TIME) 
+VALUES ('MD'|| STD_MEETDAY_SEQ.NEXTVAL,'WD6', 'SO3', '18:00', '20:00');   
+--                                    --금   스터디3  오후 6 ~ 8시
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--■ 아직 인서트문 실행 안함 ■--
+
+INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
+VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '온라인', 'LL4'); -- 보류
+
+
+
+
+
+
 
 
 
