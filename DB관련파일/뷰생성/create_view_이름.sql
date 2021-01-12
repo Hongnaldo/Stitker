@@ -3,5 +3,6 @@
 
 
 -- ○ 뷰페이지명.jsp(간단설명)
--- ○ 뷰 이름 :  
+CREATE OR REPLACE VIEW 
+AS
 SELECT 
