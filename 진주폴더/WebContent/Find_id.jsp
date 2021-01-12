@@ -19,9 +19,21 @@ String cp = request.getContextPath();
 <!-- 로그인 관련 페이지 공통 css-->
 <link rel="stylesheet" href="<%=cp%>/css/login.css" />
 
-<!-- 아이디 찾기, 비밀번호 찾기 페이지 공통 css -->
-<link rel="stylesheet" href="<%=cp%>/css/find.css" />
+<!-- 아이디 찾기, 비밀번호 찾기 페이지 공통 css --><%-- 
+<link rel="stylesheet" href="<%=cp%>/css/find.css" /> --%>
 
+<style type="text/css">
+
+	#findId_byEmail span
+	{
+		display: none;
+	}
+	#findId_byEmail button
+	{
+		float: right;
+	}
+
+</style>
 <!-- 스크립트 처리 -->
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -31,14 +43,15 @@ String cp = request.getContextPath();
 		$("#rdo_byEmail").click(function()
 		{
 			$("#findId_byEmail").css("display", "block");
-			$("#findId_byTel").css("display", "none");
+			/* $("#findId_byTel").css("display", "none"); */
 		});
-
+/* 
 		$("#rdo_byTel").click(function()
 		{
 			$("#findId_byTel").css("display", "block");
 			$("#findId_byEmail").css("display", "none");
 		});
+		 */
 	});
 </script>
 
@@ -50,9 +63,12 @@ String cp = request.getContextPath();
 
 			<div class="login">
 				<div class="divTop">
-					<h5>
+					<!-- <h5>
 						아이디 찾기<br> <small>아이디 찾기 방법을 선택해 주세요.</small>
-					</h5>
+					</h5> -->
+					<p class="category">
+						아이디 찾기<br> <small>아이디 찾기 방법을 선택해 주세요.</small>
+					</p>
 				</div>
 				<br />
 
@@ -60,27 +76,25 @@ String cp = request.getContextPath();
 				<!-- 이메일로 찾기 -->
 				<form action="">
 					<div class="form-group">
-						<label for="rdo_byEmail"> <input type="radio"
-							id="rdo_byEmail" /><span class="findTxt"> 내 정보에 등록된 이메일로
+						<label for=""> <span class="findTxt"> 내 정보에 등록된 이메일로
 								찾기</span>
 						</label>
 
-						<div id="findId_byEmail">
+						<div id="findId_byEmail" style="display: block;">
 							<div class="form-group">
 								<input type="text" class="form-control"
-									placeholder="example@email.com" required="required" /> <span
-									style="color: red; font-size: small;">입력한 이메일과 일치하는
-									회원정보가 존재하지 않습니다.</span>
+									placeholder="email@example.com" required="required" /> <span
+									style="color: red; font-size: small;">입력한 이메일과 일치하는 회원정보가 존재하지 않습니다.</span>
 							</div>
-							<button type="submit" class="btn btn-outline-primary">다음
-								단계</button>
+							<button type="submit" class="btn btn-outline-primary">다음 단계</button>
+							<br />
 						</div>
 					</div>
 				</form>
 				<br /> <br />
 
-
-				<!-- 휴대폰 번호로 찾기 -->
+<!-- 
+				휴대폰 번호로 찾기
 				<form action="">
 					<div class="form-group">
 						<label for="rdo_byTel"> <input type="radio" id="rdo_byTel" /><span
@@ -100,10 +114,10 @@ String cp = request.getContextPath();
 					</div>
 				</form>
 				<br /> <br />
-
+ -->
 
 				<div class="divBot">
-					<small>비밀번호를 찾으시나요? <a href="">비밀번호 찾기</a></small>
+					<small>비밀번호를 찾으시나요? <a href="<%= cp %>/Find_pw.jsp">비밀번호 찾기</a></small>
 				</div>
 			</div>
 

@@ -8,7 +8,7 @@ String cp = request.getContextPath();
 <html>
 <head>
 <meta charset="UTF-8">
-<title>기본틀(test.jsp)</title>
+<title>Find_id_result.jsp</title>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/style.css">
@@ -21,6 +21,7 @@ String cp = request.getContextPath();
 
 <!-- 아이디 찾기 결과, 비밀번호 찾기 결과 페이지 공통 css -->
 <link rel="stylesheet" href="<%=cp%>/css/findresult.css" />
+
 </head>
 <body>
 	<div class="wrapper">
@@ -29,16 +30,15 @@ String cp = request.getContextPath();
 
 			<div class="login">
 				<div class="divTop">
-					<h5>
+					<p class="category">
 						아이디 찾기<br>
-					</h5>
+					</p>
 				</div>
 				<br />
 
 				<div class="find_result">
 					<!-- 아이디 찾기 결과 -->
-					<span><span id="userInfo">010-1234-5678</span>으로 찾은 아이디입니다.</span>
-					<!-- <span><span id="userInfo">ljj@test.com</span>으로 찾은 아이디입니다.</span>-->
+					<span><span id="userInfo">test@example.com</span> 으로 찾은 아이디입니다.</span>
 					<br />
 					<br />
 

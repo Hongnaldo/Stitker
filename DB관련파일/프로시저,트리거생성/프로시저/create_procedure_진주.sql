@@ -44,7 +44,6 @@ END;
 
 
 
-
 --○ 면접,코딩테스트 게시판 신고 등록 테이블에 INSERT 후 -> 5회 쌓였는지 체크 -> 맞으면 신고처리에 인서트
 
 CREATE OR REPLACE PROCEDURE PRC_RPT_REG_INTERV_INSERT
