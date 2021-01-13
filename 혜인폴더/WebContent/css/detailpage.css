@@ -73,8 +73,9 @@
 	font-size: 9pt;
 }
 
-#table2 th{text-align: center; width: 200px;}
-#table2 td:nth-child(2){width: 400px; }
+#table2 th{text-align: center; width: 100px; padding-left: 10px;}
+#table2 td{text-align: left; }
+#table2 td:nth-child(2){width: 500px; }
 #table2 td:nth-child(3){width: 100px; text-align: right;}
 
 
@@ -108,7 +109,7 @@ a:hover, a:active
 
 #commentWrite tr
 {
-	border: 1px solid #000000; 
+	border: 1px solid #ffffff; 
 }
 
 #commentWrite
@@ -116,11 +117,13 @@ a:hover, a:active
 	width: 80%;
 	height: 120px;
 	margin-bottom: 40px;
+	background-color: #f0f0f0;
+	border-radius:10px;
 }
 
 
 
-#commentWrite td:nth-child(1){text-align: right; width: 680px; border-top: 1px solid #000000;}
+#commentWrite td:nth-child(1){text-align: right; width: 680px; border-top: 1px solid #ffffff;}
 #commentWrite td:nth-child(2){text-align: right; right; border-top: 1px solid #ffffff;}
 
 #commentCnt

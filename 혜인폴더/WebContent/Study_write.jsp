@@ -544,7 +544,23 @@
 			</td>
 		</tr>
 		<tr>
-			<th>인원수</th>
+			<th>최소인원수</th>
+			<td>
+				<select name="memCount" class="selectFiled">
+					<option value="select">선택</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+				</select>
+				<span style="font-size: 7pt;">
+				*스터디 개설이 가능한 인원수는 3명 이상, 8명 이하입니다.</span>
+			</td>
+		</tr>
+		<tr>
+			<th>최대인원수</th>
 			<td>
 				<select name="memCount" class="selectFiled">
 					<option value="select">선택</option>

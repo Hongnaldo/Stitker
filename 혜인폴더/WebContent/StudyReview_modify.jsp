@@ -16,7 +16,6 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="css/bootstrap.css">
 <link href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/style.css">
 <title>Mypage_evaluationComplete</title>
 <script src="https://kit.fontawesome.com/5cdf4f755d.js" crossorigin="anonymous"></script>
 
@@ -42,51 +41,21 @@
  <jsp:include page="header.jsp" flush="false"/>
  <div class="main-content text-center"><br>
  
- 	<div id="BoardMenu">
- 		<table id="tblTop">
- 			<tr>
- 				<td>
-					<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-					  <ol class="breadcrumb">
-					    <li class="breadcrumb-item"><a href="#">Home</a></li>
-					    <li class="breadcrumb-item"><a href="#">정보공유게시판</a></li>
-					    <li class="breadcrumb-item"><a href="#">스터디 후기</a></li>
-					    <li class="breadcrumb-item active" aria-current="page">글 수정</li>
-					  </ol>
-					</nav>
-				</td>
-			</tr>
-		</table>
-	</div>
-	
-	<br>
- 	 	
- 	<div id="BoardList_title">
-		스터디 후기 수정
-	</div><!-- #BoardList_title -->
-
-	 <div id="BoardType">
+ 	<div class="menu">
+	<br> 
+		<h1 class="text-center">정보공유</h1>
+		<br><br><br>
+		<nav>
 			<ul>
-				<li>
-					<a>세미나 및 공모전</a>
-				</li>
-				<li>
-					<a>IT기술정보공유</a>
-				</li>
-				<li>
-					<a>Q&A</a>
-				</li>
-				<li>
-					<a>자유게시판</a>
-				</li>
-				<li>
-					<a>면접/코딩테스트 후기</a>
-				</li>
-				<li>
-					<a>스터디 후기</a>
-				</li>
+				<li><a href="Board_inform_list.jsp" >IT기술정보공유</a></li>
+				<li><a href="Board_seminar_list.jsp">세미나 및 공모전</a></li>
+				<li><a href="Board_interview_list.jsp" >면접/코딩테스트 후기</a></li>
+				<li><a href="Board_free_list.jsp">자유게시판</a></li>
+				<li><a href="Board_Q&A_list.jsp">Q&A</a></li>
+				<li><a href="Board_studyReview_list.jsp" class="selected">스터디 후기</a></li>
 			</ul>
-	</div><!-- #BoardType -->
+		</nav>
+	</div>
 
 	<div class="main">
 		<form action="" name="myForm">
@@ -113,9 +82,9 @@
 				</td>
 			</tr>
 			<tr>
-				 <th>제목</th>
+				<th>제목</th>
 				 <td>
-				 	<input type="text" id="title" size="70" maxlength="100">
+				 	<input type="text" id="title" size="120" maxlength="100">
 				 </td>
 			</tr>
 			<tr>
@@ -125,8 +94,8 @@
 			</tr>
 			<tr>
 				 <th>패스워드</th>
-				 <td>
-				 	<input type="password" id="pwd" size="70">
+				 <td colspan="3">
+				 	<input type="password" id="pwd" size="50">
 				 </td>
 			</tr>
 
@@ -139,7 +108,8 @@
 			<button type="reset" class="btn btn-primary">취소</button>
 		</div><!-- #footer -->
 		
-
+		</form>
+	
 	</div><!-- .main -->
 	
 
