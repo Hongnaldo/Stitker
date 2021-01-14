@@ -10,92 +10,83 @@
 <meta charset="UTF-8">
 <title>스터디 후기 작성</title>
 
-<link rel="stylesheet" type="text/css" href="<%=cp %>/css/boardwrite.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="<%=cp %>/js/util.js"></script>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="css/bootstrap.css">
 <link href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/style.css">
-<title>Mypage_evaluationComplete</title>
+
+<link rel="stylesheet" href="css/Write.css">
+<link rel="stylesheet" href="css/Layout.css">
 <script src="https://kit.fontawesome.com/5cdf4f755d.js" crossorigin="anonymous"></script>
 
 <script type="text/javascript">
 
-	$(document).ready(function() {
-	    $('#commentBox').on('keyup', function() {
-	        $('#commentCnt').html("("+$(this).val().length+" / 300)");
-	 
-	        if($(this).val().length > 300) {
-	            $(this).val($(this).val().substring(0, 300));
-	            $('#commentCnt').html("(300 / 300)");
-	        }
-	    });
-	});
-
-
+	window.onload = function() {
+		document.getElementById("title").focus();
+	}
 </script>
-   
+
+<script type="text/javascript">
+	
+		$(document).ready(function() {
+			$('#summernote').summernote({
+				height: 400,
+				minHeight: null,
+				maxHeight: null,
+				focus: true,
+				lang: "ko-KR",
+				placeholder: '내용을 입력하세요.'
+	  		});
+			
+			$("#cancel").click(function()
+			{
+				var result = confirm("취소 하시겠습니까?");
+				
+				if(result)
+				{
+					location.replace("Inform_write.jsp");
+				}
+			});
+	  
+		});
+		
+		
+	
+</script>
+
 </head>
 <body>
-<div class="wrapper">
- <jsp:include page="header.jsp" flush="false"/>
- <div class="main-content text-center"><br>
- 
- 	<div id="BoardMenu">
- 		<table id="tblTop">
- 			<tr>
- 				<td>
-					<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-					  <ol class="breadcrumb">
-					    <li class="breadcrumb-item"><a href="#">Home</a></li>
-					    <li class="breadcrumb-item"><a href="#">정보공유게시판</a></li>
-					    <li class="breadcrumb-item"><a href="#">스터디 후기</a></li>
-					    <li class="breadcrumb-item active" aria-current="page">글 작성</li>
-					  </ol>
-					</nav>
-				</td>
-			</tr>
-		</table>
+
+<div class="whole">
+	<jsp:include page="header.jsp" flush="false"/>
+	<div class="menu">
+		<br> 
+		<h1 class="text-center">정보공유</h1>
+		<br><br>
+		<nav>
+			<ul>
+				<li><a href="Board_inform_list.jsp">IT기술정보공유</a></li>
+				<li><a href="Board_seminar_list.jsp">세미나 및 공모전</a></li>
+				<li><a href="Board_interview_list.jsp" >면접/코딩테스트 후기</a></li>
+				<li><a href="Board_free_list.jsp">자유게시판</a></li>
+				<li><a href="Board_Q&A_list.jsp">Q&A</a></li>
+				<li><a href="Board_studyReview_list.jsp" class="selected">스터디 후기</a></li>
+			</ul>
+		</nav>
 	</div>
 	
-	<br>
- 	 	
- 	<div id="BoardList_title">
-		스터디 후기 작성
-	</div><!-- #BoardList_title -->
-
-	 <div id="BoardType">
-			<ul>
-				<li>
-					<a>세미나 및 공모전</a>
-				</li>
-				<li>
-					<a>IT기술정보공유</a>
-				</li>
-				<li>
-					<a>Q&A</a>
-				</li>
-				<li>
-					<a>자유게시판</a>
-				</li>
-				<li>
-					<a>면접/코딩테스트 후기</a>
-				</li>
-				<li>
-					<a>스터디 후기</a>
-				</li>
-			</ul>
-	</div><!-- #BoardType -->
-
-	<div class="main">
-		<form action="" name="myForm">
-		<table id="table1" class="table">
-			<tr>
-				<th>말머리</th>
+	<div class="content">
+		<br>
+		<p class="category">스터디 후기 작성하기</p>
+		<form action="" method="post" name="myForm" role="form" class="form-inline">
+		<table class="table table-borderless" id="table">
+		<tr>
+				<th>
+					말머리
+				</th>
 				<td>
-					<select name="studyCategory1" class="selectFiled">
-						<option value="select">선택</option>
+					<select name="searchCategory" class="form-control" required="required">
 						<option value="dba">DBA/데이터베이스</option>
 						<option value="network">네트워크/서버/보안</option>
 						<option value="developer">개발자</option>
@@ -113,42 +104,30 @@
 				</td>
 			</tr>
 			<tr>
-				 <th>제목</th>
-				 <td>
-				 	<input type="text" id="title" size="70" maxlength="100">
-				 </td>
-			</tr>
-			<tr>
-				<td colspan="8" style="height: 300px;">
-					<textarea name="content" cols="" rows="" class="boxTA"></textarea>
+				<th>
+					제목
+				</th>
+				<td>
+					<input type="text" class="form-control" placeholder="제목을 입력하세요" required="required" id="title">
 				</td>
 			</tr>
 			<tr>
-				 <th>패스워드</th>
-				 <td>
-				 	<input type="password" id="pwd" size="70">
-				 </td>
+				<td colspan="2">
+					<textarea class="form-control" placeholder="내용을 입력하세요"  style="height: 170px;" required="required" name="editordata" id="summernote"></textarea>
+				</td>
 			</tr>
-
+			
+			
 		</table>
-		<br><br>
-		
 		<div id="btnSet">
-			<button type="button" class="btn btn-primary" onclick="sendIt()">등록</button>
-			<button type="button" class="btn btn-primary">재입력</button>
-			<button type="reset" class="btn btn-primary">취소</button>
-		</div><!-- #footer -->
-		
-
-	</div><!-- .main -->
+			<input type="submit" value="작성하기" class="btn btn-outline-primary">
+			<input type="button" value="취소하기" class="btn btn-outline-primary" id="cancel">	
+		</div>
+		</form>
 	
-
-	</form>
-   
-  </div>
-  
- <jsp:include page="footer.jsp" flush="false"/>
- </div>
+	</div>
+	<jsp:include page="footer.jsp" flush="false"/>
+</div>
  
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </body>

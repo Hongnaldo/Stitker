@@ -84,14 +84,14 @@
 		<table id="table1" class="table">
 			<tr>
 				<td>
-					<select name="searchKey" class="selectFiled">
+					<select name="searchKey" id="searchKey" class="form-control">
 						<option value="all">전체</option>
 						<option value="title">제목</option>
 						<option value="name">작성자</option>
 						<option value="content">내용</option>
 						<option value="titlecontent">제목+내용</option>
 					</select>
-					<select name="searchCategory" class="selectFiled">
+					<select name="searchCategory" id="searchCategory" class="form-control">
 						<option value="all">전체</option>
 						<option value="dba">DBA/데이터베이스</option>
 						<option value="network">네트워크/서버/보안</option>
@@ -107,7 +107,7 @@
 						<option value="erp">ERP/시스템분석/설계</option>
 						<option value="edu">교육</option>
 					</select>
-					<input type="text" name="searchValue" class="textField"
+					<input type="text" name="searchValue" id="searchValue" class="form-control"
 					placeholder="검색어를 입력하세요." style="width: 200px;">
 					  <button class="btn btn-default" 
 					  type="button" id="searchSort" data-bs-toggle="dropdown" aria-expanded="false">
@@ -120,8 +120,8 @@
 					    <li><a class="dropdown-item" href="#">조회순</a></li>
 					    <li><a class="dropdown-item" href="#">추천순</a></li>
 					  </ul>
-					<input type="button" value="검색" class="btn btn-outline-primary btn-sm"
-					>	
+					<input type="button" value="검색" id="searchBtn" 
+					class="btn btn-outline-primary btn-sm">	
 				</td>
 			</tr>
 		</table>

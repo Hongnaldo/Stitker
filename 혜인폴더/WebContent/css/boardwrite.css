@@ -1,59 +1,55 @@
 @charset "UTF-8";
- #table
-{
-	width: 600px;
-	border: 1px solid black;
-	border-collapse: collapse;
-}
+/* 메뉴와 컨텐트 레이아웃, 배경색 설정 */
+.menu {float: left; background-color: white; width: 20%; min-height: 800px; border-right: 1px solid black;}
 
-#table td
-{
-	border: 1px solid black;
-	font-size: 9pt;
-}
+/* footer 설정 */
+.footer {clear: left;}
 
-#tblTop 
-{
-	width: 600px;
-	text-align: right;
-}
+/* 왼쪽네비게이션 설정 */
+.menu nav ul li { list-style: none; text-align: left; margin: 10px; height: 50px; }
+.menu a { text-decoration: none; font-size: 15px; font-weight: bold;}
+.menu a:not(.selected) {color: black; }
+.menu a:hover {color: SlateBlue;}
+.selected {color: SlateBlue;}
 
-#tblTop ol
-{
-	float: right;
-	text-align: right;
+.table {margin-left:auto; margin-right:auto;}
 
+.main
+{
+	width: 80%;
+	margin-left: 20px;
+ 	margin: 0px auto; 
 }
 
 #table1
 {
-	width: 600px;
+	width: 80%;
 	font-size: 9pt;
+	margin-bottom: 10px;
+	border-bottom: 0px solid #ffffff;
+	
 }
 
 #table1 th
 {
-	width: 100px;
 	background: #f0f0f0;
+	width: 100px;
 }
 
 #table1 td
 {
-	width: 500px;
 	text-align: left;
+	width: 700px;
 }
 
 
-#table1 td:nth-child(1){text-align: left;}
+#table1 td:nth-child(2){color: blue; text-align: left;}
+#table1 td:nth-child(4){color: red; text-align: left;}
 
-#table1 #title
-{
-	width: 500px;
-}
 
 #table1 .boxTA
 {
-	width: 600px;
+	width: 750px;
 	height: 500px;
 	
 }
@@ -62,40 +58,6 @@
 {
 	margin-bottom: 40px;
 }
-
-.main
-{
-	width: 600px;
-	margin: 0px auto;
-}
-
-#BoardType
-{
-	float: left;
-}
-
-#BoardType li
-{
-	font-size: 10pt;   
-	border-bottom: 1px solid;   
-	padding-top: 10px;
-	padding-bottom: 10px;
-	font-weight: bold;
-	                    
-}
-
-ul
-{
-	list-style: none;
-	text-align: left;
-}
-
-#BoardMenu 
-{
-	padding-left: 300px;
-	width: 800px;
-	text-align: right;
-} 
 
 a
 {
@@ -110,24 +72,6 @@ a:hover, a:active
 	color: #8000ff;
 	text-decoration: underline;
 }
-
-#BoardList_title
-{
-	width: 664px; /* 690 - (padding-left + border: 3px + border:3px) */
-	height: 40px;
-	text-align: left;
-	font-weight: bold;
-	line-height: 40px;
-	font-size: 20pt;
-	margin-bottom: 30px;
-	margin-left: 300px;
-}
-
-
-
-
-
-
 
 #footer
 {

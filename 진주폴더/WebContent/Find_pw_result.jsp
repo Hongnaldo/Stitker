@@ -28,17 +28,16 @@ String cp = request.getContextPath();
 		<div class="main-content"><br />
 			<div class="login">
 				<div class="divTop">
-					<h5>
+					<p class="category">
 						비밀번호 찾기<br>
-					</h5>
+					</p>
 				</div>
 				<br />
 
 				<div class="find_result">
 
 					<!-- 비밀번호 찾기 결과 -->
-					<span><span id="userInfo">010-1234-5678</span>으로<br>비밀번호
-						재설정 코드가 발송되었습니다.</span>
+					<span><span id="userInfo">010-1234-5678</span> 으로<br>임시 비밀번호가 발송되었습니다.</span>
 					<!-- <span><span id="userInfo">ljj@test.com</span>으로<br>비밀번호 재설정 코드가 발송되었습니다.</span> -->
 					<br />
 					<br />

@@ -14,7 +14,7 @@
     */
     .main-content
     {
-    	min-height: 800px;
+    	min-height: 650px;
     }
 	.login
 	{
@@ -24,6 +24,7 @@
 		padding: 15px;
 		margin: 30px;
 		margin:0 auto; 
+		
 	}
 	.login h5
 	{
@@ -43,4 +44,8 @@
 	{
 		border-top: 1px solid #ccc;
 		padding-top: 15px;
+	}
+	.divTop .category 
+	{
+		font-size: 20pt; padding: 3px; font-weight: bold;
 	}
