@@ -70,7 +70,7 @@ CREATE TABLE TBL_USER_REGISTER
 (USER_CODE         VARCHAR2(10)                     -- 사용자 코드(PK)
 , ID               VARCHAR2(30)          NOT NULL   -- 아이디
 , PW               VARCHAR2(20)          NOT NULL   -- 비밀번호
-, SSN              VARCHAR2(13)          NOT NULL   -- 주민번호
+, SSN              VARCHAR2(20)          NOT NULL   -- 주민번호
 , PW_SRCH_QUE_CODE VARCHAR2(5)           NOT NULL   -- 비밀번호 찾기 질문 코드(FK)
 , PW_SRCH_QUE_ANS  VARCHAR2(50)          NOT NULL   -- 비밀번호 찾기 답변
 , INTEREST_MC_CODE VARCHAR2(5)           NOT NULL   -- 관심 분야 중분류 코드(FK)

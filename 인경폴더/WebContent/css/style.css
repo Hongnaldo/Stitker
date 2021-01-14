@@ -1,4 +1,3 @@
-@charset "UTF-8";
 * {
   margin: 0;
   padding: 0;
@@ -9,19 +8,17 @@
 }
 html,
 body {
-  margin: 0;
+  margin: 0; 
   padding: 0;
   height: 100%;
   width: 100%;
   font-family: sans-serif;
 }
 .wrapper {
-  display: flex;
-  flex-direction: column;
   height: 100%;
 }
 .main-content {
-  flex: 1;
+  min-height: 800px;
 }
 .footer {
   width: 100%;
@@ -29,9 +26,17 @@ body {
 }
 
 #table1 {
-  display: table;
+  display: table; 
   width: 100%;
 }
+
+.bd {
+  border-right: 1px solid rgb(214, 214, 214);
+} 
+
+.cen {
+  text-align: center;
+} 
 
 .ro {
   display: table-row;
@@ -53,3 +58,54 @@ body {
 .col44 {
   width: 40%;
 }
+
+.hit {
+  float: right;
+ /* display: inline;*/
+}
+.hit > span {
+  margin-right: 8px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.wriDate {
+  float: right;
+  /*display: inline;*/
+  margin-top: 15pt;
+  font-weight: 600;
+  margin-bottom: 15pt;
+}
+
+.title {
+  width: 100%;
+  height: 370px;
+  background-image: url("../images/title3.JPG");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.titleas {
+  width: 100%;
+  height: 370px;
+  background-image: url("../images/as2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.titleTxt {
+  position: relative;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  font-size: 30pt;
+  font-family: "Do Hyeon", sans-serif;
+  letter-spacing: 2px;
+  text-shadow: 2px 4px 2px rgb(34, 34, 34);
+}
+
+.stdcon
+{
+	width:100%;
+}  

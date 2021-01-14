@@ -48,9 +48,9 @@ String cp = request.getContextPath();
 						aria-label="Search">
 				</form>
 				<!--account--> 
-				<nav style="-bs-breadcrumb-divider: '┃';" aria-label="breadcrumb">
+				<nav style="-bs-breadcrumb-divider: '';" aria-label="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="#">로그인</a></li>
+						<li class="breadcrumb-item"><a href="#" >로그인</a></li>
 						<li class="breadcrumb-item"><a href="#">회원가입</a></li>
 						<li class="breadcrumb-item"><a href="#">고객센터</a></li>
 					</ol>
