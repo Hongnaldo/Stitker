@@ -11,6 +11,11 @@
 .menu a:hover {color: SlateBlue;}
 .selected {color: SlateBlue;}
 
+.table .form-control
+{
+	font-size: 9pt;
+}
+
 .main-content
 {
 	min-height: 800px;
@@ -44,6 +49,7 @@
 	width: 80%;
 	font-size: 9pt;
 	margin-bottom: 40px;
+	margin-top: 40px;
 }
 
 
@@ -52,20 +58,6 @@
 	margin-bottom: 30px;
 }
 
-#BoardType
-{
-	float: left;
-}
-
-#BoardType li
-{
-	font-size: 10pt;   
-	border-bottom: 1px solid;   
-	padding-top: 10px;
-	padding-bottom: 10px;
-	font-weight: bold;
-	                    
-}
 
 ul
 {
@@ -73,12 +65,6 @@ ul
 	text-align: left;
 }
 
-#BoardMenu 
-{
-	padding-left: 200px;
-	width: 800px;
-	text-align: right;
-} 
 
 a
 {
@@ -94,66 +80,69 @@ a:hover, a:active
 	text-decoration: underline;
 }
 
-#BoardList_title
+#searchKey
 {
-	width: 664px; /* 690 - (padding-left + border: 3px + border:3px) */
-	height: 40px;
-	text-align: left;
-	font-weight: bold;
-	line-height: 40px;
-	font-size: 20pt;
-	margin-bottom: 30px;
-	margin-left: 200px;
+	width: 10%;
+	position: absolute;
+  	left: 44%;
 }
 
-#BoardList
+#searchCategory
 {
-	float: right;
-	width: 800px;
-	margin: 30px auto;
-	text-align: left;
-	padding-right: 250px;
-}
-#BoardList_header
-{
-	height: 27px;
-
+	position: absolute;
+	left: 54%;
+	width: 10%;
 }
 
-#BoardList_header #leftHeader
+#searchValue
 {
-
-
-	text-align: left;
+	width: 30%;
+	position: absolute;
+	left: 64%;
+	
 }
 
-#BoardList_header #rightHeader
+#searchSort
 {
-
-	width: 150px;
-	text-align: right
+	position: absolute;
+	left: 80%;
 }
 
-#BoardList_header .selectField
+#searchBtn
 {
-	border: 1px solid;
-	border-color: #000000;
-	background-color: #ffffff;
-	font-family: '굴림';
-	font-size: 7pt;
-	height: 20px
+	position: absolute;
+	left: 83%;
 }
 
-#BoardList_header .textField
+
+
+#searchKeyFree
 {
-	border: 1px solid;
-	height: 13px;
-	padding: 2px 2px 2px 2px;
-	border-color: #000000;
-	background-color: #ffffff;
-	font-family: '굴림';
-	font-size: 9pt;
+	width: 10%;
+	position: absolute;
+  	left: 49%;
 }
+
+#searchValueFree
+{
+	width: 20%;
+	position: absolute;
+	left: 59%;
+	
+}
+
+#searchSortFree
+{
+	position: absolute;
+	left: 79%;
+}
+
+#searchBtnFree
+{
+	position: absolute;
+	left: 83%;
+}
+
 
 #footer
 {

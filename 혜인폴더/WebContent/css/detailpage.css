@@ -12,6 +12,11 @@
 .menu a:hover {color: SlateBlue;}
 .selected {color: SlateBlue;}
 
+.form-control
+{
+	font-size: 9pt;
+}
+
 .main-content
 {
 	min-height: 800px;
@@ -128,8 +133,6 @@ a:hover, a:active
 
 #commentCnt
 {
-
-
 	font-size: 8pt;
 } 
 
@@ -141,7 +144,7 @@ a:hover, a:active
 } 
 
 
-.commentBox
+#commentBox
 {
 	border: 0px solid #000000;
 	color: #000000;

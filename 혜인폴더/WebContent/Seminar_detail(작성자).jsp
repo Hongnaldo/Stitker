@@ -177,7 +177,7 @@
 			<tr>
 		 		<td colspan="2">
 		 			<textarea id="commentBox" name="commentBox" cols="" rows="" 
-						class="commentBox" placeholder="댓글을 입력하세요."></textarea>
+						class="form-control" placeholder="댓글을 입력하세요."></textarea>
 		 		</td>
 		 	</tr>
 		 	<tr>

@@ -83,27 +83,27 @@
 		<table id="table1" class="table">
 			<tr>
 				<td>
-					<select name="searchKey" class="selectFiled">
+					<select name="searchKey" id="searchKeyFree" class="form-control">
 						<option value="all">전체</option>
 						<option value="title">제목</option>
 						<option value="name">작성자</option>
 						<option value="content">내용</option>
 						<option value="titlecontent">제목+내용</option>
 					</select>
-					<input type="text" name="searchValue" class="textField"
-					placeholder="검색어를 입력하세요." style="width: 200px;">
+					<input type="text" name="searchValue" id="searchValueFree" class="form-control"
+					placeholder="검색어를 입력하세요.">
 					  <button class="btn btn-default" 
 					  type="button" id="searchSort" data-bs-toggle="dropdown" aria-expanded="false">
 					 	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"/>
 </svg>
 					  </button>
-					  <ul class="dropdown-menu" aria-labelledby="searchSort">
+					  <ul class="dropdown-menu" aria-labelledby="searchSortFree">
 					    <li><a class="dropdown-item" href="#">등록일순</a></li>
 					    <li><a class="dropdown-item" href="#">조회순</a></li>
 					    <li><a class="dropdown-item" href="#">추천순</a></li>
 					  </ul>
-					<input type="button" value="검색" class="btn btn-outline-primary btn-sm"
+					<input type="button" value="검색" id="searchBtnFree" class="btn btn-outline-primary btn-sm"
 					>	
 				</td>
 			</tr>
