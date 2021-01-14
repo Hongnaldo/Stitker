@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+/* 페이지 수 */
+.number:hover{color:orange;}
+
+/* 내 스터디 목록 */
+table {border-collapse: collapse; width: 90%; height: 80%;}
+th {border-bottom: 1px solid black; width:22%;}
+td:hover{color: orange; width:22%;}
+p{font-size: x-large; font-weight: bold;}

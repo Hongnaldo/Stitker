@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+/*페이지 제목, 질문 제목, 내용 입력칸, 버튼 설정*/
+.write { width: 90%;}
+.buttons {position: absolute; right:7.5%;}
+.category {font-size: 20pt; padding: 15px; font-weight: bold;}
+.tableDiv {margin-left: 5%;}
+th {text-align: right; }
