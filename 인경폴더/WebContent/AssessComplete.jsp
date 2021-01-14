@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>기본틀(test.jsp)</title>
+<title>평가완료</title>
 <!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="<%=cp %>/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="<%=cp %>/css/style.css">
