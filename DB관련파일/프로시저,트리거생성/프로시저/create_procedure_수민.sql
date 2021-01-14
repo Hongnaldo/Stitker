@@ -139,9 +139,8 @@ BEGIN
             THEN
                 -- ▶ 종료 + 현재 유효한 경고수가 3개 이상이면 인서트
                 IF (V_WARNING_COUNT >= 3)
-                THEN 
-                    INSERT INTO TBL_ACCOUNT_SUSPEND(ACCT_SUS_CODE, ACCT_SUS_DATE, WARNING_CODE)
-                    VALUES ('AS'||ACCT_SUS_SEQ.NEXTVAL, V_WARNING_DATE, V_WARNING_CODE);
+                THEN
+                    PRC_INSERT_SUSPEND(V_WARNING_DATE, V_WARNING_CODE);
                 END IF;
                 
                 -- ▶종료안됐으면 업데이트 시키기    
@@ -154,8 +153,7 @@ BEGIN
         
         -- ▶계정정지 이력이 존재하지 않으면 새로 계정 정지에 등록
         ELSE
-            INSERT INTO TBL_ACCOUNT_SUSPEND(ACCT_SUS_CODE, ACCT_SUS_DATE, WARNING_CODE)
-            VALUES ('AS'||ACCT_SUS_SEQ.NEXTVAL, V_WARNING_DATE, V_WARNING_CODE);
+            PRC_INSERT_SUSPEND(V_WARNING_DATE, V_WARNING_CODE);
         END IF;
         
     END IF;    
