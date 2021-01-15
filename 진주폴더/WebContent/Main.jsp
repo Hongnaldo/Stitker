@@ -89,11 +89,11 @@ small {
 <body>
 	<div class="wrapper">
 		<jsp:include page="header.jsp" flush="false" />
-		<div class="main-content" style="width: 90%;margin-left:auto; margin-right:auto;">
+		<div class="main-content" style="margin-left:auto; margin-right:auto;">
 
 
-			<div>
-				<br> <br>
+			<div class="bg-light">
+				<br><br>
 				<!-- 스터딧 장점 -->
 				<div class="content_Table">
 					<div class="content_TableBody">
@@ -166,11 +166,160 @@ small {
 					<!-- content_TableBody -->
 				</div>
 				<!-- content_Table -->
+				<br /><br /><br />
 			</div>
 
-			<br /> <br />
+			<br><br><br />
 
-			<div class="bg-light">
+			<div class="">
+				<!-- 스터디 찾기 -->
+				<div class="content_Table">
+					<div class="content_TableBody">
+						<div class="content_Row">
+							<div class="content_Cell">
+								<h1 style="text-align: left; padding-left: 20%;">
+									<span id="highlight">스터딧</span><br /> <span id="titlea">인기있는 스터디</span>
+								</h1>
+							</div>
+							<div class="content_Cell"></div>
+							<div class="content_Cell">
+								<button class="btn btn-outline-primary">
+									전체 보기 <span class="btnTxt">></span>
+								</button>
+							</div>
+						</div>
+					</div>
+					<!-- content_TableBody -->
+				</div>
+				<!-- content_Table -->
+
+
+
+				<div class="container">
+					<div class="row" style="width: 79%; margin-left: auto; margin-right: auto;">
+						<div class="col-4" style="width: 330px;">
+							<div class="card">
+								<div class="card-header" style="color: gray; font-size: small;">열려있는 스터디</div>
+								<img src="images/study.jpg" alt="" style="height: 215px;"/>
+								<div class="card-body">
+									<h5 class="card-title">제목</h5>
+									<p class="card-text">Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Nullam egestas sed sem ut
+										malesuada.</p>
+									<a href="#">More</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-4" style="width: 330px">
+							<div class="card">
+								<div class="card-header" style="color: gray; font-size: small;">열려있는 스터디</div>
+								<img src="images/study2.jpg" alt=""  style="height: 215px;"/>
+								<div class="card-body">
+									<h5 class="card-title">제목</h5>
+									<p class="card-text">Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Nullam egestas sed sem ut
+										malesuada.</p>
+									<a href="#">More</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-4" style="width: 330px">
+							<div class="card">
+								<div class="card-header" style="color: gray; font-size: small;">열려있는 스터디</div>
+								<img src="images/study3.jpg" alt="" style="height: 215px;"/>
+								<div class="card-body">
+									<h5 class="card-title">제목</h5>
+									<p class="card-text">Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Nullam egestas sed sem ut
+										malesuada.</p>
+									<a href="#">More</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				<br />
+				</div>
+
+			</div><!-- end 스터디 찾기 -->
+			<br />
+			<br />
+			<br />
+			
+			
+			
+			<div class="bg-light">	
+			<br /><br />	
+				<div class="content_Table">
+					<div class="content_TableBody">
+						<div class="content_Row Row3">
+							<div class="content_Cell" id="cell1">
+								<h1 style="text-align: left; padding-left: 20%;">
+									<span id="highlight">스터딧</span><br /> <span id="titlea">IT
+										정보공유 게시판</span>
+								</h1>
+							</div>
+							<div class="content_Cell"></div>
+							<div class="content_Cell" style="padding-bottom: 0px;">
+								<button class="btn btn-outline-primary">
+									전체 보기 <span class="btnTxt">></span>
+								</button>
+							</div>
+						</div>
+					</div>
+					<!-- content_TableBody -->
+				</div>
+				<!-- content_Table -->
+				
+				<div class="">
+					<table class="table table-hover" 
+					style="text-align: center; width: 65%; 
+					margin-left: auto; margin-right: auto;">
+						<thead>
+							<tr class="trTitle" >
+								<th>작성자</th>
+								<th>제목</th>
+								<th>조회수</th>
+								<th>추천수</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>박혜인</td>
+								<td>고급 개발자가 되는 법</td>
+								<td>298</td>
+								<td>132</td>
+							</tr>
+							<tr>
+								<td>박혜인</td>
+								<td>고급 개발자가 되는 법</td>
+								<td>298</td>
+								<td>132</td>
+							</tr>
+							<tr>
+								<td>박혜인</td>
+								<td>고급 개발자가 되는 법</td>
+								<td>298</td>
+								<td>132</td>
+							</tr>
+							<tr>
+								<td>박혜인</td>
+								<td>고급 개발자가 되는 법</td>
+								<td>298</td>
+								<td>132</td>
+							</tr>
+							<tr>
+								<td>박혜인</td>
+								<td>고급 개발자가 되는 법</td>
+								<td>298</td>
+								<td>132</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<br /><br />
+			</div>
+			
+			<div class="">
 				<br />
 				<br />
 				<!-- 스터디 후기 -->
@@ -198,132 +347,56 @@ small {
 
 
 				<div class="container">
-					<div class="row" style="width: 75%; margin-left: auto; margin-right: auto;">
-						<div class="col-4">
-							<!-- <p>Card</p> -->
+					<div class="row" style="width: 79%; margin-left: auto; margin-right: auto;">
+						<div class="col-4" style="width: 330px;">
 							<div class="card">
-								<div class="card-header">My Card</div>
-								<img src="images/card-image.png" alt="" />
+								<div class="card-header" style="color: gray; font-size: small;">스터디 후기</div>
+								<!-- <img src="images/study.jpg" alt="" style="height: 215px;"/> -->
 								<div class="card-body">
-									<h5 class="card-title">Lorem</h5>
+									<h5 class="card-title">제목</h5>
 									<p class="card-text">Lorem ipsum dolor sit amet,
 										consectetur adipiscing elit. Nullam egestas sed sem ut
 										malesuada.</p>
-									<a href="#" class="btn btn-outline-primary"">More</a>
+									<a href="#">More</a>
 								</div>
 							</div>
 						</div>
-						<div class="col-4" >
-							<!-- <p>Card</p> -->
+						<div class="col-4" style="width: 330px">
 							<div class="card">
-								<div class="card-header">My Card</div>
-								<img src="images/card-image.png" alt="" />
+								<div class="card-header" style="color: gray; font-size: small;">스터디 후기</div>
+								<!-- <img src="images/" alt=""  style="height: 215px;"/> -->
 								<div class="card-body">
-									<h5 class="card-title">Lorem</h5>
+									<h5 class="card-title">제목</h5>
 									<p class="card-text">Lorem ipsum dolor sit amet,
 										consectetur adipiscing elit. Nullam egestas sed sem ut
 										malesuada.</p>
-									<a href="#" class="btn btn-outline-primary"">More</a>
+									<a href="#">More</a>
 								</div>
 							</div>
 						</div>
-						<div class="col-4">
-							<!-- <p>Card</p> -->
+						<div class="col-4" style="width: 330px">
 							<div class="card">
-								<div class="card-header">My Card</div>
-								<img src="images/card-image.png" alt="" />
+								<div class="card-header" style="color: gray; font-size: small;">스터디 후기</div>
+								<!-- <img src="images/study3.jpg" alt="" style="height: 215px;"/> -->
 								<div class="card-body">
-									<h5 class="card-title">Lorem</h5>
+									<h5 class="card-title">제목</h5>
 									<p class="card-text">Lorem ipsum dolor sit amet,
 										consectetur adipiscing elit. Nullam egestas sed sem ut
 										malesuada.</p>
-									<a href="#" class="btn btn-outline-primary"">More</a>
+									<a href="#">More</a>
 								</div>
 							</div>
 						</div>
 					</div>
+				
 				</div>
 
 
 				<br /> <br />
-			</div>
-			<!-- 스터디 후기 -->
-			<br />
-			<br />
-			
-			
-			
-			
-						
-			<div class="content_Table ">
-				<div class="content_TableBody">
-					<div class="content_Row Row3">
-						<div class="content_Cell" id="cell1">
-							<h1 style="text-align: left; padding-left: 20%;">
-								<span id="highlight">스터딧</span><br /> <span id="titlea">IT
-									정보공유 게시판</span>
-							</h1>
-						</div>
-						<div class="content_Cell"></div>
-						<div class="content_Cell" style="padding-bottom: 0px;">
-							<button class="btn btn-outline-primary">
-								전체 보기 <span class="btnTxt">></span>
-							</button>
-						</div>
-					</div>
-				</div>
-				<!-- content_TableBody -->
-			</div>
-			<!-- content_Table -->
-			
-			<div class="">
-				<table class="table table-hover" 
-				style="text-align: center; width: 65%; 
-				margin-left: auto; margin-right: auto;">
-					<thead>
-						<tr class="trTitle" >
-							<th>작성자</th>
-							<th>제목</th>
-							<th>조회수</th>
-							<th>추천수</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>박혜인</td>
-							<td>고급 개발자가 되는 법</td>
-							<td>298</td>
-							<td>132</td>
-						</tr>
-						<tr>
-							<td>박혜인</td>
-							<td>고급 개발자가 되는 법</td>
-							<td>298</td>
-							<td>132</td>
-						</tr>
-						<tr>
-							<td>박혜인</td>
-							<td>고급 개발자가 되는 법</td>
-							<td>298</td>
-							<td>132</td>
-						</tr>
-						<tr>
-							<td>박혜인</td>
-							<td>고급 개발자가 되는 법</td>
-							<td>298</td>
-							<td>132</td>
-						</tr>
-						<tr>
-							<td>박혜인</td>
-							<td>고급 개발자가 되는 법</td>
-							<td>298</td>
-							<td>132</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-
+			</div><!-- 스터디 후기 -->
 			<br /> <br />
+
+
 
 			<div class="footer2 bg-light">
 				<div class="content_Table">
