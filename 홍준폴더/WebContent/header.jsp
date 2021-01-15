@@ -9,23 +9,35 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<style type="text/css">
+	.breadcrumb-item
+	{
+		font-size: 80%;
+	}
+</style>
 </head>
 <body>
  <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand m-sm-3" href="#">
-                <img src="images/logo3.jpg" alt="" width="150px" height="70px">
+                <img src="images/logo3.png" alt="" width="150px" height="70px">
               </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="#">스터딧소개</a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a class="nav-link" href="#">스터디 찾기</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">스터디 개설</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">스터디 후기</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
