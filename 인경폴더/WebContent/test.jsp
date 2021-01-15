@@ -10,8 +10,9 @@
 <meta charset="UTF-8">
 <title>기본틀(test.jsp)</title>
 <!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="<%=cp %>/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="<%=cp %>/css/style.css">
+	<link rel="stylesheet" type="text/css" href="<%=cp %>/css/bootstrap-reboot.css">
 	<script src="http://code.jquery.com/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="https://kit.fontawesome.com/5cdf4f755d.js"></script>

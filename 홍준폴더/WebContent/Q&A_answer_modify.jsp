@@ -64,15 +64,16 @@
 	<jsp:include page="header.jsp" flush="false"/>
 	<div class="menu">
 		<br> 
-		<h2 class="text-center">정보공유</h2>
+		<h1 class="text-center">정보공유</h1>
 		<br><br>
 		<nav>
 			<ul>
-				<li><a href="">자유게시판</a></li>
-				<li><a href="" class="selected">Q&A</a></li>
-				<li><a href="">기술정보공유</a></li>
-				<li><a href="">세미나/공모전</a></li>
-				<li><a href="">면접/코딩테스트</a></li>
+				<li><a href="Board_inform_list.jsp" >IT기술정보공유</a></li>
+				<li><a href="Board_seminar_list.jsp">세미나 및 공모전</a></li>
+				<li><a href="Board_interview_list.jsp" >면접/코딩테스트 후기</a></li>
+				<li><a href="Board_free_list.jsp">자유게시판</a></li>
+				<li><a href="Board_Q&A_list.jsp" class="selected">Q&A</a></li>
+				<li><a href="Board_studyReview_list.jsp">스터디 후기</a></li>
 			</ul>
 		</nav>
 	</div>
@@ -129,8 +130,8 @@
 			
 		</table>
 		<div id="btnSet">
-			<input type="submit" value="수정하기" class="btn-outline-primary">
-			<input type="button" value="취소하기" class="btn-outline-primary" id="cancel" >	
+			<input type="submit" value="수정하기" class="btn btn-outline-primary">
+			<input type="button" value="취소하기" class="btn btn-outline-primary" id="cancel" >	
 		</div>
 		</form>
 	

@@ -8,8 +8,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>스터디 개설</title>
-<!-- 스터디 개설 페이지 css -->
+<title>스터디 수정</title>
+<!-- 스터디 수정 페이지 css -->
 <style type="text/css">
 	#sunTime{display: none;}
 	#monTime{display: none;}
@@ -22,12 +22,12 @@
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/studywrite.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript" src="<%=cp %>/js/util.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=cp %>/css/jquery-ui.css">
 
 <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Mypage_evaluationComplete</title>
+<link rel="stylesheet" href="css/bootstrap.css">
+<link href="css/bootstrap.min.css">
+<script type="text/javascript" src="<%=cp %>/js/jquery-ui.js"></script>
     <script src="https://kit.fontawesome.com/5cdf4f755d.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
 	
@@ -48,6 +48,7 @@
 			return; 
 		}
 		
+		
 		// 목적 및 목표 입력 확인
 		str = f.purpose.value;
 		str = str.trim();
@@ -60,24 +61,24 @@
 		}
 		
 		// 스터디 분야 선택 확인
-		str = f.studyCategory1.value;
+		str = f.studyCategory.value;
 		str = str.trim();
 		
 		if(str=='select')
 		{
 			alert("\n스터디 분야를 선택하세요");
-			f.studyCategory1.focus();
+			f.studyCategory.focus();
 			return; 
 		}
 		
 		// 스터디 유형 선택 확인
-		str = f.studyCategory2.value;
+		str = f.studyType.value;
 		str = str.trim();
 		
 		if(str=='select')
 		{
 			alert("\n스터디 유형을 선택하세요");
-			f.studyCategory2.focus();
+			f.studyType.focus();
 			return; 
 		}
 		
@@ -115,27 +116,16 @@
 			return; 
 		}
 		
-		// 요일 선택 확인
-		sun = f.sun.value;
-		sun = sun.trim();
-		
-		month = f.endMonth.value;
-		month = month.trim();
-		
-		date = f.endDate.value;
-		date = date.trim();
-		
-		if(!sun)
+		// 요일 입력 확인
+		if ($("input:checkbox[name=day]").is(":checked") == false) 
 		{
-			alert("요일을 입력하세요.");
-			f.sun.focus();
-			return; 
-		}
-		
-		
+            alert("\n스터디 진행 요일을 선택하세요.");
+		} 
+
+	}
+	
 
 	
-	}
 	
 	// 요일 선택 시 시간 입력
 	function checkDay()
@@ -183,6 +173,7 @@
 	    }
 	}
 	
+	// 목적 및 목표 글자수 
 	$(document).ready(function() {
 	    $('#purpose').on('keyup', function() {
 	        $('#purposeCnt').html("("+$(this).val().length+" / 300)");
@@ -193,9 +184,32 @@
 	        }
 	    });
 	});
-
-
 	
+	// 시작날짜, 종료날짜 달력 선택
+	$(document).ready(function()
+	{
+		$("#startDate").datepicker(
+		{	
+			dateFormat : "yy-mm-dd"
+			, changeYear : true
+			, changeMonth : true
+		}); 
+		
+		$("#endDate").datepicker(
+		{	
+			dateFormat : "yy-mm-dd"
+			, changeYear : true
+			, changeMonth : true
+		});
+		
+		// 날짜 선택 범위 설정
+		/* $(selector).datepicker(
+		{
+			dateFormat: 'yy-mm-dd',
+			minDate: new Date('2017-12-01'),
+			maxDate: new Date('2017-12-31')
+		}); */
+	}); 
 
 
 </script>
@@ -209,29 +223,33 @@
     <div id="StudyOpen">
     
 	<div id="StudyOpen_title">
-		스터디 모집 수정
+		스터디 수정 신청
 	</div><!-- #StudyOpen_title -->
 	
+	<div class="main">
 	<form action="" method="post" name=myForm>
 	
-	<p class="header_left">스터디 개설 정보 입력</p>
+	<p class="header_left">스터디 수정 정보 입력</p>
 	
 	<table id="table1" class="table table-striped table-bordered">
 		<tr>
 			<th>스터디 이름</th>
-			<td><input type="text" maxlength="60" name="title"></td>
+			<td><input type="text" maxlength="60" name="title" class="form-control" id="title"
+			required="required"></td>
 		</tr>
 		<tr>
 			<th>스터디의 목적 및 목표</th>
 			<td>
-				<textarea rows="2" cols="40" name="purpose" id="purpose"></textarea>
+				<textarea rows="2" cols="40" name="purpose" id="purpose" class="form-control"
+				required="required"></textarea>
 				<div style="font-size: 7pt;" id="purposeCnt">(0 / 300)</div>
 			</td>
 		</tr>
 		<tr>
 			<th>스터디 분야</th>
 			<td>
-				<select name="studyCategory1" class="selectFiled" disabled="disabled">
+				<select name="studyCategory" class="form-control" id="studyCategory"
+				required="required">
 					<option value="select">선택</option>
 					<option value="dba">DBA/데이터베이스</option>
 					<option value="network">네트워크/서버/보안</option>
@@ -252,269 +270,129 @@
 		<tr>
 			<th>스터디 유형</th>
 			<td>
-				<select name="studyCategory2" class="selectFiled" disabled="disabled">
+				<select name="studyType" class="form-control" id="studyType"
+				required="required">
 					<option value="select">선택</option>
 					<option value="dba">면접</option>
 					<option value="network">코딩테스트</option>
 					<option value="developer">프로젝트</option>
 					<option value="pm">프로그래밍언어</option>
 					<option value="marketing">알고리즘</option>
+					<option value="etc">기타</option>
 				</select>
 			</tr>
 		<tr>
 			<th>시작 날짜</th>
 			<td>
-				<select name="startYear" class="selectFiled" disabled="disabled">
-					<option value="select">선택</option>
-					<option value="2020">2020</option>
-					<option value="2021">2021</option>
-					<option value="2022">2022</option>
-					<option value="2023">2023</option>
-					<option value="2024">2024</option>
-				</select>
-				<select name="startMonth" class="selectFiled" disabled="disabled">
-					<option value="select">선택</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-					<option value="8">8</option>
-					<option value="9">9</option>
-					<option value="10">10</option>
-					<option value="11">11</option>
-					<option value="12">12</option>
-				</select>
-				<select name="startDate" class="selectFiled" disabled="disabled">
-					<option value="select">선택</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-					<option value="8">8</option>
-					<option value="9">9</option>
-					<option value="10">10</option>
-					<option value="11">11</option>
-					<option value="12">12</option>
-					<option value="13">13</option>
-					<option value="14">14</option>
-					<option value="15">15</option>
-					<option value="16">16</option>
-					<option value="17">17</option>
-					<option value="18">18</option>
-					<option value="19">19</option>
-					<option value="20">20</option>
-					<option value="21">21</option>
-					<option value="22">22</option>
-					<option value="23">23</option>
-					<option value="24">24</option>
-					<option value="25">25</option>
-					<option value="26">26</option>
-					<option value="27">27</option>
-					<option value="28">28</option>
-					<option value="29">29</option>
-					<option value="30">30</option>
-					<option value="31">31</option>
-				</select>
+				<input type="text" id="startDate" name="startDate" class="form-control"
+				placeholder="스터디 시작일">
 			</td>
 		</tr>
 		<tr>
 			<th>종료 날짜</th>
 			<td>
-				<select name="endYear" class="selectFiled">
-					<option value="select">선택</option>
-					<option value="2020">2020</option>
-					<option value="2021">2021</option>
-					<option value="2022">2022</option>
-					<option value="2023">2023</option>
-					<option value="2024">2024</option>
-				</select>
-				<select name="endMonth" class="selectFiled">
-					<option value="select">선택</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-					<option value="8">8</option>
-					<option value="9">9</option>
-					<option value="10">10</option>
-					<option value="11">11</option>
-					<option value="12">12</option>
-				</select>
-				<select name="endDate" class="selectFiled">
-					<option value="select">선택</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-					<option value="8">8</option>
-					<option value="9">9</option>
-					<option value="10">10</option>
-					<option value="11">11</option>
-					<option value="12">12</option>
-					<option value="13">13</option>
-					<option value="14">14</option>
-					<option value="15">15</option>
-					<option value="16">16</option>
-					<option value="17">17</option>
-					<option value="18">18</option>
-					<option value="19">19</option>
-					<option value="20">20</option>
-					<option value="21">21</option>
-					<option value="22">22</option>
-					<option value="23">23</option>
-					<option value="24">24</option>
-					<option value="25">25</option>
-					<option value="26">26</option>
-					<option value="27">27</option>
-					<option value="28">28</option>
-					<option value="29">29</option>
-					<option value="30">30</option>
-					<option value="31">31</option>
-				</select>
-				<span style="font-size: 7pt;">
+				<input type="text" id="endDate" name="endDate" 
+				class="form-control" placeholder="스터디 종료일">
+				<span class="errMsg" style="font-size: 7pt;">
 				*종료 날짜는 시작 날짜로부터 1년까지 선택할 수 있습니다.</span>
 			</td>
 		</tr>
-<!-- 		<tr>
-			<th>시작 시간</th>
-			<td>
-				<select name="startTime" class="selectFiled">
-					<option value="2020">오전</option>
-					<option value="2021">오후</option>
-				</select>
-				<select name="startHour" class="selectFiled">
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-					<option value="8">8</option>
-					<option value="9">9</option>
-					<option value="10">10</option>
-					<option value="11">11</option>
-					<option value="12">12</option>
-				</select>
-				<select name="startMinute" class="selectFiled">
-					<option value="00">00</option>
-					<option value="10">10</option>
-					<option value="20">20</option>
-					<option value="30">30</option>
-					<option value="40">40</option>
-					<option value="50">50</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<th>종료 시간</th>
-			<td>
-				<select name="endTime" class="selectFiled">
-					<option value="2020">오전</option>
-					<option value="2021">오후</option>
-				</select>
-				<select name="endHour" class="selectFiled">
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-					<option value="8">8</option>
-					<option value="9">9</option>
-					<option value="10">10</option>
-					<option value="11">11</option>
-					<option value="12">12</option>
-				</select>
-				<select name="endMinute" class="selectFiled">
-					<option value="00">00</option>
-					<option value="10">10</option>
-					<option value="20">20</option>
-					<option value="30">30</option>
-					<option value="40">40</option>
-					<option value="50">50</option>
-				</select>
-			</td>
-		</tr> -->
 		<tr>
 			<th>스터디 진행 요일 및 시간</th>
 			<td>
-				<div id="studyDate" name="studyDate">
+				<div id="studyDate" name="studyDate" class="form-control" required="required">
 						<label>
-							<input type="checkbox" name="sun" id="sun" 
-							value="sun" onclick="checkDay()">일요일
+							<input type="checkbox" name="day" id="sun" 
+							value="sun" onchange="checkDay()" required="required">일요일
 						</label>
-						<div id="sunTime">
-						<input type="text" class="hour">시 
-						<input type="text" class="minute">분
-						</div><br>
+						<form action="" class="form-inline" role="form">
+						<div id="sunTime" class="form group">
+							<input type="text" id="hour" class="form-control" required="required"
+							style="display:inline-block">
+							<label for="hour">시</label>
+							<input type="text" id="minute" class="form-control" required="required"
+							style="display:inline-block">
+							<label for="minute">분</label>
+						</div>
+						</form><br>
 						
 						<label>
-							<input type="checkbox" name="mon" id="mon" 
-							value="mon" onclick="checkDay()">월요일
+							<input type="checkbox" name="day" id="mon" 
+							value="mon" onchange="checkDay()">월요일
 						</label>
 						<div id="monTime">
-						<input type="text" class="hour">시 
-						<input type="text" class="minute">분
+							<input type="text" id="hour" class="form-control" required="required"
+							style="display:inline-block">
+							<label for="hour">시</label>
+							<input type="text" id="minute" class="form-control" required="required"
+							style="display:inline-block">
+							<label for="minute">분</label>
 						</div><br>
 						
 						<label>
-							<input type="checkbox" name="tue" id="tue" 
-							value="tue" onclick="checkDay()">화요일
+							<input type="checkbox" name="day" id="tue" 
+							value="tue" onchange="checkDay()">화요일
 						</label>
 						<div id="tueTime">
-						<input type="text" class="hour">시 
-						<input type="text" class="minute">분
+							<input type="text" id="hour" class="form-control" required="required"
+							style="display:inline-block">
+							<label for="hour">시</label>
+							<input type="text" id="minute" class="form-control" required="required"
+							style="display:inline-block">
+							<label for="minute">분</label>
 						</div><br>
 						
 						
 						<label>
-							<input type="checkbox" name="wed" id="wed" 
-							value="wed" onclick="checkDay()">수요일
+							<input type="checkbox" name="day" id="wed" 
+							value="wed" onchange="checkDay()">수요일
 						</label>
 						<div id="wedTime">
-						<input type="text" class="hour">시 
-						<input type="text" class="minute">분
+							<input type="text" id="hour" class="form-control" required="required"
+							style="display:inline-block">
+							<label for="hour">시</label>
+							<input type="text" id="minute" class="form-control" required="required"
+							style="display:inline-block">
+							<label for="minute">분</label>
 						</div><br>
 						
 						<label>
-							<input type="checkbox" name="thu" id="thu" 
-							value="thu" onclick="checkDay()">목요일
+							<input type="checkbox" name="day" id="thu" 
+							value="thu" onchange="checkDay()">목요일
 						</label>
 						<div id="thuTime">
-						<input type="text" class="hour">시 
-						<input type="text" class="minute">분
+							<input type="text" id="hour" class="form-control" required="required"
+							style="display:inline-block">
+							<label for="hour">시</label>
+							<input type="text" id="minute" class="form-control" required="required"
+							style="display:inline-block">
+							<label for="minute">분</label>
 						</div><br>
 						
 						<label>
-							<input type="checkbox" name="fri" id="fri" 
-							value="fri" onclick="checkDay()">금요일
+							<input type="checkbox" name="day" id="fri" 
+							value="fri" onchange="checkDay()">금요일
 						</label>
 						<div id="friTime">
-						<input type="text" class="hour">시 
-						<input type="text" class="minute">분
+							<input type="text" id="hour" class="form-control" required="required"
+							style="display:inline-block">
+							<label for="hour">시</label>
+							<input type="text" id="minute" class="form-control" required="required"
+							style="display:inline-block">
+							<label for="minute">분</label>
 						</div><br>
 						
 						<label>
-							<input type="checkbox" name="sat" id="sat" 
-							value="sat" onclick="checkDay()">토요일
+							<input type="checkbox" name="day" id="sat" 
+							value="sat" onchange="checkDay()">토요일
 						</label>
 						<div id="satTime">
-						<input type="text" class="hour">시 
-						<input type="text" class="minute">분
+							<input type="text" id="hour" class="form-control" required="required"
+							style="display:inline-block">
+							<label for="hour">시</label>
+							<input type="text" id="minute" class="form-control" required="required"
+							style="display:inline-block">
+							<label for="minute">분</label>
 						</div><br>
 					</div>
 			</td>
@@ -522,7 +400,7 @@
 		<tr>
 			<th>지역</th>
 			<td>
-				<select name="regionGroup1" class="selectFiled">
+				<select name="regionGroup1" id="regionGroup1" class="form-control">
 					<option value="select">선택</option>
 					<option value="seoul">서울</option>
 					<option value="incheon">인천</option>
@@ -542,7 +420,7 @@
 					<option value="gyeongbuk">경북</option>
 					<option value="jeju">제주</option>
 				</select>
-				<select name="regionGroup2" class="selectFiled">
+				<select name="regionGroup2" id="regionGroup2" class="form-control">
 					<option value="select">선택</option>
 					<option value="1">강남구</option>
 					<option value="2">강동구</option>
@@ -552,9 +430,25 @@
 			</td>
 		</tr>
 		<tr>
-			<th>인원수</th>
+			<th>최소인원수</th>
 			<td>
-				<select name="memCount" class="selectFiled">
+				<select name="memCount" id="memCount" class="form-control">
+					<option value="select">선택</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+				</select>
+				<span style="font-size: 7pt;">
+				*스터디 개설이 가능한 인원수는 3명 이상, 8명 이하입니다.</span>
+			</td>
+		</tr>
+		<tr>
+			<th>최대인원수</th>
+			<td>
+				<select name="memCount" id="memCount" class="form-control">
 					<option value="select">선택</option>
 					<option value="3">3</option>
 					<option value="4">4</option>
@@ -570,7 +464,7 @@
 		<tr>
 			<th>참여최소등급</th>
 			<td>
-				<select name="grade" class="selectFiled" disabled="disabled">
+				<select name="grade" id="grade" class="form-control">
 					<option value="select">선택</option>
 					<option value="1">1등급</option>
 					<option value="2">2등급</option>
@@ -586,12 +480,13 @@
 	</table>
 	
 	<div id="footer">
-		<button type="button" class="btn btn-primary" onclick="sendIt()">수정</button>
+		<button type="button" id="sendBtn" class="btn btn-primary" onclick="sendIt()">수정</button>
 		<button type="button" class="btn btn-primary">재입력</button>
 		<button type="reset" class="btn btn-primary">취소</button>
 	</div><!-- #footer -->
 	
 	</form>
+	</div>
 	
 </div><!-- #StudyOpen -->
    

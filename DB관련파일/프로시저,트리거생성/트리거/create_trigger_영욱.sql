@@ -77,6 +77,334 @@ BEGIN
 END;
 
 
+-- 2021-01-13 스터디 개설 비포 트리거
+CREATE OR REPLACE TRIGGER TRG_BEFORE_INSERT_STUDY_OPEN
+BEFORE 
+INSERT ON TBL_STUDY_OPEN
+FOR EACH ROW
+DECLARE  
+V_SUSPEND_CHECK NUMBER;
+V_STUDY_NUM      NUMBER;
+V_SCORE_NUM      NUMBER;
+
+-- 예외 처리 변수 선언
+SUSPEND_CHECK_ERROR   EXCEPTION;
+STUDY_NUM_ERROR         EXCEPTION;
+SCORE_NUM_ERROR         EXCEPTION;
+        
+BEGIN
+        
+        --○ 계정정지 확인
+        SELECT COUNT(*) INTO V_SUSPEND_CHECK
+        FROM  ACCOUNT_SUSPEND_VIEW 
+        WHERE ID = :NEW.USER_CODE;
+        
+        IF(V_SUSPEND_CHECK = 1 )
+        THEN    RAISE SUSPEND_CHECK_ERROR;
+        
+        ELSE
+            --○ 등급 확인
+            SELECT SUM(SCORE) INTO V_SCORE_NUM
+            FROM TBL_SCORE
+            WHERE USER_CODE = :NEW.USER_CODE;
+            
+            IF(V_SCORE_NUM < 1800)    
+            THEN    RAISE STUDY_NUM_ERROR;
+            
+            ELSE
+                --○ 참여중인 스터디 갯수 확인
+                SELECT COUNT(*) INTO V_STUDY_NUM
+                FROM MY_NOW_STUDY_VIEW;                
+            
+                IF(V_STUDY_NUM >2)
+                THEN    RAISE SCORE_NUM_ERROR;
+
+                END IF;
+            END IF;
+        END IF;
+        
+        -- 커밋
+        COMMIT;
+        
+        -- 예외처리
+        EXCEPTION
+                WHEN SUSPEND_CHECK_ERROR
+                    THEN    RAISE_APPLICATION_ERROR(-70021,'계정정지상태라 개설불가~!!!');
+                WHEN STUDY_NUM_ERROR
+                    THEN    RAISE_APPLICATION_ERROR(-70022,'4등급 이하라 개설불가~!!!');
+                WHEN SCORE_NUM_ERROR 
+                    THEN    RAISE_APPLICATION_ERROR(-70023,'진행중인 스터디가 2개이상이라 개설불가~!!!');
+                WHEN OTHERS
+                    THEN ROLLBACK;
+END;
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+-- it, 기술정보 공유 게시판 수정 BEFORE 트리거
+CREATE OR REPLACE TRIGGER TRG_BEFORE_UPDATE_INFORM
+BEFORE 
+UPDATE ON TBL_BOARD_INFORM
+FOR EACH ROW
+DECLARE  
+V_POST_NUM NUMBER;
+
+-- 예외 처리 변수 선언
+POST_ERROR   EXCEPTION;
+        
+BEGIN
+
+        --○ 신고 갯수 확인
+        SELECT COUNT(*) INTO V_POST_NUM
+        FROM  TBL_REPORT_REG_INFORM 
+        WHERE POST_CODE = :NEW.POST_CODE;
+        
+        IF(V_POST_NUM > 0 )
+        THEN    RAISE POST_ERROR;
+        END IF;
+        
+        -- 커밋
+        COMMIT;
+        
+        -- 예외처리
+        EXCEPTION
+                WHEN POST_ERROR
+                    THEN    RAISE_APPLICATION_ERROR(-70031,'신고 접수된 상태라 수정불가~!!!');
+                WHEN OTHERS
+                    THEN ROLLBACK;
+END;
+
+--○ 면접,코딩테스트 후기 게시판 수정 BEFORE 트리거
+CREATE OR REPLACE TRIGGER TRG_BEFORE_UPDATE_INTERVIEW
+BEFORE 
+UPDATE ON TBL_BOARD_INTERVIEW
+FOR EACH ROW
+DECLARE  
+V_POST_NUM NUMBER;
+
+-- 예외 처리 변수 선언
+POST_ERROR   EXCEPTION;
+        
+BEGIN
+        
+        
+        --○ 신고 갯수 확인
+        SELECT COUNT(*) INTO V_POST_NUM
+        FROM  TBL_REPORT_REG_INTERVIEW 
+        WHERE POST_CODE = :NEW.POST_CODE;
+        
+        IF(V_POST_NUM > 0 )
+        THEN    RAISE POST_ERROR;
+        END IF;
+        
+        -- 커밋
+        COMMIT;
+        
+        -- 예외처리
+        EXCEPTION
+                WHEN POST_ERROR
+                    THEN    RAISE_APPLICATION_ERROR(-70031,' 신고 접수된 상태라 수정불가~!!!');
+                WHEN OTHERS
+                    THEN ROLLBACK;
+END;
+
+
+--○ 세미나,공모전  게시판 수정 BEFORE 트리거
+CREATE OR REPLACE TRIGGER TRG_BEFORE_UPDATE_SEMINAR
+BEFORE 
+UPDATE ON TBL_BOARD_SEMINAR
+FOR EACH ROW
+DECLARE  
+V_POST_NUM NUMBER;
+
+-- 예외 처리 변수 선언
+POST_ERROR   EXCEPTION;
+        
+BEGIN
+        
+        
+        --○ 신고 갯수 확인
+        SELECT COUNT(*) INTO V_POST_NUM
+        FROM  TBL_REPORT_REG_SEMINAR 
+        WHERE POST_CODE = :NEW.POST_CODE;
+        
+        IF(V_POST_NUM > 0 )
+        THEN    RAISE POST_ERROR;
+        END IF;
+        
+        -- 커밋
+        COMMIT;
+        
+        -- 예외처리
+        EXCEPTION
+                WHEN POST_ERROR
+                    THEN    RAISE_APPLICATION_ERROR(-70031,' 신고 접수된 상태라 수정불가~!!!');
+                WHEN OTHERS
+                    THEN ROLLBACK;
+END;
+
+
+--○ 자유게시판 수정 BEFORE 트리거
+CREATE OR REPLACE TRIGGER TRG_BEFORE_UPDATE_FREE
+BEFORE 
+UPDATE ON TBL_BOARD_FREE
+FOR EACH ROW
+DECLARE  
+V_POST_NUM NUMBER;
+
+-- 예외 처리 변수 선언
+POST_ERROR   EXCEPTION;
+        
+BEGIN
+        
+        
+        --○ 신고 갯수 확인
+        SELECT COUNT(*) INTO V_POST_NUM
+        FROM  TBL_REPORT_REG_FREE 
+        WHERE POST_CODE = :NEW.POST_CODE;
+        
+        IF(V_POST_NUM > 0 )
+        THEN    RAISE POST_ERROR;
+        END IF;
+        
+        -- 커밋
+        COMMIT;
+        
+        -- 예외처리
+        EXCEPTION
+                WHEN POST_ERROR
+                    THEN    RAISE_APPLICATION_ERROR(-70031,' 신고 접수된 상태라 수정불가~!!!');
+                WHEN OTHERS
+                    THEN ROLLBACK;
+END;
+
+
+--○ Q&A질문  게시판 수정 BEFORE 트리거
+CREATE OR REPLACE TRIGGER TRG_BEFORE_UPDATE_QUESTION
+BEFORE 
+UPDATE ON TBL_BOARD_QUESTION
+FOR EACH ROW
+DECLARE  
+V_POST_NUM NUMBER;
+
+-- 예외 처리 변수 선언
+POST_ERROR   EXCEPTION;
+        
+BEGIN
+        
+        
+        --○ 신고 갯수 확인
+        SELECT COUNT(*) INTO V_POST_NUM
+        FROM  TBL_REPORT_REG_QUESTION 
+        WHERE POST_CODE = :NEW.POST_CODE;
+        
+        IF(V_POST_NUM > 0 )
+        THEN    RAISE POST_ERROR;
+        END IF;
+        
+        -- 커밋
+        COMMIT;
+        
+        -- 예외처리
+        EXCEPTION
+                WHEN POST_ERROR
+                    THEN    RAISE_APPLICATION_ERROR(-70031,' 신고 접수된 상태라 수정불가~!!!');
+                WHEN OTHERS
+                    THEN ROLLBACK;
+END;
+
+
+--○ Q&A답변 게시판 수정 BEFORE 트리거
+CREATE OR REPLACE TRIGGER TRG_BEFORE_UPDATE_ANSWER
+BEFORE 
+UPDATE ON TBL_BOARD_ANSWER
+FOR EACH ROW
+DECLARE  
+V_POST_NUM NUMBER;
+
+-- 예외 처리 변수 선언
+POST_ERROR   EXCEPTION;
+        
+BEGIN
+        
+        
+        --○ 신고 갯수 확인
+        SELECT COUNT(*) INTO V_POST_NUM
+        FROM  TBL_REPORT_REG_ANSWER 
+        WHERE POST_CODE = :NEW.POST_CODE;
+        
+        IF(V_POST_NUM > 0 )
+        THEN    RAISE POST_ERROR;
+        END IF;
+        
+        -- 커밋
+        COMMIT;
+        
+        -- 예외처리
+        EXCEPTION
+                WHEN POST_ERROR
+                    THEN    RAISE_APPLICATION_ERROR(-70031,' 신고 접수된 상태라 수정불가~!!!');
+                WHEN OTHERS
+                    THEN ROLLBACK;
+END;
+
+
+--○ 스터디 후기 게시판 수정 BEFORE 트리거
+CREATE OR REPLACE TRIGGER TRG_BEFORE_UPDATE_STUDYREVIEW
+BEFORE 
+UPDATE ON TBL_BOARD_STUDYREVIEW
+FOR EACH ROW
+DECLARE  
+V_POST_NUM NUMBER;
+
+-- 예외 처리 변수 선언
+POST_ERROR   EXCEPTION;
+        
+BEGIN
+        
+        
+        --○ 신고 갯수 확인
+        SELECT COUNT(*) INTO V_POST_NUM
+        FROM  TBL_REPORT_REG_STUDYREVIEW 
+        WHERE POST_CODE = :NEW.POST_CODE;
+        
+        IF(V_POST_NUM > 0 )
+        THEN    RAISE POST_ERROR;
+        END IF;
+        
+        -- 커밋
+        COMMIT;
+        
+        -- 예외처리
+        EXCEPTION
+                WHEN POST_ERROR
+                    THEN    RAISE_APPLICATION_ERROR(-70031,' 신고 접수된 상태라 수정불가~!!!');
+                WHEN OTHERS
+                    THEN ROLLBACK;
+END;
+
+----------------------------END----------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 --@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@----
 --○ 경고소멸 : 경고 인서트될 때 마지막 경고 날짜 체크해서 1년 지났으면 그 전 경고 소멸.
 CREATE OR REPLACE TRIGGER TRG_BIA
