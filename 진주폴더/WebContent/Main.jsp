@@ -190,38 +190,72 @@ small {
 								</button>
 							</div>
 						</div>
-						<div class="content_Row">
-							<div class="content_Cell">제목1</div>
-							<div class="content_Cell">제목2</div>
-							<div class="content_Cell">제목3</div>
-						</div>
-						<div class="content_Row">
-							<div class="content_Cell">(작성자 프사)</div>
-							<div class="content_Cell">(작성자 프사)</div>
-							<div class="content_Cell">(작성자 프사)</div>
-						</div>
-						<div class="content_Row">
-							<div class="content_Cell">
-								<span>간략한 내용</span>
-							</div>
-							<div class="content_Cell">
-								<span>간략한 내용</span>
-							</div>
-							<div class="content_Cell">
-								<span>간략한 내용</span>
-							</div>
-						</div>
 					</div>
 					<!-- content_TableBody -->
 				</div>
 				<!-- content_Table -->
+
+
+
+				<div class="container">
+					<div class="row" style="width: 75%; margin-left: auto; margin-right: auto;">
+						<div class="col-4">
+							<!-- <p>Card</p> -->
+							<div class="card">
+								<div class="card-header">My Card</div>
+								<img src="images/card-image.png" alt="" />
+								<div class="card-body">
+									<h5 class="card-title">Lorem</h5>
+									<p class="card-text">Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Nullam egestas sed sem ut
+										malesuada.</p>
+									<a href="#" class="btn btn-outline-primary"">More</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-4" >
+							<!-- <p>Card</p> -->
+							<div class="card">
+								<div class="card-header">My Card</div>
+								<img src="images/card-image.png" alt="" />
+								<div class="card-body">
+									<h5 class="card-title">Lorem</h5>
+									<p class="card-text">Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Nullam egestas sed sem ut
+										malesuada.</p>
+									<a href="#" class="btn btn-outline-primary"">More</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-4">
+							<!-- <p>Card</p> -->
+							<div class="card">
+								<div class="card-header">My Card</div>
+								<img src="images/card-image.png" alt="" />
+								<div class="card-body">
+									<h5 class="card-title">Lorem</h5>
+									<p class="card-text">Lorem ipsum dolor sit amet,
+										consectetur adipiscing elit. Nullam egestas sed sem ut
+										malesuada.</p>
+									<a href="#" class="btn btn-outline-primary"">More</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
 
 				<br /> <br />
 			</div>
 			<!-- 스터디 후기 -->
 			<br />
 			<br />
-			<div class="content_Table">
+			
+			
+			
+			
+						
+			<div class="content_Table ">
 				<div class="content_TableBody">
 					<div class="content_Row Row3">
 						<div class="content_Cell" id="cell1">
@@ -231,37 +265,63 @@ small {
 							</h1>
 						</div>
 						<div class="content_Cell"></div>
-						<div class="content_Cell">
+						<div class="content_Cell" style="padding-bottom: 0px;">
 							<button class="btn btn-outline-primary">
 								전체 보기 <span class="btnTxt">></span>
 							</button>
-						</div>
-					</div>
-					<div class="content_Row Row4">
-						<div class="content_Cell">고급개발자가 되는 법</div>
-						<div class="content_Cell">div로 테이블을 구성하는 이유가 무엇인가요?</div>
-						<div class="content_Cell">한국IT진흥원 주최 세미나 알림</div>
-					</div>
-					<div class="content_Row Row4">
-						<div class="content_Cell">(작성자 프사)</div>
-						<div class="content_Cell">(작성자 프사)</div>
-						<div class="content_Cell">(작성자 프사)</div>
-					</div>
-					<div class="content_Row Row4">
-						<div class="content_Cell">
-							<span>간략한 내용</span>
-						</div>
-						<div class="content_Cell">
-							<span>간략한 내용</span>
-						</div>
-						<div class="content_Cell">
-							<span>간략한 내용</span>
 						</div>
 					</div>
 				</div>
 				<!-- content_TableBody -->
 			</div>
 			<!-- content_Table -->
+			
+			<div class="">
+				<table class="table table-hover" 
+				style="text-align: center; width: 65%; 
+				margin-left: auto; margin-right: auto;">
+					<thead>
+						<tr class="trTitle" >
+							<th>작성자</th>
+							<th>제목</th>
+							<th>조회수</th>
+							<th>추천수</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>박혜인</td>
+							<td>고급 개발자가 되는 법</td>
+							<td>298</td>
+							<td>132</td>
+						</tr>
+						<tr>
+							<td>박혜인</td>
+							<td>고급 개발자가 되는 법</td>
+							<td>298</td>
+							<td>132</td>
+						</tr>
+						<tr>
+							<td>박혜인</td>
+							<td>고급 개발자가 되는 법</td>
+							<td>298</td>
+							<td>132</td>
+						</tr>
+						<tr>
+							<td>박혜인</td>
+							<td>고급 개발자가 되는 법</td>
+							<td>298</td>
+							<td>132</td>
+						</tr>
+						<tr>
+							<td>박혜인</td>
+							<td>고급 개발자가 되는 법</td>
+							<td>298</td>
+							<td>132</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 
 			<br /> <br />
 

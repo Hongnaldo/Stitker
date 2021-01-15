@@ -1,6 +1,137 @@
+--■■■ 스터디 취소 프로시저 ■■■--
+
+--○ 취소테이블에 INSERT 후
+-- -> 진행중인지(START_DATE 이전인지 이후인지)체크
+-- -> 리더(작성자)인지 체크 
+-- -> 리더면 진행테이블에 남아있는 사람들 중 점수가 가장 높은 사람의 직책을 리더로 업데이트
+
+-- 실행 예 : EXEC PRC_STD_CANC_INSERT(신청코드)
+-- 실행 예 : EXEC PRC_STD_CANC_INSERT(신청코드, 오토캔슬값)
+
+CREATE OR REPLACE PROCEDURE PRC_STD_CANC_INSERT
+( V_APPLY_CODE    IN TBL_STUDY_APPLY.APPLY_CODE%TYPE
+--, V_AUTO_CANCEL   IN TBL_STUDY_CANCEL.AUTO_CANCEL%TYPE
+)
+IS
+    V_POSITION_CODE TBL_STUDY_POSITION.POSITION_CODE%TYPE;  -- 취소한 사용자의 POSITION_CODE
+    V_USER_CODE     TBL_USER_CODE_CREATE.USER_CODE%TYPE;    -- 취소한 사용자의 USER_CODE
+    V_STUDY_CODE    TBL_STUDY_OPEN.STUDY_CODE%TYPE;         -- 취소한 STUDY_CODE
+    V_WRITER_CODE   TBL_USER_CODE_CREATE.USER_CODE%TYPE;    -- 취소한 스터디 작성자 USER_CODE
+    V_START_DATE    TBL_STUDY_OPEN.START_DATE%TYPE;         -- 스터디 시작일
+    V_NEW_LEADER    TBL_USER_CODE_CREATE.USER_CODE%TYPE;    -- 모집중, 가장 높은 점수인 사용자의 USER_CODE
+    P_NEW_LEADER    TBL_USER_CODE_CREATE.USER_CODE%TYPE;    -- 진행중, 가장 높은 점수인 사용자의 USER_CODE   
+    
+
+BEGIN
+
+    
+    -- 오토 캔슬 값도 입력받아야 하면 입력 쿼리문 이거 쓰기
+    --INSERT INTO TBL_STUDY_CANCEL (CANCEL_CODE, APPLY_CODE, AUTO_CANCEL)
+    --VALUES ('SC'|| STUDY_CANC_SEQ.NEXTVAL, V_APPLY_CODE, V_AUTO_CANCEL);
+    
+    -- 스터디 취소
+    INSERT INTO TBL_STUDY_CANCEL (CANCEL_CODE, APPLY_CODE)
+    VALUES ('SC'|| STUDY_CANC_SEQ.NEXTVAL, V_APPLY_CODE);
+    
+    
+    -- V_POSITION_CODE, V_USER_CODE 
+    SELECT POSITION_CODE, USER_CODE INTO V_POSITION_CODE, V_USER_CODE
+    FROM TBL_STUDY_APPLY
+    WHERE APPLY_CODE = V_APPLY_CODE;  
+    
+    -- V_STUDY_CODE 
+    SELECT STUDY_CODE INTO V_STUDY_CODE
+    FROM TBL_STUDY_APPLY
+    WHERE APPLY_CODE = V_APPLY_CODE;
+    
+    -- V_WRITER_CODE
+    SELECT USER_CODE INTO V_WRITER_CODE
+    FROM TBL_STUDY_OPEN
+    WHERE STUDY_CODE = V_STUDY_CODE;
+    
+    -- V_START_DATE
+    SELECT START_DATE INTO V_START_DATE
+    FROM TBL_STUDY_OPEN
+    WHERE STUDY_CODE = V_STUDY_CODE;
+    
+   -- V_NEW_LEADER 
+    SELECT USER_CODE INTO V_NEW_LEADER  
+    FROM ( SELECT A.USER_CODE, SUM(S.SCORE) AS SCORESUM
+           FROM TBL_STUDY_APPLY A, TBL_SCORE S
+           WHERE STUDY_CODE = V_STUDY_CODE
+             AND A.USER_CODE = S.USER_CODE
+             AND A.USER_CODE NOT IN (   -- 신청테이블에 있지만 취소한 사람들의 USER_CODE
+                                        SELECT USER_CODE
+                                        FROM TBL_STUDY_CANCEL C , TBL_STUDY_APPLY A
+                                        WHERE A.STUDY_CODE =V_STUDY_CODE
+                                          AND A.APPLY_CODE IN ( SELECT APPLY_CODE
+                                                                FROM TBL_STUDY_CANCEL)
+                                          AND C.APPLY_CODE IN (SELECT APPLY_CODE
+                                                                FROM TBL_STUDY_APPLY
+                                                                WHERE STUDY_CODE =V_STUDY_CODE)
+                                        GROUP BY USER_CODE) 
+           GROUP BY A.USER_CODE
+           ORDER BY SCORESUM DESC )
+    WHERE ROWNUM=1;
+    
+    -- P_NEW_LEADER
+    SELECT USER_CODE INTO P_NEW_LEADER
+    FROM 
+    (   SELECT T.USER_CODE, SUM(S.SCORE) AS MAX_SCORE
+        FROM 
+        ( SELECT A.APPLY_CODE, A.STUDY_CODE, A.USER_CODE, A.POSITION_CODE
+          FROM TBL_STUDY_APPLY A, TBL_STUDY_PARTICIPANT P
+          WHERE A.APPLY_CODE = P.APPLY_CODE
+            AND A.USER_CODE NOT IN (    -- 신청테이블에 있지만 취소한 사람들의 USER_CODE
+                                        SELECT USER_CODE
+                                        FROM TBL_STUDY_CANCEL C , TBL_STUDY_APPLY A
+                                        WHERE A.STUDY_CODE =V_STUDY_CODE
+                                          AND A.APPLY_CODE IN ( SELECT APPLY_CODE
+                                                                FROM TBL_STUDY_CANCEL)
+                                          AND C.APPLY_CODE IN (SELECT APPLY_CODE
+                                                                FROM TBL_STUDY_APPLY
+                                                                WHERE STUDY_CODE =V_STUDY_CODE)
+                                        GROUP BY USER_CODE)   
+        ) T, TBL_SCORE S
+        WHERE T.USER_CODE = S.USER_CODE
+        GROUP BY T.USER_CODE
+        ORDER BY MAX_SCORE DESC
+    )
+    WHERE ROWNUM=1;
+    
+    -- 모집중
+    IF ( TO_DATE(SYSDATE, 'YYYY-MM-DD') < TO_DATE(V_START_DATE, 'YYYY-MM-DD') )
+        THEN            
+        -- 신청 테이블에 있는 사람들 중에 가장 높은 점수를 가진 사람이 뉴리더
+        IF ( V_POSITION_CODE = 'SP1' ) -- 취소한 사람이 리더이면
+            THEN UPDATE TBL_STUDY_APPLY
+                 SET POSITION_CODE = 'SP1'
+                 WHERE USER_CODE = V_NEW_LEADER
+                 AND STUDY_CODE = V_STUDY_CODE;
+        END IF;
+    
+    -- 진행중  
+    ELSIF ( TO_DATE(SYSDATE, 'YYYY-MM-DD') > TO_DATE(V_START_DATE, 'YYYY-MM-DD') ) -- 진행중
+            THEN 
+            -- 진행 테이블에 있는 사람들 중에 가장 높은 점수를 가진 사람이 뉴리더
+            IF ( V_POSITION_CODE = 'SP1' ) -- 취소한 사람이 리더이면
+            THEN UPDATE TBL_STUDY_APPLY
+                 SET POSITION_CODE = 'SP1'
+                 WHERE USER_CODE = P_NEW_LEADER
+                 AND STUDY_CODE = V_STUDY_CODE;
+            END IF;   
+            
+    END IF;
+    
+    -- 커밋
+    COMMIT;
+    
+END;
 
 
---■■■ 신고 등록 프로시저 ■■■--
+
+
+--■■■ 각 게시판 신고 등록 프로시저 ■■■--
 -- 신고 등록 5회 → 마지막 신고 등록 코드로 신고 처리 테이블에 인서트되는 프로시저
 
 
@@ -330,3 +461,155 @@ END;
 
 
 
+
+
+
+
+--INSERT INTO TBL_STUDY_APPLY(APPLY_CODE, STUDY_CODE, USER_CODE, APPLY_DATE, POSITION_CODE)
+--VALUES('SA'|| STUDY_APL_SEQ.NEXTVAL,'SO9', 'UC80', SYSDATE, 'SP2' );
+
+ 
+-- EXEC PRC_STD_APPLY_INSERT('SO4', 'UC80', 'SP2');
+create or replace PROCEDURE PRC_STD_APPLY_INSERT
+( V_STUDY_CODE      IN TBL_STUDY_OPEN.STUDY_CODE%TYPE
+, V_USER_CODE       IN TBL_USER_CODE_CREATE.USER_CODE%TYPE
+, V_POSITION_CODE   IN TBL_STUDY_APPLY.POSITION_CODE%TYPE
+)
+IS
+    C_STUDY_CODE    TBL_STUDY_MEETDAY.STUDY_CODE%TYPE;
+    C_WEEKDAY_CODE  TBL_STUDY_MEETDAY.WEEKDAY_CODE%TYPE;
+    C_START_TIME    TBL_STUDY_MEETDAY.START_TIME%TYPE;
+    C_END_TIME      TBL_STUDY_MEETDAY.END_TIME%TYPE;
+
+    N_STUDY_CODE    TBL_STUDY_MEETDAY.STUDY_CODE%TYPE;
+    N_WEEKDAY_CODE  TBL_STUDY_MEETDAY.WEEKDAY_CODE%TYPE;
+    N_START_TIME    TBL_STUDY_MEETDAY.START_TIME%TYPE;
+    N_END_TIME      TBL_STUDY_MEETDAY.END_TIME%TYPE;
+
+
+    OPEN_COUNT      NUMBER;
+    APPLY_COUNT     NUMBER;
+    SUSPEND_USER    TBL_WARNING.USER_CODE%TYPE;     -- 계정 정지 내역
+
+    MEET_CNT        NUMBER;
+    TOTAL_CNT       NUMBER;
+
+    N_START         NUMBER;
+    N_END           NUMBER;
+    C_START         NUMBER;
+    C_END           NUMBER;
+
+    V_CLOSE_DATE    TBL_STUDY_OPEN.CLOSE_DATE%TYPE; -- 신청하려는 스터디의 마감일
+    CANCEL_COUNT    NUMBER;
+    TOTAL_COUNT     NUMBER;
+
+    V_APPLY_DATE    TBL_STUDY_APPLY.APPLY_DATE%TYPE;
+BEGIN
+
+    -- 계정 정지 내역이 있는 사용자 코드일 경우
+    -- BEGIN END; 로 감싸서 익셉션 주는 방법으로 NO DATA FOUND 에러 해결할 수 있대서 해봤는데 여기를 그냥 지나치는거 같아요
+    -- 계정정지내역 있는 사용자도 인서트 되네요..  EXEC PRC_STD_APPLY_INSERT('SO20', 'UC7', 'SP2');
+    BEGIN
+        SELECT DISTINCT USER_CODE INTO SUSPEND_USER  
+        FROM TBL_WARNING W, TBL_ACCOUNT_SUSPEND S
+        WHERE W.WARNING_CODE = S.WARNING_CODE AND W.USER_CODE = V_USER_CODE;
+        
+        EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+        SUSPEND_USER := NULL;
+        
+        IF(SUSPEND_USER IS NOT NULL)
+        THEN RAISE_APPLICATION_ERROR(-20008, '계정 정지된 사용자입니다.');
+             RETURN;
+        END IF;
+    END;
+    
+    
+    -- 신청하려는 스터디의 마감일이 지났을 경우 : 테스트 완료
+    SELECT CLOSE_DATE INTO V_CLOSE_DATE
+    FROM TBL_STUDY_OPEN
+    WHERE STUDY_CODE = V_STUDY_CODE;
+
+    V_APPLY_DATE := SYSDATE;
+
+    IF( TO_DATE(V_CLOSE_DATE, 'YYYY-MM-DD') < TO_DATE(V_APPLY_DATE, 'YYYY-MM-DD') )
+        THEN RAISE_APPLICATION_ERROR(-20005, '이미 마감된 스터디는 신청할 수 없습니다.');
+             RETURN;
+    END IF;
+
+
+    -- 참여중인 스터디 개수가 3개 이상일 경우 : 테스트 완료
+    SELECT COUNT(*) INTO APPLY_COUNT                
+    FROM TBL_STUDY_APPLY A, TBL_STUDY_OPEN O
+    WHERE A.STUDY_CODE = O.STUDY_CODE AND O.END_DATE>SYSDATE  AND A.USER_CODE = V_USER_CODE;
+
+    SELECT COUNT(*) INTO CANCEL_COUNT
+    FROM TBL_STUDY_APPLY A, TBL_STUDY_CANCEL C, TBL_STUDY_OPEN O
+    WHERE A.APPLY_CODE = C.APPLY_CODE AND A.USER_CODE= V_USER_CODE AND O.STUDY_CODE = A.STUDY_CODE AND O.END_DATE>SYSDATE; 
+
+    TOTAL_COUNT := APPLY_COUNT - CANCEL_COUNT;
+
+    IF(TOTAL_COUNT >= 3)
+    THEN RAISE_APPLICATION_ERROR(-20002,'이미 3개의 스터디에 참여중입니다.');
+         RETURN;
+    END IF;    
+
+
+    -- 참여중인 스터디와 기간, 요일, 시간이 겹치는 경우
+    SELECT COUNT(*) INTO MEET_CNT
+    FROM TBL_STUDY_MEETDAY
+    WHERE STUDY_CODE = V_STUDY_CODE;
+
+    SELECT COUNT(*) INTO TOTAL_CNT
+    FROM TBL_STUDY_OPEN O, TBL_STUDY_MEETDAY M, TBL_STUDY_APPLY A
+    WHERE O.STUDY_CODE = M.STUDY_CODE AND A.STUDY_CODE = O.STUDY_CODE 
+    AND O.END_DATE<SYSDATE AND A.USER_CODE = V_USER_CODE;
+
+    FOR I IN 1..MEET_CNT LOOP
+
+    SELECT STUDY_CODE, WEEKDAY_CODE, START_TIME, END_TIME INTO N_STUDY_CODE, N_WEEKDAY_CODE, N_START_TIME, N_END_TIME
+    FROM (SELECT ROWNUM AS CNT1, STUDY_CODE, WEEKDAY_CODE, START_TIME, END_TIME
+          FROM TBL_STUDY_MEETDAY
+          WHERE STUDY_CODE = V_STUDY_CODE)
+    WHERE CNT1 = I;
+
+    N_START := TO_NUMBER(SUBSTR(N_START_TIME,1,2)||SUBSTR(N_START_TIME,4,2));
+    N_END := TO_NUMBER(SUBSTR(N_END_TIME,1,2)||SUBSTR(N_END_TIME,4,2));
+
+        FOR J IN 1..TOTAL_CNT LOOP
+
+            SELECT STUDY_CODE, WEEKDAY_CODE, START_TIME, END_TIME INTO C_STUDY_CODE, C_WEEKDAY_CODE, C_START_TIME, C_END_TIME
+            FROM (SELECT ROWNUM AS CNT2, M.STUDY_CODE, M.WEEKDAY_CODE, M.START_TIME, M.END_TIME
+                  FROM TBL_STUDY_OPEN O, TBL_STUDY_MEETDAY M, TBL_STUDY_APPLY A
+                  WHERE O.STUDY_CODE = M.STUDY_CODE AND A.STUDY_CODE = O.STUDY_CODE 
+                  AND O.END_DATE<SYSDATE AND A.USER_CODE = V_USER_CODE)
+            WHERE CNT2= J;
+
+            C_START := TO_NUMBER(SUBSTR(C_START_TIME,1,2)||SUBSTR(C_START_TIME,4,2));
+            C_END := TO_NUMBER(SUBSTR(C_END_TIME,1,2)||SUBSTR(C_END_TIME,4,2));
+
+            IF(N_STUDY_CODE = C_STUDY_CODE)
+            THEN
+                IF(N_WEEKDAY_CODE = C_WEEKDAY_CODE)
+                THEN
+                    IF((N_START >= C_START AND N_START <= C_END) OR (N_END>=C_START AND N_END <= C_END))
+                    THEN RAISE_APPLICATION_ERROR(-20009, '수정된 스터디와 기간, 요일, 시간이 겹치는 스터디가 있어 신청을 확인할 수 없습니다.');
+                         RETURN;
+                    END IF; 
+                END IF;
+            END IF;
+
+        END LOOP;
+
+    END LOOP;
+    
+    
+    -- 스터디 신청 
+    INSERT INTO TBL_STUDY_APPLY(APPLY_CODE, STUDY_CODE, USER_CODE, APPLY_DATE, POSITION_CODE)
+    VALUES('SA'|| STUDY_APL_SEQ.NEXTVAL, V_STUDY_CODE, V_USER_CODE, V_APPLY_DATE, V_POSITION_CODE);
+
+    -- 커밋
+    COMMIT;
+    
+    
+END;
