@@ -33,11 +33,14 @@
 	
 	function sendIt()
 	{
-		//alert("호출");
+		// 필수사항 입력 안 하면 알림창 띄우고 입력 안 한 칸에 focus 주는 함수인데
+		// 다른 건 required 속성이 적용이 되어서 주석처리 했고, 
+		// 요일 선택하는 checkbox는 required 속성이 안 먹어서 살려 뒀어요
+		// 혹시 알림창 띄우실 거면 다른 것도 풀어서 사용하시면 될 것 같아요
 		
 		f = document.myForm;
 	
-		// 제목 입력 확인
+		/* // 제목 입력 확인
 		str = f.title.value;
 		str = str.trim();
 		
@@ -114,7 +117,7 @@
 			alert("\n스터디 종료 날짜를 선택하세요");
 			f.endYear.focus();
 			return; 
-		}
+		} */
 		
 		// 요일 입력 확인
 		if ($("input:checkbox[name=day]").is(":checked") == false) 
@@ -122,7 +125,7 @@
             alert("\n스터디 진행 요일을 선택하세요.");
 		} 
 
-	}
+	} 
 	
 
 	
@@ -235,13 +238,13 @@
 		<tr>
 			<th>스터디 이름</th>
 			<td><input type="text" maxlength="60" name="title" class="form-control" id="title"
-			required="required"></td>
+			required></td>
 		</tr>
 		<tr>
 			<th>스터디의 목적 및 목표</th>
 			<td>
 				<textarea rows="2" cols="40" name="purpose" id="purpose" class="form-control"
-				required="required"></textarea>
+				required></textarea>
 				<div style="font-size: 7pt;" id="purposeCnt">(0 / 300)</div>
 			</td>
 		</tr>
@@ -249,8 +252,8 @@
 			<th>스터디 분야</th>
 			<td>
 				<select name="studyCategory" class="form-control" id="studyCategory"
-				required="required">
-					<option value="select">선택</option>
+				required>
+					<option value="">선택</option>
 					<option value="dba">DBA/데이터베이스</option>
 					<option value="network">네트워크/서버/보안</option>
 					<option value="developer">개발자</option>
@@ -271,8 +274,8 @@
 			<th>스터디 유형</th>
 			<td>
 				<select name="studyType" class="form-control" id="studyType"
-				required="required">
-					<option value="select">선택</option>
+				required>
+					<option value="">선택</option>
 					<option value="dba">면접</option>
 					<option value="network">코딩테스트</option>
 					<option value="developer">프로젝트</option>
@@ -285,14 +288,14 @@
 			<th>시작 날짜</th>
 			<td>
 				<input type="text" id="startDate" name="startDate" class="form-control"
-				placeholder="스터디 시작일">
+				placeholder="스터디 시작일" required>
 			</td>
 		</tr>
 		<tr>
 			<th>종료 날짜</th>
 			<td>
 				<input type="text" id="endDate" name="endDate" 
-				class="form-control" placeholder="스터디 종료일">
+				class="form-control" placeholder="스터디 종료일" required>
 				<span class="errMsg" style="font-size: 7pt;">
 				*종료 날짜는 시작 날짜로부터 1년까지 선택할 수 있습니다.</span>
 			</td>
@@ -300,31 +303,31 @@
 		<tr>
 			<th>스터디 진행 요일 및 시간</th>
 			<td>
-				<div id="studyDate" name="studyDate" class="form-control" required="required">
+				<div id="studyDate" name="studyDate" class="form-control" required>
 						<label>
 							<input type="checkbox" name="day" id="sun" 
-							value="sun" onchange="checkDay()" required="required">일요일
+							value="sun" onchange="checkDay()">일요일
 						</label>
-						<form action="" class="form-inline" role="form">
+						
 						<div id="sunTime" class="form group">
-							<input type="text" id="hour" class="form-control" required="required"
+							<input type="text" id="hour" class="form-control" 
 							style="display:inline-block">
 							<label for="hour">시</label>
-							<input type="text" id="minute" class="form-control" required="required"
+							<input type="text" id="minute" class="form-control" 
 							style="display:inline-block">
 							<label for="minute">분</label>
 						</div>
-						</form><br>
+						<br>
 						
 						<label>
 							<input type="checkbox" name="day" id="mon" 
 							value="mon" onchange="checkDay()">월요일
 						</label>
 						<div id="monTime">
-							<input type="text" id="hour" class="form-control" required="required"
+							<input type="text" id="hour" class="form-control" 
 							style="display:inline-block">
 							<label for="hour">시</label>
-							<input type="text" id="minute" class="form-control" required="required"
+							<input type="text" id="minute" class="form-control" 
 							style="display:inline-block">
 							<label for="minute">분</label>
 						</div><br>
@@ -334,10 +337,10 @@
 							value="tue" onchange="checkDay()">화요일
 						</label>
 						<div id="tueTime">
-							<input type="text" id="hour" class="form-control" required="required"
+							<input type="text" id="hour" class="form-control" 
 							style="display:inline-block">
 							<label for="hour">시</label>
-							<input type="text" id="minute" class="form-control" required="required"
+							<input type="text" id="minute" class="form-control" 
 							style="display:inline-block">
 							<label for="minute">분</label>
 						</div><br>
@@ -348,10 +351,10 @@
 							value="wed" onchange="checkDay()">수요일
 						</label>
 						<div id="wedTime">
-							<input type="text" id="hour" class="form-control" required="required"
+							<input type="text" id="hour" class="form-control" 
 							style="display:inline-block">
 							<label for="hour">시</label>
-							<input type="text" id="minute" class="form-control" required="required"
+							<input type="text" id="minute" class="form-control" 
 							style="display:inline-block">
 							<label for="minute">분</label>
 						</div><br>
@@ -361,10 +364,10 @@
 							value="thu" onchange="checkDay()">목요일
 						</label>
 						<div id="thuTime">
-							<input type="text" id="hour" class="form-control" required="required"
+							<input type="text" id="hour" class="form-control" 
 							style="display:inline-block">
 							<label for="hour">시</label>
-							<input type="text" id="minute" class="form-control" required="required"
+							<input type="text" id="minute" class="form-control" 
 							style="display:inline-block">
 							<label for="minute">분</label>
 						</div><br>
@@ -374,10 +377,10 @@
 							value="fri" onchange="checkDay()">금요일
 						</label>
 						<div id="friTime">
-							<input type="text" id="hour" class="form-control" required="required"
+							<input type="text" id="hour" class="form-control"
 							style="display:inline-block">
 							<label for="hour">시</label>
-							<input type="text" id="minute" class="form-control" required="required"
+							<input type="text" id="minute" class="form-control" 
 							style="display:inline-block">
 							<label for="minute">분</label>
 						</div><br>
@@ -387,10 +390,10 @@
 							value="sat" onchange="checkDay()">토요일
 						</label>
 						<div id="satTime">
-							<input type="text" id="hour" class="form-control" required="required"
+							<input type="text" id="hour" class="form-control" 
 							style="display:inline-block">
 							<label for="hour">시</label>
-							<input type="text" id="minute" class="form-control" required="required"
+							<input type="text" id="minute" class="form-control"
 							style="display:inline-block">
 							<label for="minute">분</label>
 						</div><br>
@@ -400,8 +403,8 @@
 		<tr>
 			<th>지역</th>
 			<td>
-				<select name="regionGroup1" id="regionGroup1" class="form-control">
-					<option value="select">선택</option>
+				<select name="regionGroup1" id="regionGroup1" class="form-control" required>
+					<option value="">선택</option>
 					<option value="seoul">서울</option>
 					<option value="incheon">인천</option>
 					<option value="gyeonggi">경기</option>
@@ -420,8 +423,8 @@
 					<option value="gyeongbuk">경북</option>
 					<option value="jeju">제주</option>
 				</select>
-				<select name="regionGroup2" id="regionGroup2" class="form-control">
-					<option value="select">선택</option>
+				<select name="regionGroup2" id="regionGroup2" class="form-control" required>
+					<option value="">선택</option>
 					<option value="1">강남구</option>
 					<option value="2">강동구</option>
 					<option value="3">영등포구</option>
@@ -432,8 +435,8 @@
 		<tr>
 			<th>최소인원수</th>
 			<td>
-				<select name="memCount" id="memCount" class="form-control">
-					<option value="select">선택</option>
+				<select name="memCount" id="memCount" class="form-control" required>
+					<option value="">선택</option>
 					<option value="3">3</option>
 					<option value="4">4</option>
 					<option value="5">5</option>
@@ -448,8 +451,8 @@
 		<tr>
 			<th>최대인원수</th>
 			<td>
-				<select name="memCount" id="memCount" class="form-control">
-					<option value="select">선택</option>
+				<select name="memCount" id="memCount" class="form-control" required>
+					<option value="">선택</option>
 					<option value="3">3</option>
 					<option value="4">4</option>
 					<option value="5">5</option>
@@ -464,8 +467,8 @@
 		<tr>
 			<th>참여최소등급</th>
 			<td>
-				<select name="grade" id="grade" class="form-control">
-					<option value="select">선택</option>
+				<select name="grade" id="grade" class="form-control" required>
+					<option value="">선택</option>
 					<option value="1">1등급</option>
 					<option value="2">2등급</option>
 					<option value="3">3등급</option>
@@ -480,7 +483,7 @@
 	</table>
 	
 	<div id="footer">
-		<button type="button" id="sendBtn" class="btn btn-primary" onclick="sendIt()">등록</button>
+		<button type="submit" id="sendBtn" class="btn btn-primary" onclick="sendIt()">등록</button>
 		<button type="button" class="btn btn-primary">재입력</button>
 		<button type="reset" class="btn btn-primary">취소</button>
 	</div><!-- #footer -->
