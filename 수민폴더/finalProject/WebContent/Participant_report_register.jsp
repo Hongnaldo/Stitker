@@ -19,12 +19,14 @@
 	/* 신고사유 보이기 */
 	function show_textarea() {
 		document.getElementById("report_reason").style.display="block";
+		document.getElementById("report_reason").required="required";
 	}
 	
 	/* 신고사유 감추기 */
 	function hide_textarea() {
 		document.getElementById("report_reason").style.display="none";
-	}
+		document.getElementById("report_reason").removeAttribute("required");
+	}	
 </script>
 </head>
 <body>
@@ -52,7 +54,7 @@
     <span class="message">위 스터디에 대한 대표적인 신고사유 1개를 선택하세요.</span>
     <br><br>
 	<div class="form-check">
-		<label><input type="radio" name="report_category" onclick="hide_textarea()" class="form-check-input"> 따돌림(카테고리 가져오기)</label><br>
+		<label><input type="radio" name="report_category" onclick="hide_textarea()" class="form-check-input" required> 따돌림(카테고리 가져오기)</label><br>
 		<label><input type="radio" name="report_category" onclick="hide_textarea()" class="form-check-input"> 부정출석 </label><br>
 		<label><input type="radio" name="report_category" onclick="hide_textarea()" class="form-check-input"> 태도불량 </label><br>
 		<label><input type="radio" name="report_category" onclick="hide_textarea()" class="form-check-input"> 불쾌감을 주는 언행 </label><br>
