@@ -47,24 +47,21 @@
 					<thead>
 					<tr class="first">
 						<th>번호</th>
+						<th>게시판</th>
 						<th class="title">제목</th>
 						<th>작성자</th>
-						<th>작성일</th>
+						<th>처리결과</th>
 					</tr>
 					</thead>
-					<tr onclick="window.location.href='Report_detailpage.jsp'">
-						<td>예시</td>
-						<td>예시</td>
-						<td>예시</td>
-						<td>예시</td>
-					</tr>
-					<tr>
-						<td>예시</td>
-						<td>예시</td>
-						
-						<td>예시</td>
-						<td>예시</td>
-					</tr>
+					<c:forEach var="report" items="${list }">
+						<tr>
+							<td>${report.rownum }</td>
+							<td>${report.post_code }</td>
+							<td>${report.title }</td>
+							<td>${report.id }</td>
+							<td>${report.handle_result }</td>
+						</tr>
+					</c:forEach>
 				</table>
 			</div>
 			<br>
