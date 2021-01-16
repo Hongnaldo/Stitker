@@ -9,15 +9,43 @@
 						http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<context:component-scan base-package="org.springframework.samples.petclinic.web" />
 
-	<!-- ※ 『dispatcher-servlet.xml』의 기본 샘플 코드 -->
-	<!-- 이 코드는 기본 설정 내용을 복사하기 위해서 스프링 doc를 참고하여 작성한다. -->
-	<!-- → 『C:\spring-3.0.2-with-docs\docs\spring-framework-reference\pdf』 경로로 이동 -->
-	<!-- → spring-framework-reference.pdf 파일 열기(실행) -->
-	<!-- → 문서 본문 내용의 425페이지(직접 이동 시 450번)로 이동 -->
-	<!-- → 페이지 하단의 XML 파일 샘플코드 복사 & 붙여넣기 -->
+	<!-- ① 기존 코드 -->
+	<!--  ※Annotation 표기법으로 Controller 객체를 등록한다. -->
+	<context:component-scan base-package="com.studyit.mvc" />
 	
+	<!-- ③ mybatis 등록 과정에서 생겨나는 추가 코드 『2』  -->
+	<!-- ※ mybatis 를 사용하기 위해 환경 설정을 추가하는 과정에서 -->
+	<!-- 필요한 dataSource를 사용하기 위한 환경 설정 추가 -->
+	<!-- remote -->
+    <bean id="remoteDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+       <property name="driverClass" value="oracle.jdbc.driver.OracleDriver"></property>
+       <property name="url" value="jdbc:oracle:thin:@211.238.142.153:1521:xe"></property>
+       <property name="username" value="stitker"></property>
+       <property name="password" value="java006$"></property>
+    </bean>	
 	
+	<!-- ② mybatis 등록 과정에서 생겨나는 추가 코드 『1』-->
+	<!-- ※ mybatis를 사용하기 위한 환경 설정 추가 -->
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		
+		<!-- ③ dataSource를 등록하고 와서 다시 추가 -->
+		<property name="dataSource" ref="remoteDataSource"></property>
+		
+		<!--⑤ 매퍼 파일을 작성하고 와서 다시 추가 -->	
+		<property name="mapperLocations" value="classpath:com/studyit/mybatis/mapper/*.xml"></property>
+	</bean>
 	
+	<!-- ⑥ mybatis 등록 과정에서 생겨나는 추가 코드 『3』 -->
+	<!-- ※ sqlSession을 사용하기 위한 환경 설정 추가 -->
+	<!-- → SqlSessionTemplete 등록 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+
+
+
+
 
 
 </beans>

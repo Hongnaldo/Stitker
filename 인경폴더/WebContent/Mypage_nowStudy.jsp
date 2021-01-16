@@ -57,7 +57,8 @@
               <button type="button" class="btn btn-outline-primary">출석부</button>
               <button type="button" class="btn btn-outline-primary">스터디원 목록</button>
               <button type="button" class="btn btn-outline-primary">스터디 나가기</button>
-          </div>
+              <button type="button" class="btn btn-outline-danger">스터디 신고</button>
+          </div> 
         <div>
           <br><br><br>
           <span class="fs-4 fw-bold">컨텐츠</span>

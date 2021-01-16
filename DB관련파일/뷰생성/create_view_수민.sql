@@ -94,7 +94,8 @@ FROM TBL_STUDY_OPEN B JOIN TBL_STUDY_ACCUSE R
         LEFT JOIN TBL_HANDLE_RESULT HR
         ON HR.HANDLE_RESULT_CODE = H.HANDLE_RESULT_CODE;
 
-
+select *
+from RH_BOARDLIST_VIEW;
 
 -- ○ Report_detailpage.jsp(각종 게시판 신고처리 상세페이지를 위한 뷰 - 게시물코드, 피신고자, 신고자, 신고일, 카테고리, 기타내용)
 -- ○ 뷰 이름 : RH_REPORTLIST_VIEW

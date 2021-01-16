@@ -52,6 +52,7 @@ END;
 --DESC TBL_STUDY_ACCUSE;
 --==>>Trigger TRG_STUDY_OPEN이(가) 컴파일되었습니다.
 
+
 UPDATE TBL_STUDY_OPEN
 SET STUDY_NAME ='고구마 팔아요'
 WHERE STUDY_CODE = 'SO9';

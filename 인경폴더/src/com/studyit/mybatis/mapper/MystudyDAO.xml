@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.studyit.mvc.IMystudyDAO">
+
+	<select id="endlist" resultType="com.studyit.mvc.MystudyDTO">
+	SELECT RNUM, STUDY_NAME,CLOSE_DATE,PERIOD,USER_CODE,STUDY_CODE
+			,PARTI_CODE,LEADER,WEEKDAY,END_TIME,PROGRESS,NOWPGS,PLACE
+	FROM VIEW_STUDY_END
+	<!-- WHERE ID = 'phi11' -->
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+	SELECT COUNT(*)
+	FROM TBL_STUDY_PARTICIPANT P JOIN TBL_STUDY_APPLY A
+	ON P.APPLY_CODE = A.APPLY_CODE
+	    JOIN TBL_STUDY_OPEN O
+	    ON A.STUDY_CODE = O.STUDY_CODE
+	       LEFT JOIN TBL_USER_REGISTER R
+	        ON A.USER_CODE = R.USER_CODE 
+	            JOIN TBL_LOC_MC L
+	            ON O.LOC_MC_CODE = L.LOC_MC_CODE 
+	WHERE (SYSDATE >O.END_DATE)
+	<!-- AND R.ID='#{id}' -->
+	</select>
+</mapper>
