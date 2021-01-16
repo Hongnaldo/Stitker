@@ -54,7 +54,7 @@
           </table>   
           </div>
            <div class="col-lg-12 col-md-8 col-sm-12 mt-3 mb-5" style="margin: 0 auto;">
-               <div class="col-5 mt-3" style="margin: 0 auto;">
+               <div class="col-7 mt-3" style="margin: 0 auto;">
               <button type="button" class="btn btn-outline-primary">출석부</button>
               <!-- Button trigger modal -->
               <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#memberList">
@@ -129,8 +129,9 @@
                 </div>
               </div>
               <button type="button" class="btn btn-outline-primary">스터디 후기</button>
+              <button type="button" class="btn btn-outline-primary">스터디원 평가</button>
           </div>
-          </div>
+          </div>  
         <div>
           <br><br><br>
           <span class="fs-4 fw-bold">컨텐츠</span>
