@@ -24,15 +24,18 @@ String cp = request.getContextPath();
 	font-size: 9pt;
 	display: none;
 }
-.divBot a {
-	cursor: pointer;
-	color: #000000;
-	text-decoration: none;
-	font-size: 9pt;
-	line-height: 150%;
-}
 .form-control {
 	margin-bottom: 15px;
+}
+.divBot a
+{
+	text-decoration: none;
+	color: gray;
+}
+.divBot a:hover
+{
+	color: SlateBlue;
+	font-weight: bold;
 }
 </style>
 </head>
@@ -41,12 +44,13 @@ String cp = request.getContextPath();
 		<jsp:include page="header.jsp" flush="false" />
 		<div class="main-content">
 			<br>
+			
+			
 			<div class="login">
 				<div class="divTop">
-					<h5>로그인</h5>
+					<h5><strong>로그인</strong></h5>
 				</div>
 				<br>
-				
 				
 				<form action="login.action" method="post">
 					<div class="login_input">
@@ -58,25 +62,28 @@ String cp = request.getContextPath();
 						<input type="password" class="form-control" id="pw" name="pw"
 							placeholder="비밀번호 입력" required="required" />
 						<p>입력한 아이디와 비밀번호가 일치하지 않습니다. 아이디 또는 비밀번호를 다시 한번 입력해 주세요.</p>
-
+						
+						<br>
+						
 						<div class="custom-control custom-checkbox">
 						<input type="checkbox" id="loginck" class="custom-control-input">
 						<label class="custom-control-label" for="loginck">로그인 상태 유지</label>
 						</div>		
 
 						<!-- 로그인 버튼 -->
-						<button type="submit" class="btn btn-outline-primary form-control"
-							style="margin-top: 15px;">로그인</button>
+						<button type="submit" class="btn btn-outline-primary form-control" style="margin-top: 15px; margin-bottom: 22px;">로그인</button>
 					</div>
 				</form>
 				
 				
 				<div class="divBot">
-					<a href="">회원가입</a> | <a href="<%= cp %>/find_id.jsp">아이디 찾기</a> | <a href="<%= cp %>/find_pw.jsp">비밀번호 찾기</a>
+					<small><a href="">회원가입</a> | <a href="<%= cp %>/find_id.jsp">아이디 찾기</a> | <a href="<%= cp %>/find_pw.jsp">비밀번호 찾기</a></small>
 				</div>
-			</div>
-		</div>
+			</div><!-- end .login -->
+			
+			
+		</div><!-- end .main-content -->
 		<jsp:include page="footer.jsp" flush="false" />
-	</div>
+	</div><!-- end .wrapp -->
 </body>
 </html>

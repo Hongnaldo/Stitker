@@ -19,11 +19,7 @@ String cp = request.getContextPath();
 <!-- 로그인 관련 페이지 공통 css-->
 <link rel="stylesheet" href="<%=cp%>/css/login.css" />
 
-<!-- 아이디 찾기, 비밀번호 찾기 페이지 공통 css --><%-- 
-<link rel="stylesheet" href="<%=cp%>/css/find.css" /> --%>
-
 <style type="text/css">
-
 	#findId_byEmail span
 	{
 		display: none;
@@ -32,48 +28,49 @@ String cp = request.getContextPath();
 	{
 		float: right;
 	}
-
+	.divBot a
+	{
+		text-decoration: none;
+		color: gray;
+	}
+	.divBot a:hover
+	{
+		color: SlateBlue;
+		font-weight: bold;
+	}
 </style>
+
 <!-- 스크립트 처리 -->
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function()
 	{
 		$("#rdo_byEmail").click(function()
 		{
 			$("#findId_byEmail").css("display", "block");
-			/* $("#findId_byTel").css("display", "none"); */
 		});
-/* 
-		$("#rdo_byTel").click(function()
-		{
-			$("#findId_byTel").css("display", "block");
-			$("#findId_byEmail").css("display", "none");
-		});
-		 */
+
 	});
 </script>
-
 </head>
 <body>
 	<div class="wrapper">
 		<jsp:include page="header.jsp" flush="false" />
 		<div class="main-content"><br>
 
+
+
 			<div class="login">
 				<div class="divTop">
-					<!-- <h5>
-						아이디 찾기<br> <small>아이디 찾기 방법을 선택해 주세요.</small>
-					</h5> -->
-					<p class="category">
-						아이디 찾기<br> <small>아이디 찾기 방법을 선택해 주세요.</small>
-					</p>
+					<h5>
+						<strong>아이디 찾기</strong>
+						<!-- <small>이메일을 입력해주세요.</small> -->
+					</h5>
 				</div>
-				<br />
+				<br>
 
 
-				<!-- 이메일로 찾기 -->
+				<!-- 이메일로 아이디 찾기 -->
 				<form action="">
 					<div class="form-group">
 						<label for=""> <span class="findTxt"> 내 정보에 등록된 이메일로
@@ -82,47 +79,31 @@ String cp = request.getContextPath();
 
 						<div id="findId_byEmail" style="display: block;">
 							<div class="form-group">
-								<input type="text" class="form-control"
-									placeholder="email@example.com" required="required" /> <span
-									style="color: red; font-size: small;">입력한 이메일과 일치하는 회원정보가 존재하지 않습니다.</span>
+								<input type="email" class="form-control" placeholder="email@example.com" required="required" /> 
+								<span style="color: red; font-size: small;">입력한 이메일과 일치하는 회원정보가 존재하지 않습니다.</span>
+								<br>
+								<br>
+								<br>
 							</div>
 							<button type="submit" class="btn btn-outline-primary">다음 단계</button>
-							<br />
+							<br>
 						</div>
 					</div>
 				</form>
-				<br /> <br />
-
-<!-- 
-				휴대폰 번호로 찾기
-				<form action="">
-					<div class="form-group">
-						<label for="rdo_byTel"> <input type="radio" id="rdo_byTel" /><span
-							class="findTxt"> 내 정보에 등록된 휴대폰 번호로 찾기</span>
-						</label>
-
-						<div id="findId_byTel">
-							<div class="form-group">
-								<input type="text" class="form-control"
-									placeholder="012-3456-7890" required="required" /> <span
-									style="color: red; font-size: small;">입력한 번호와 일치하는 회원정보가
-									존재하지 않습니다.</span>
-							</div>
-							<button type="submit" class="btn btn-outline-primary">다음
-								단계</button>
-						</div>
-					</div>
-				</form>
-				<br /> <br />
- -->
+				<br>
+				<br>
 
 				<div class="divBot">
 					<small>비밀번호를 찾으시나요? <a href="<%= cp %>/Find_pw.jsp">비밀번호 찾기</a></small>
 				</div>
-			</div>
+				
+			</div><!-- end .login -->
 
-		</div>
+
+
+		</div><!-- end .main-content -->
+		
 		<jsp:include page="footer.jsp" flush="false" />
-	</div>
+	</div><!-- end .wrapper -->
 </body>
 </html>

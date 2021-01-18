@@ -7,21 +7,7 @@
 	
 	  페이지 공통 CSS
 	*/
-	/* 
-	 #findId_byTel, #findId_byEmail, #find_byQnA
-	{
-		display: none;
-	}
-	#findId_byTel span, #findId_byEmail span, #find_byQnA span
-	{
-		display: none;
-	}
-	#findId_byTel button, #findId_byEmail button, #find_byQnA button
-	{
-		float: right;
-	}
-	 */
-	
+
 	#findId_byEmail, #find_byQnA
 	{
 		display: none;
@@ -29,8 +15,19 @@
 	#findId_byEmail span, #find_byQnA span
 	{
 		display: none;
+		
 	}
 	#findId_byEmail button, #find_byQnA button
 	{
 		float: right;
 	}
+/* 	.divBot a
+	{
+		text-decoration: none;
+		color: gray;
+	}
+	.divBot a:hover
+	{
+		color: SlateBlue;
+		font-weight: bold;
+	} */
