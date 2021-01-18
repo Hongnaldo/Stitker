@@ -95,10 +95,8 @@ String cp = request.getContextPath();
 								</span>
 							</div>
 						</div>
-					</div>
-					<!-- content_TableBody -->
-				</div>
-				<!-- content_Table -->
+					</div><!-- content_TableBody -->
+				</div><!-- content_Table -->
 				<br /><br /><br />
 			</div>
 
@@ -111,7 +109,7 @@ String cp = request.getContextPath();
 						<div class="content_Row">
 							<div class="content_Cell">
 								<h1 style="text-align: left; padding-left: 20%;">
-									<span id="highlight">스터딧</span><br /> <span id="titlea">인기있는 스터디</span>
+									<span id="highlight">스터딧</span><br /> <span id="titlea">관심분야 스터디</span>
 								</h1>
 							</div>
 							<div class="content_Cell"></div>

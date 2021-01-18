@@ -2,6 +2,7 @@
 	LoginController.java
 	- 로그인 폼 컨트롤러
 	- 로그인 액션 컨트롤러
+	- 로그아웃 액션 컨트롤러
 ==================================*/
 
 package com.studyit.mybatis;
@@ -62,6 +63,7 @@ public class LoginController
 				session.setAttribute("code", code);
 				session.setAttribute("id", dto.getId());
 				session.setAttribute("pw", dto.getPw());
+				session.setAttribute("admin", "admin");
 				
 				
 				// ◆ 관리자로 로그인 성공 시 요청할 페이지 ◆
@@ -86,6 +88,7 @@ public class LoginController
 				session.setAttribute("code", code);
 				session.setAttribute("id", dto.getId());
 				session.setAttribute("pw", dto.getPw());
+				session.setAttribute("admin", null);
 				
 				// ◆ 일반 사용자로 로그인 성공 시 요청할 페이지 ◆
 				result = "redirect:studyit.action";
@@ -93,6 +96,21 @@ public class LoginController
 		}
 		
 		return result;
+	}
+	
+	// 로그아웃 액션 
+	@RequestMapping(value = "/logout.action", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request)
+	{
+		HttpSession session = request.getSession();
+		
+		session.removeAttribute("code");
+		session.removeAttribute("id");
+		session.removeAttribute("pw");
+		session.removeAttribute("admin");
+		
+		return "redirect:studyit.action";
+		
 	}
 }
 

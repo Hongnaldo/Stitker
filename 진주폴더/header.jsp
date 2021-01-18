@@ -18,7 +18,7 @@ String cp = request.getContextPath();
 	.headerNav > a:hover
 	{
 		color: SlateBlue;
-		font-weight: bold;
+		/* font-weight: bold; */
 	}
 </style>
 </head>
@@ -69,12 +69,32 @@ String cp = request.getContextPath();
 					</ol> 
 					-->
 				<nav class="headerNav">
+					 
 					<span class="bar">|</span>
-					<a href="#">로그인</a>
-					<span class="bar">|</span>
-					<a href="#">회원가입</a>
-					<span class="bar">|</span>
-					<a href="#">고객센터</a>
+					<c:choose>
+						<c:when test="${sessionScope.code==null }">
+							<a href="loginform.action">로그인</a>
+							<span class="bar">|</span>
+							<a href="#">회원가입</a>
+							<span class="bar">|</span>
+							<a href="#">고객센터</a>
+						</c:when>
+						<c:when test="${sessionScope.admin==null }">
+							<a href="logout.action">로그아웃</a>
+							<span class="bar">|</span>
+							<a href="#">마이페이지</a>
+							<span class="bar">|</span>
+							<a href="#">고객센터</a>
+						</c:when>
+						<c:otherwise>
+							<a href="logout.action">로그아웃</a>
+							<span class="bar">|</span>
+							<a href="#">신고처리</a>
+							<span class="bar">|</span>
+							<a href="#">문의관리</a>
+						</c:otherwise>
+					</c:choose>
+					 
 				</nav>
 			</div>
 		</div>
