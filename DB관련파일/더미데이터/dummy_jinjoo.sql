@@ -1,6 +1,6 @@
 
-
 -- 요일 테이블 데이터 입력
+INSERT INTO TBL_WEEKDAY(WEEKDAY_CODE, WEEKDAY) VALUES('WD'||WEEKDAY_SEQ.NEXTVAL, '일');
 INSERT INTO TBL_WEEKDAY(WEEKDAY_CODE, WEEKDAY) VALUES('WD'||WEEKDAY_SEQ.NEXTVAL, '월');
 INSERT INTO TBL_WEEKDAY(WEEKDAY_CODE, WEEKDAY) VALUES('WD'||WEEKDAY_SEQ.NEXTVAL, '화');
 INSERT INTO TBL_WEEKDAY(WEEKDAY_CODE, WEEKDAY) VALUES('WD'||WEEKDAY_SEQ.NEXTVAL, '수');
@@ -9,11 +9,9 @@ INSERT INTO TBL_WEEKDAY(WEEKDAY_CODE, WEEKDAY) VALUES('WD'||WEEKDAY_SEQ.NEXTVAL,
 INSERT INTO TBL_WEEKDAY(WEEKDAY_CODE, WEEKDAY) VALUES('WD'||WEEKDAY_SEQ.NEXTVAL, '토');
 INSERT INTO TBL_WEEKDAY(WEEKDAY_CODE, WEEKDAY) VALUES('WD'||WEEKDAY_SEQ.NEXTVAL, '일');
 --==>> 입력 완.
-
 SELECT *
 FROM TBL_WEEKDAY
-ORDER BY 1;
-
+ORDER BY TO_NUMBER(SUBSTR(WEEKDAY_CODE, 3));
 
 
 -- 인원수 테이블 데이터 입력
@@ -24,10 +22,9 @@ INSERT INTO TBL_MEMNUM(MEMNUM_CODE, MEMNUM) VALUES('MN'||MEMNUM_SEQ.NEXTVAL, 6);
 INSERT INTO TBL_MEMNUM(MEMNUM_CODE, MEMNUM) VALUES('MN'||MEMNUM_SEQ.NEXTVAL, 7);
 INSERT INTO TBL_MEMNUM(MEMNUM_CODE, MEMNUM) VALUES('MN'||MEMNUM_SEQ.NEXTVAL, 8);
 --==>> 입력 완.
-
 SELECT *
 FROM TBL_MEMNUM
-ORDER BY 1;
+ORDER BY TO_NUMBER(SUBSTR(MEMNUM_CODE, 3));
 
 
 
@@ -47,6 +44,8 @@ VALUES('UR'||USER_RANK_SEQ.NEXTVAL, 6, 0, 599);
 -->> 입력 완.
 SELECT *
 FROM TBL_USER_RANK;
+
+
 
 -- 스터디 유형 테이블 데이터 입력
 INSERT INTO TBL_STUDY_TYPE(STUDY_TYPE_CODE, STUDY_TYPE) VALUES('ST'||STD_TYPE_SEQ.NEXTVAL, '면접');
@@ -73,7 +72,7 @@ INSERT INTO TBL_INTEREST_LC(INTEREST_LC_CODE, INTEREST_LC) VALUES('IL'||INTER_LC
 --==>> 입력 완.
 SELECT *
 FROM TBL_INTEREST_LC
-ORDER BY INTEREST_LC_CODE;
+ORDER BY TO_NUMBER(SUBSTR(INTEREST_LC_CODE, 3));
 
 
 
@@ -188,8 +187,7 @@ INSERT INTO TBL_LOC_LC(LOC_LC_CODE, LOC_LC) VALUES('LL'||LOC_LC_SEQ.NEXTVAL, '온
 --==>> 입력 완.
 SELECT *
 FROM TBL_LOC_LC
-ORDER BY 1;
-
+ORDER BY TO_NUMBER(SUBSTR(LOC_LC_CODE, 3));
 
 -- 지역 중분류 테이블 데이터 입력
 INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
@@ -253,6 +251,9 @@ VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '울산', 'LL3');
 INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
 VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '부산', 'LL3');
 --==>> 1 행 이(가) 삽입되었습니다.
+SELECT *
+FROM TBL_LOC_MC
+ORDER BY TO_NUMBER(SUBSTR(LOC_MC_CODE, 3));
 
 
 
@@ -275,99 +276,133 @@ VALUES
 , TO_DATE('2020-12-30', 'YYYY-MM-DD')   -- 종료일
 , 'MN1', 'MN2'                          -- 3~4명
 , 'UR4', TO_DATE('2020-12-16', 'YYYY-MM-DD')
-, '카카오톡 개발자 공채 면접 준비', '함께 면접 준비하실분!!!'
+, '스터디 1번', '이미 종료된 스터디 예시 입니다.'
 , 'LM1'                                -- 은평구/서대문구/마포구
 );   
 
--- 진행요일
-INSERT INTO TBL_STUDY_MEETDAY (MEETDAY_CODE, WEEKDAY_CODE, STUDY_CODE, START_TIME, END_TIME)
-VALUES ('MD'|| STD_MEETDAY_SEQ.NEXTVAL,'WD2', 'SO1', '15:00', '17:00');
-                                    -- 월   스터디1   오후 3 ~ 5시
+-- 스터디 개설 (작성 완)
+--     : 이미 끝난 것 1개, 현재 진행 중인 것 1개, 광고글1개 
+--               개설자-1                    개설자-5           개설자-3
 
-INSERT INTO TBL_STUDY_MEETDAY (MEETDAY_CODE, WEEKDAY_CODE, STUDY_CODE, START_TIME, END_TIME) 
-VALUES ('MD'|| STD_MEETDAY_SEQ.NEXTVAL,'WD4', 'SO1', '19:00', '21:00');
-                                    -- 수   스터디1   오후 7 ~ 9시                                 
+SELECT * FROM ALL_CONSTRAINTS WHERE TABLE_NAME = 'TBL_STUDY_OPEN';
+
+-- 스터디 개설 프로시저
+EXEC PRC_STD_OPEN_INSERT('스터디 1번', '이미 종료된 스터디 예시 입니다.', 'IM1', 'ST1', TO_DATE('2020-12-16', 'YYYY-MM-DD'), TO_DATE('2020-12-30', 'YYYY-MM-DD'), 'LM1', 'MN1', 'MN6', 'UR4', 'UC1');
+-- 진행요일
+EXEC PRC_STD_MEETDAY_INSERT('SO4', 'WD2','15:00', '17:00'); 
+EXEC PRC_STD_MEETDAY_INSERT('SO4', 'WD2','15:00', '17:00'); 
+                                    -- 월   스터디1   오후 3 ~ 5시
+                                    -- 수   스터디1   오후 7 ~ 9시 
 
 
 --○ 스터디2, 현재 진행 중인 것
 -- 진행 요일 : 화 8~9
-INSERT INTO TBL_STUDY_OPEN
-( STUDY_CODE, USER_CODE
-, WRITE_DATE
-, STUDY_TYPE_CODE, INTEREST_MC_CODE
-, START_DATE
-, END_DATE
-, MIN_MEM_CODE, MAX_MEM_CODE
-, MIN_RANK, CLOSE_DATE
-, STUDY_NAME, STUDY_DESC
-, LOC_MC_CODE)
-VALUES
-( 'SO'||STD_OPEN_SEQ.NEXTVAL, 'UC5'     --사용자5(조인경)의 유저코드
-, TO_DATE('2020-12-20', 'YYYY-MM-DD')   -- 작성일
-, 'ST2', 'IM2'                          -- 스터티타입:자격증, 관심분야중분류:정보기술컨설팅
-, TO_DATE('2021-01-04', 'YYYY-MM-DD')   -- 시작일
-, TO_DATE('2021-01-18', 'YYYY-MM-DD')   -- 종료일
-, 'MN1', 'MN3'                          -- 3~5명
-, 'UR4', TO_DATE('2021-01-04', 'YYYY-MM-DD')
-, '정보처리기사 자격증 취득 스터디', '스터디로 정처기 박살내실분들!! 성실하신분 환영'
-, 'LM2'                                 -- 종로구/중구/용산구
-);
-
+EXEC PRC_STD_OPEN_INSERT('스터디 2번', '현재 진행 중인 스터디 예시 입니다.', 'IM2', 'ST2', SYSDATE+12, SYSDATE+30, 'LM2', 'MN1', 'MN6', 'UR4', 'UC5');
 -- 진행요일
-INSERT INTO TBL_STUDY_MEETDAY (MEETDAY_CODE, WEEKDAY_CODE, STUDY_CODE, START_TIME, END_TIME) 
-VALUES ('MD'|| STD_MEETDAY_SEQ.NEXTVAL,'WD3', 'SO2', '20:00', '21:00');
+EXEC PRC_STD_MEETDAY_INSERT('SO2', 'WD3','20:00', '21:00'); 
 --                                     화   스터디2  오후 8 ~ 9시
 
 
 --○ 스터디3, 광고 글
 -- 진행 요일 : 금 오후 6 ~ 8시
-INSERT INTO TBL_STUDY_OPEN
-( STUDY_CODE, USER_CODE
-, WRITE_DATE
-, STUDY_TYPE_CODE, INTEREST_MC_CODE
-, START_DATE
-, END_DATE
-, MIN_MEM_CODE, MAX_MEM_CODE
-, MIN_RANK, CLOSE_DATE
-, STUDY_NAME, STUDY_DESC
-, LOC_MC_CODE)
-VALUES
-( 'SO'||STD_OPEN_SEQ.NEXTVAL, 'UC7'     --사용자7(김호진)의 유저코드
-, TO_DATE('2021-01-08', 'YYYY-MM-DD')   -- 작성일
-, 'ST3', 'IM9'                          -- 스터티타입:프로그래밍언어, 관심분야중분류:SW아키텍처
-, TO_DATE('2021-01-18', 'YYYY-MM-DD')   -- 시작일
-, TO_DATE('2021-02-01', 'YYYY-MM-DD')   -- 종료일
-, 'MN1', 'MN6'                          -- 3~8명
-, 'UR4', TO_DATE('2021-01-18', 'YYYY-MM-DD')-- 마감일
-, '@ㄷh박ㄴr는 ㅋrㅈi노ㅂr다2ya기@', '쪽^박n0!!ㄷh박go_수입@보장!!@'
-, 'LM3'                                 -- 도봉구/강북구/성북구/노원구
-);
+
+EXEC PRC_STD_OPEN_INSERT('스터디 3번(광고스팸)', '@ㄷh박ㅋrㅈi노ㅂr다2ya기@', 'IM3', 'ST3', SYSDATE+12, SYSDATE+30, 'LM3', 'MN1', 'MN6', 'UR4', 'UC7');
 -- 진행요일
-INSERT INTO TBL_STUDY_MEETDAY (MEETDAY_CODE, WEEKDAY_CODE, STUDY_CODE, START_TIME, END_TIME) 
-VALUES ('MD'|| STD_MEETDAY_SEQ.NEXTVAL,'WD6', 'SO3', '18:00', '20:00');   
---                                    --금   스터디3  오후 6 ~ 8시
+EXEC PRC_STD_MEETDAY_INSERT('SO3', 'WD6','18:00', '20:00');  
+--                         --금   스터디3  오후 6 ~ 8시
+
+EXEC PRC_STD_OPEN_INSERT('스터디 5번', '스터디 2번과 시간이 겹치는 스터디입니다.', 'IM5', 'ST5', SYSDATE+12, SYSDATE+30, 'LM5', 'MN1', 'MN6', 'UR4', 'UC3');
+-- 진행요일
+EXEC PRC_STD_MEETDAY_INSERT('SO5', 'WD3','20:00', '21:00'); 
+--                                     화   스터디2  오후 8 ~ 9시
+
+EXEC PRC_STD_OPEN_INSERT('스터디 6번', '스터디 2번과 시간이 겹치는 스터디입니다.', 'IM5', 'ST5', SYSDATE+12, SYSDATE+30, 'LM5', 'MN1', 'MN6', 'UR4', 'UC4');
+-- 진행요일
+EXEC PRC_STD_MEETDAY_INSERT('SO9', 'WD3','20:00', '21:00');
+
+SELECT *
+FROM TBL_STUDY_OPEN
+WHERE STUDY_CODE = 'SO8';
+COMMIT;
+DELETE
+FROM TBL_STUDY_MEETDAY
+WHERE STUDY_CODE = 'SO8';
+
+SELECT *
+FROM TBL_STUDY_APPLY
+WHERE USER_CODE = 'UC3';
+WHERE STUDY_CODE= 'SO9';
+
+SELECT *
+FROM TBL_SCORE;
+
+SELECT *             
+FROM TBL_STUDY_MEETDAY
+ORDER BY TO_NUMBER(SUBSTR(MEETDAY_CODE, 3));
 
 
+SELECT *
+FROM TBL_STUDY_OPEN
+ORDER BY TO_NUMBER(SUBSTR(STUDY_CODE, 3));
+
+COMMIT;
+
+ROLLBACK;
+EXEC PRC_STD_APPLY_INSERT('SO5', 'UC3', 'SP2');
+
+SELECT *
+FROM TBL_STUDY_APPLY;
+
+SELECT *
+FROM TBL_STUDY_APPLY
+WHERE USER_CODE = 'UC3'
+WHERE STUDY_CODE = 'SO2'
+ORDER BY TO_NUMBER(SUBSTR(APPLY_CODE, 3));
+
+SELECT *
+FROM TBL_STUDY_CANCEL C, TBL_STUDY_APPLY A
+WHERE USER_CODE = 'UC3' 
+  AND C.APPLY_CODE = A.APPLY_CODE;
+WHERE STUDY_CODE = 'SO4';
+--> UC3은 SO2와 SO5를 취소한상태.
+
+-- 취소한 스터디를 다시 신청하려고할때 시간겹친다는 내역 나오면 안됨.
+EXEC PRC_STD_APPLY_INSERT('SO5', 'UC3', 'SP2');
+EXEC PRC_STD_APPLY_UPDATE('SO5', 'UC3'); -- 취소한것도 비교되긴 하는데..  어차피 취소한거는 다시 신청못하도록.했으니까 ..
+
+COMMIT;
+
+SA2
+SA12
+SA13
+SA6
+SA11
+SA5
+
+    SELECT A.STUDY_CODE 
+    FROM TBL_STUDY_CANCEL C, TBL_STUDY_APPLY A
+    WHERE C.APPLY_CODE = A.APPLY_CODE
+      AND A.USER_CODE = 'UC3';
+
+--==>> SA 2, 6, 11
+EXEC PRC_INSERT_CANCEL('SA13', TO_DATE('2021-01-17', 'YYYY-MM-DD'), NULL); 
 
 
+EXEC PRC_STD_APPLY_INSERT('SO5', 'UC3', 'SP2');
+-- SA9	SO4	UC3		SP2
+EXEC PRC_STD_APPLY_UPDATE('SO5', 'UC3');
 
 
+SELECT *
+FROM TBL_SCORE;
 
-
-
-
-
-
-
-
-
-
+COMMIT;
 --■ 아직 인서트문 실행 안함 ■--
 
 INSERT INTO TBL_LOC_MC(LOC_MC_CODE, LOC_MC, LOC_LC_CODE)
 VALUES('LM'||LOC_MC_SEQ.NEXTVAL, '온라인', 'LL4'); -- 보류
-
-
+SELECT *
+FROM TBL_SCORE;
 
 
 

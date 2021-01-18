@@ -7,7 +7,7 @@
 						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 						http://www.springframework.org/schema/context
 						http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-	<context:component-scan base-package="org.springframework.samples.petclinic.web" />
+	
 	
 	<!-- ※ 『dispatcher-servlet.xml』의 기본 샘플 코드 -->
 	<!--    이 코드는 기본 설정 내용을 복사하기 위해서 스프링 doc 를 참고하여 작성한다. -->
@@ -16,7 +16,60 @@
 	<!--    → 문서 본문 내용의 425 페이지(직접 이동 450 / 850)로 이동 -->
 	<!--    → 페이지 하단의 XML 파일 샘플코드 복사 & 붙여넣기 -->
 	
-	
+	<!-- ① 기존 코드 -->
+	<!-- ※ Annotation 표기법으로 Controller 객체를 등록한다. -->
+	<context:component-scan base-package="com.studyit.mybatis" />
 
+	<!-- ③ mybatis 등록 과정에서 생겨나는 추가 코드 『2』 -->
+	<!-- ※ mybatis 를 사용하기 위해 환경 설정을 추가하는 과정에서 
+	        필요한 dataSource 를 사용하기 위한 환경 설정 추가 -->
+	<bean id="remoteDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@211.238.142.153:1521:xe"></property>
+		<property name="username" value="stitker"></property>
+		<property name="password" value="java006$"></property>
+	</bean>
+
+
+
+	<!-- sqlSessionFactory를 등록하는 과정에서 두가지 속성을 등록해줘야하는데 
+	mybatis 는 jdbc기반 . jdbc기반으로 운용할수있게 데이터소스 등록해주고
+	우리가 java에 작성하던 sql을 xml파일에 모아서 관리하는게 핵심이라고했으니까
+	xml파일을 추가해줘야함.(매퍼파일) -->
+
+
+
+	<!-- ② mybatis 등록 과정에서 생겨나는 추가 코드 『1』 -->
+	<!-- ※ mybatis 를 사용하기 위한 환경 설정 추가 -->
+	<!--    → SqlSessionFactoryBean -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	
+		<!-- ④ dataSource 를 등록하고 와서 다시 추가 -->
+		<property name="dataSource" ref="remoteDataSource"></property>
+		
+		<!-- ⑤ 매퍼 파일을 작성하고 와서 다시 추가 -->
+		<!-- <property name="mapperLocations" value="classpath:com.studyit.mvc.mapper/*.xml"></property> -->
+		
+		<!-- ⑤ 매퍼 파일을 작성하고 와서 다시 추가 -->
+		<property name="mapperLocations" value="classpath:com/studyit/mybatis/mapper/*.xml"></property>
+	</bean>
+
+
+
+	<!-- 마이바티스가 sql세션이 필요해서 이렇게↑ sql세션팩토리빈 등록한거.
+	이 팩토리빈으로 부터 sql세션을 얻어내도록 처리↓ -->
+
+
+	
+	<!-- ⑥ mybatis 등록 과정에서 생겨나는 추가 코드 『3』 -->
+	<!-- ※ sqlSession 을 사용하기 위한 환경 설정 추가 -->
+	<!--    → SqlSessionTemplate 등록 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
+		<!-- 생성자의 인자로 sqlSessionFactory를 준다는 것.
+		이거는 컨스트럭트 인젝션임 / 이전까지는 setter인젝션 -->
+	</bean>
+
+	
 
 </beans>
