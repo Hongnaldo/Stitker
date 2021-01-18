@@ -1,0 +1,23 @@
+
+○ 로그인 관련 파일(mybatis)
+
+	# 1. LoginDTO.java		로그인 관련 속성 자료형 클래스
+
+	# 2. ILoginDAO.java		인터페이스
+					로그인 관련 메소드 정의
+
+	# 3. LoginDAO.xml		ILoginDAO.java 매퍼 파일
+
+	# 4. LoginController.java	로그인 폼 컨트롤러 + 로그인 액션 컨트롤러
+
+	# 5. LoginForm.jsp		로그인 폼
+
+	# 6. login.css			로그인 폼 CSS
+
+
+
+	로그인 성공시 세션에 code, id, pw 탑재됩니다..^^
+	로그 아웃은 아직 구현 안돼서 창닫아서 세션 없애주셔야 합니다..^^
+
+
+		
