@@ -3,6 +3,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
+
 %>
 <!DOCTYPE html>
 <html>
@@ -18,14 +19,14 @@ String cp = request.getContextPath();
 	.headerNav > a:hover
 	{
 		color: SlateBlue;
-		/* font-weight: bold; */
+		font-weight: bold;
 	}
 </style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm navbar-light bg-light">
 		<div class="container-fluid">
-			<a class="navbar-brand m-sm-3" href="#"> <img
+			<a class="navbar-brand m-sm-3" href="studyit.action"> <img
 				src="images/logo3.png" alt="" width="150px" height="70px">
 			</a>
 			<button class="navbar-toggler" type="button"

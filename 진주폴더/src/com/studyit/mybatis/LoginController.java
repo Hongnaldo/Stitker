@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -33,7 +34,7 @@ public class LoginController
 	
 	// 로그인 액션
 	@RequestMapping(value = "/login.action", method = RequestMethod.POST)
-	public String login(LoginDTO dto, HttpServletRequest request)
+	public String login(LoginDTO dto, HttpServletRequest request, Model model)
 	{
 		ILoginDAO dao = sqlSession.getMapper(ILoginDAO.class);
 		
@@ -61,10 +62,11 @@ public class LoginController
 				// 로그인 성공 → 세션 구성
 				HttpSession session = request.getSession();
 				session.setAttribute("code", code);
-				session.setAttribute("id", dto.getId());
-				session.setAttribute("pw", dto.getPw());
 				session.setAttribute("admin", "admin");
 				
+				model.addAttribute("admincode", code);
+				model.addAttribute("adminid", dto.getId());
+				model.addAttribute("adminpw", dto.getPw());
 				
 				// ◆ 관리자로 로그인 성공 시 요청할 페이지 ◆
 				result = "redirect:studyit.action";
@@ -86,9 +88,11 @@ public class LoginController
 				// 로그인 성공 → 세션 구성
 				HttpSession session = request.getSession();
 				session.setAttribute("code", code);
-				session.setAttribute("id", dto.getId());
-				session.setAttribute("pw", dto.getPw());
 				session.setAttribute("admin", null);
+				
+				model.addAttribute("usercode", code);
+				model.addAttribute("userid", dto.getId());
+				model.addAttribute("userpw", dto.getPw());
 				
 				// ◆ 일반 사용자로 로그인 성공 시 요청할 페이지 ◆
 				result = "redirect:studyit.action";
@@ -97,6 +101,7 @@ public class LoginController
 		
 		return result;
 	}
+	
 	
 	// 로그아웃 액션 
 	@RequestMapping(value = "/logout.action", method = RequestMethod.GET)

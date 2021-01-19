@@ -56,53 +56,48 @@ String cp = request.getContextPath();
 <body>
 	<div class="wrapper">
 		<jsp:include page="header.jsp" flush="false" />
-		<div class="main-content"><br>
-
+		<div class="main-content">
+		<br>
 
 
 			<div class="login">
 				<div class="divTop">
 					<h5>
 						<strong>아이디 찾기</strong>
-						<!-- <small>이메일을 입력해주세요.</small> -->
 					</h5>
 				</div>
 				<br>
 
-
 				<!-- 이메일로 아이디 찾기 -->
-				<form action="/findid.action" method="post">
+				<form action="findid.action" method="post">
 					<div class="form-group">
-						<label for="">
-							<span class="findTxt"> 내 정보에 등록된 이메일로 찾기</span>
+						<label for=""> 
+							<span style="color: black;"> 내 정보에 등록된 이메일로 찾기</span>
 						</label>
 
-						<div id="findId_byEmail" style="display: block;">
+						<div id="findId_byEmail" style="display: block; margin-top: 5px;">
 							<div class="form-group">
 								<input type="email" class="form-control" id="email" name="email"
-								 placeholder="email@example.com" required="required" /> 
+								placeholder="email@example.com" required="required" /> 
 								<span style="color: red; font-size: small;">입력한 이메일과 일치하는 회원정보가 존재하지 않습니다.</span>
-								<br>
-								<br>
-								<br>
+								<br><br><br>
 							</div>
 							<button type="submit" class="btn btn-outline-primary">다음 단계</button>
 							<br>
 						</div>
 					</div>
 				</form>
-				<br>
-				<br>
+				<br><br>
 
 				<div class="divBot">
-					<small>비밀번호를 찾으시나요? <a href="">비밀번호 찾기</a></small>
+					<small>비밀번호를 찾으시나요? <a href="findpwform.action">비밀번호 찾기</a></small>
 				</div>
 				
 			</div><!-- end .login -->
 
 
-
 		</div><!-- end .main-content -->
+		
 		<jsp:include page="footer.jsp" flush="false" />
 	</div><!-- end .wrapper -->
 </body>

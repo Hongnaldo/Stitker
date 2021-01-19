@@ -704,3 +704,4 @@ BEGIN
 
 END;
 --==>> Procedure PRC_STD_APPLY_UPDATE이(가) 컴파일되었습니다.
+

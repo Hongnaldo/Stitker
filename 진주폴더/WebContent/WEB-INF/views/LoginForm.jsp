@@ -15,7 +15,6 @@ String cp = request.getContextPath();
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/5cdf4f755d.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <!-- 로그인 관련 페이지 공통 css-->
 <link rel="stylesheet" href="<%=cp%>/css/login.css" />
 <style type="text/css">
@@ -42,10 +41,11 @@ String cp = request.getContextPath();
 <body>
 	<div class="wrapper">
 		<jsp:include page="header.jsp" flush="false" />
-		<div class="main-content">
-			<br>
+		<div class="main-content" style="margin-left:auto; margin-right:auto;">
 			
 			
+			<div>
+			<br><br>
 			<div class="login">
 				<div class="divTop">
 					<h5><strong>로그인</strong></h5>
@@ -63,7 +63,7 @@ String cp = request.getContextPath();
 							placeholder="비밀번호 입력" required="required" />
 						<p>입력한 아이디와 비밀번호가 일치하지 않습니다. 아이디 또는 비밀번호를 다시 한번 입력해 주세요.</p>
 						
-						<br>
+						<br><br>
 						
 						<div class="custom-control custom-checkbox">
 						<input type="checkbox" id="loginck" class="custom-control-input">
@@ -77,10 +77,10 @@ String cp = request.getContextPath();
 				
 				
 				<div class="divBot">
-					<small><a href="">회원가입</a> | <a href="<%= cp %>/find_id.jsp">아이디 찾기</a> | <a href="<%= cp %>/find_pw.jsp">비밀번호 찾기</a></small>
+					<small><a href="">회원가입</a> | <a href="findidform.action">아이디 찾기</a> | <a href="findpwform.action">비밀번호 찾기</a></small>
 				</div>
 			</div><!-- end .login -->
-			
+			</div>
 			
 		</div><!-- end .main-content -->
 		<jsp:include page="footer.jsp" flush="false" />
