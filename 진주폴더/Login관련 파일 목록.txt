@@ -23,7 +23,9 @@
 
 ---------------------------------------------------------------------------------------
 	로그인 성공시 세션에 code, id, pw, admin여부(일반사용자는 null) 탑재됩니다..^^
-	
+	sessionScope.code 또는
+	session.getSession("code") 
+	이런 방식으로 가져다 쓰실 수 있을 것 같습니다.
 
 	LoginController.java 에서 	
 

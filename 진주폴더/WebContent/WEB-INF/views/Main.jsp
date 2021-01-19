@@ -33,8 +33,7 @@ String cp = request.getContextPath();
 						<div class="content_Row">
 							<div class="content_Cell">
 								<h1 style="text-align: left; padding-left: 20%;">
-									<span id="highlight">스터딧</span><br /> <span id="titlea">어떤
-										점이 좋나요?</span>
+									<span id="highlight">스터딧</span><br /> <span id="titlea">어떤	점이 좋나요?</span>
 								</h1>
 							</div>
 						</div>

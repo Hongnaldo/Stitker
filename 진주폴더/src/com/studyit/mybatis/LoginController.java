@@ -34,16 +34,19 @@ public class LoginController
 	
 	// 로그인 액션
 	@RequestMapping(value = "/login.action", method = RequestMethod.POST)
-	public String login(LoginDTO dto, HttpServletRequest request, Model model)
+	public String login(LoginDTO dto, HttpServletRequest request)
 	{
 		ILoginDAO dao = sqlSession.getMapper(ILoginDAO.class);
 		
 		
-		String result = null;	// 리턴할 뷰 페이지 주소를 담을 변수
-		String code = null;		// 세션에 setAttribute할 사용자_CODE 값을 담을 변수
-		String id = null;		// 세션에 setAttribute할 사용자 id 를 담을 변수
-		String pw = null;		// 세션에 setAttribute할 사용자 pw 를 담을 변수
+		String result = null;	 // 리턴할 뷰 페이지 주소를 담을 변수
+		String code = null;		 // 세션에 setAttribute할 사용자_CODE 값을 담을 변수
+		String id = dto.getId(); // 세션에 setAttribute할 사용자 id 
+		String pw = dto.getPw(); // 세션에 setAttribute할 사용자 pw 
 		
+		// 테스트
+		//System.out.println(id);
+		//System.out.println(pw);
 		
 		// 로그인 처리 → 대상에 따른 로그인 처리 방식 구분
 		if (dto.getId().substring(0, 1).equals("@"))
@@ -62,11 +65,10 @@ public class LoginController
 				// 로그인 성공 → 세션 구성
 				HttpSession session = request.getSession();
 				session.setAttribute("code", code);
+				session.setAttribute("userid", id);
+				session.setAttribute("userpw", pw);
 				session.setAttribute("admin", "admin");
 				
-				model.addAttribute("admincode", code);
-				model.addAttribute("adminid", dto.getId());
-				model.addAttribute("adminpw", dto.getPw());
 				
 				// ◆ 관리자로 로그인 성공 시 요청할 페이지 ◆
 				result = "redirect:studyit.action";
@@ -88,11 +90,10 @@ public class LoginController
 				// 로그인 성공 → 세션 구성
 				HttpSession session = request.getSession();
 				session.setAttribute("code", code);
+				session.setAttribute("userid", id);
+				session.setAttribute("userpw", pw);
 				session.setAttribute("admin", null);
 				
-				model.addAttribute("usercode", code);
-				model.addAttribute("userid", dto.getId());
-				model.addAttribute("userpw", dto.getPw());
 				
 				// ◆ 일반 사용자로 로그인 성공 시 요청할 페이지 ◆
 				result = "redirect:studyit.action";
