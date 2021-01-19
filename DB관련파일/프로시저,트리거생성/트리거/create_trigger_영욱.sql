@@ -3,7 +3,7 @@
 -- 시퀀스 앞에 영어 두 글자 수정하기
 
 --○ it, 기술정보 공유 게시판 글 작성 점수 추가TRIGGER(트리거) 생성
-CREATE OR REPLACE TRIGGER TRG_BI_
+CREATE OR REPLACE TRIGGER TRG_BI_SCORE
         AFTER
         INSERT  ON TBL_BOARD_INFORM
         FOR EACH ROW    
@@ -11,18 +11,16 @@ BEGIN
     
     -- 게시물을 등록한 사용자 점수 추가
     INSERT INTO TBL_SCORE(SCORE_CODE, USER_CODE, SCORE, SCORE_DATE)
-    VALUES('??'||STUDY_ASSE_RESP_SEQ.NEXTVAL, :NEW.USER_CODE, 5, SYSDATE);
+    VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, :NEW.USER_CODE, 5, SYSDATE);
 
    -- COMMIT;
    -- ※ TRIGGER 내에서는 COMMT/ ROLLBACK 구문 사용 불가~!!!
 END;
 
 
---@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@----
-
 
 --○ 면접,코딩테스트 후기 게시판 글 작성 점수 추가TRIGGER(트리거) 생성
-CREATE OR REPLACE TRIGGER TRG_BI_
+CREATE OR REPLACE TRIGGER TRG_BV_SCORE
         AFTER
         INSERT  ON TBL_BOARD_INTERVIEW
         FOR EACH ROW
@@ -30,18 +28,16 @@ BEGIN
     
     -- 게시물을 등록한 사용자 점수 추가
     INSERT INTO TBL_SCORE(SCORE_CODE, USER_CODE, SCORE, SCORE_DATE)
-    VALUES('??'||STUDY_ASSE_RESP_SEQ.NEXTVAL, :NEW.USER_CODE, 5, SYSDATE);
+    VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, :NEW.USER_CODE, 5, SYSDATE);
 
    -- COMMIT;
    -- ※ TRIGGER 내에서는 COMMT/ ROLLBACK 구문 사용 불가~!!!
 END;
 
 
---@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@----
-
 
 --○ 세미나,공모전 게시판 글 작성 점수 추가TRIGGER(트리거) 생성
-CREATE OR REPLACE TRIGGER TRG_BI_
+CREATE OR REPLACE TRIGGER TRG_BS_SCORE
         AFTER
         INSERT  ON TBL_BOARD_SEMINAR
         FOR EACH ROW
@@ -50,95 +46,52 @@ BEGIN
     
     -- 게시물을 등록한 사용자 점수 추가
     INSERT INTO TBL_SCORE(SCORE_CODE, USER_CODE, SCORE, SCORE_DATE)
-    VALUES('??'||STUDY_ASSE_RESP_SEQ.NEXTVAL, :NEW.USER_CODE, 5, SYSDATE);
+    VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, :NEW.USER_CODE, 5, SYSDATE);
 
    -- COMMIT;
    -- ※ TRIGGER 내에서는 COMMT/ ROLLBACK 구문 사용 불가~!!!
 END;
-
-
-
---@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@----
 
 
 --○ 스터디 후기 게시판 글 작성 점수 추가TRIGGER(트리거) 생성
-CREATE OR REPLACE TRIGGER TRG_BI_
+CREATE OR REPLACE TRIGGER TRG_BSR_SCORE
         AFTER
         INSERT  ON TBL_BOARD_STUDYREVIEW
         FOR EACH ROW
+DECLARE  
+V_USER_CODE VARCHAR2(10);
+
 BEGIN
+    
+    -- 유저 코드 받아오기
+    SELECT A.USER_CODE INTO V_USER_CODE
+    FROM TBL_STUDY_PARTICIPANT P JOIN TBL_STUDY_APPLY A 
+    ON P.APPLY_CODE = A.APPLY_CODE
+    WHERE PARTI_CODE = :NEW.PARTI_CODE ;
     
     -- 게시물을 등록한 사용자 점수 추가
     INSERT INTO TBL_SCORE(SCORE_CODE, USER_CODE, SCORE, SCORE_DATE)
-    VALUES('??'||STUDY_ASSE_RESP_SEQ.NEXTVAL, :NEW.USER_CODE, 10, SYSDATE);
+    VALUES('SR'||STUDY_SCOR_SEQ.NEXTVAL, V_USER_CODE, 10, SYSDATE);
 
    -- COMMIT;
    -- ※ TRIGGER 내에서는 COMMT/ ROLLBACK 구문 사용 불가~!!!
 END;
 
 
--- 2021-01-13 스터디 개설 비포 트리거
-CREATE OR REPLACE TRIGGER TRG_BEFORE_INSERT_STUDY_OPEN
-BEFORE 
-INSERT ON TBL_STUDY_OPEN
-FOR EACH ROW
-DECLARE  
-V_SUSPEND_CHECK NUMBER;
-V_STUDY_NUM      NUMBER;
-V_SCORE_NUM      NUMBER;
-
--- 예외 처리 변수 선언
-SUSPEND_CHECK_ERROR   EXCEPTION;
-STUDY_NUM_ERROR         EXCEPTION;
-SCORE_NUM_ERROR         EXCEPTION;
-        
-BEGIN
-        
-        --○ 계정정지 확인
-        SELECT COUNT(*) INTO V_SUSPEND_CHECK
-        FROM  ACCOUNT_SUSPEND_VIEW 
-        WHERE ID = :NEW.USER_CODE;
-        
-        IF(V_SUSPEND_CHECK = 1 )
-        THEN    RAISE SUSPEND_CHECK_ERROR;
-        
-        ELSE
-            --○ 등급 확인
-            SELECT SUM(SCORE) INTO V_SCORE_NUM
-            FROM TBL_SCORE
-            WHERE USER_CODE = :NEW.USER_CODE;
-            
-            IF(V_SCORE_NUM < 1800)    
-            THEN    RAISE STUDY_NUM_ERROR;
-            
-            ELSE
-                --○ 참여중인 스터디 갯수 확인
-                SELECT COUNT(*) INTO V_STUDY_NUM
-                FROM MY_NOW_STUDY_VIEW;                
-            
-                IF(V_STUDY_NUM >2)
-                THEN    RAISE SCORE_NUM_ERROR;
-
-                END IF;
-            END IF;
-        END IF;
-        
-        -- 커밋
-        COMMIT;
-        
-        -- 예외처리
-        EXCEPTION
-                WHEN SUSPEND_CHECK_ERROR
-                    THEN    RAISE_APPLICATION_ERROR(-70021,'계정정지상태라 개설불가~!!!');
-                WHEN STUDY_NUM_ERROR
-                    THEN    RAISE_APPLICATION_ERROR(-70022,'4등급 이하라 개설불가~!!!');
-                WHEN SCORE_NUM_ERROR 
-                    THEN    RAISE_APPLICATION_ERROR(-70023,'진행중인 스터디가 2개이상이라 개설불가~!!!');
-                WHEN OTHERS
-                    THEN ROLLBACK;
-END;
-
+commit;
 ---------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO TBL_BOARD_STUDYREVIEW
+VALUES('SR1','PT3',SYSDATE,0,'ASDF','ASFSG','IM1');
+ROLLBACK;
+DROP TRIGGER TRG_SR_SCORE;
+SELECT * FROM TBL_INTEREST_MC;
+SELECT * FROM TBL_BOARD_STUDYREVIEW;
+SELECT * FROM TBL_SCORE;
+SELECT * FROM TBL_WARNING;
+SELECT * FROM TBL_ACCOUNT_SUSPEND;
+update TBL_BOARD_INFORM
+SET CONTENT='수정확인'
+WHERE POST_CODE = 'BI1';
 
 -- it, 기술정보 공유 게시판 수정 BEFORE 트리거
 CREATE OR REPLACE TRIGGER TRG_BEFORE_UPDATE_INFORM
@@ -162,13 +115,11 @@ BEGIN
         THEN    RAISE POST_ERROR;
         END IF;
         
-        -- 커밋
-        COMMIT;
         
         -- 예외처리
         EXCEPTION
                 WHEN POST_ERROR
-                    THEN    RAISE_APPLICATION_ERROR(-70031,'신고 접수된 상태라 수정불가~!!!');
+                    THEN    RAISE_APPLICATION_ERROR(-20031,'신고 접수된 상태라 수정불가~!!!');
                 WHEN OTHERS
                     THEN ROLLBACK;
 END;
@@ -196,13 +147,12 @@ BEGIN
         THEN    RAISE POST_ERROR;
         END IF;
         
-        -- 커밋
-        COMMIT;
+        
         
         -- 예외처리
         EXCEPTION
                 WHEN POST_ERROR
-                    THEN    RAISE_APPLICATION_ERROR(-70031,' 신고 접수된 상태라 수정불가~!!!');
+                    THEN    RAISE_APPLICATION_ERROR(-20031,' 신고 접수된 상태라 수정불가~!!!');
                 WHEN OTHERS
                     THEN ROLLBACK;
 END;
@@ -231,13 +181,11 @@ BEGIN
         THEN    RAISE POST_ERROR;
         END IF;
         
-        -- 커밋
-        COMMIT;
         
         -- 예외처리
         EXCEPTION
                 WHEN POST_ERROR
-                    THEN    RAISE_APPLICATION_ERROR(-70031,' 신고 접수된 상태라 수정불가~!!!');
+                    THEN    RAISE_APPLICATION_ERROR(-20031,' 신고 접수된 상태라 수정불가~!!!');
                 WHEN OTHERS
                     THEN ROLLBACK;
 END;
@@ -266,13 +214,12 @@ BEGIN
         THEN    RAISE POST_ERROR;
         END IF;
         
-        -- 커밋
-        COMMIT;
+        
         
         -- 예외처리
         EXCEPTION
                 WHEN POST_ERROR
-                    THEN    RAISE_APPLICATION_ERROR(-70031,' 신고 접수된 상태라 수정불가~!!!');
+                    THEN    RAISE_APPLICATION_ERROR(-20031,' 신고 접수된 상태라 수정불가~!!!');
                 WHEN OTHERS
                     THEN ROLLBACK;
 END;
@@ -301,13 +248,11 @@ BEGIN
         THEN    RAISE POST_ERROR;
         END IF;
         
-        -- 커밋
-        COMMIT;
         
         -- 예외처리
         EXCEPTION
                 WHEN POST_ERROR
-                    THEN    RAISE_APPLICATION_ERROR(-70031,' 신고 접수된 상태라 수정불가~!!!');
+                    THEN    RAISE_APPLICATION_ERROR(-20031,' 신고 접수된 상태라 수정불가~!!!');
                 WHEN OTHERS
                     THEN ROLLBACK;
 END;
@@ -336,13 +281,11 @@ BEGIN
         THEN    RAISE POST_ERROR;
         END IF;
         
-        -- 커밋
-        COMMIT;
         
         -- 예외처리
         EXCEPTION
                 WHEN POST_ERROR
-                    THEN    RAISE_APPLICATION_ERROR(-70031,' 신고 접수된 상태라 수정불가~!!!');
+                    THEN    RAISE_APPLICATION_ERROR(-20031,' 신고 접수된 상태라 수정불가~!!!');
                 WHEN OTHERS
                     THEN ROLLBACK;
 END;
@@ -371,13 +314,88 @@ BEGIN
         THEN    RAISE POST_ERROR;
         END IF;
         
-        -- 커밋
-        COMMIT;
         
         -- 예외처리
         EXCEPTION
                 WHEN POST_ERROR
-                    THEN    RAISE_APPLICATION_ERROR(-70031,' 신고 접수된 상태라 수정불가~!!!');
+                    THEN    RAISE_APPLICATION_ERROR(-20031,' 신고 접수된 상태라 수정불가~!!!');
+                WHEN OTHERS
+                    THEN ROLLBACK;
+END;
+
+---------------------------------------------
+SELECT * FROM TBL_USER_RANK;
+SELECT * FROM VIEW_STUDY_NOW;
+SELECT * FROM TBL_STUDY_OPEN ORDER BY USER_CODE;
+SELECT * FROM TBL_USER_REGISTER WHERE ID ='khj77'; --uc1,uc7
+SELECT * FROM  ACCOUNT_SUSPEND_VIEW;
+INSERT INTO TBL_STUDY_OPEN
+(study_code, user_code, write_date, hitcount , study_type_code, interest_mc_code, start_date, end_date, min_mem_code, max_mem_code, study_name, min_rank, close_date, study_desc , loc_mc_code) 
+VALUES('SO'||STD_OPEN_SEQ.NEXTVAL, 'UC4', SYSDATE, 0, 'ST3', 'IM7', '2021-01-22', '2021-02-10', 'MN1', 'MN6', '뉴테스트', 'UR4', '2021-01-20', '뉴테스트', 'LM1');
+
+
+-- 스터디 개설 비포 트리거
+CREATE OR REPLACE TRIGGER TRG_BEFORE_INSERT_STUDY_OPEN
+BEFORE 
+INSERT ON TBL_STUDY_OPEN
+FOR EACH ROW
+
+DECLARE  
+V_ID                      VARCHAR2(30);
+V_SUSPEND_CHECK NUMBER;
+V_STUDY_NUM      NUMBER;
+V_SCORE_NUM      NUMBER;
+
+-- 예외 처리 변수 선언
+SUSPEND_CHECK_ERROR   EXCEPTION;
+STUDY_NUM_ERROR         EXCEPTION;
+SCORE_NUM_ERROR         EXCEPTION;
+        
+BEGIN
+        --○ 계정정지 확인을 위한 ID 값 가져오기
+        SELECT ID INTO V_ID
+        FROM TBL_USER_REGISTER
+        WHERE USER_CODE = :NEW.USER_CODE;
+        
+        --○ 계정정지 확인
+        SELECT COUNT(*) INTO V_SUSPEND_CHECK
+        FROM  ACCOUNT_SUSPEND_VIEW 
+        WHERE ID = V_ID;
+        
+        IF(V_SUSPEND_CHECK = 1 )
+        THEN    RAISE SUSPEND_CHECK_ERROR;
+        
+        ELSE
+            --○ 등급 확인
+            SELECT SUM(SCORE) INTO V_SCORE_NUM
+            FROM TBL_SCORE
+            WHERE USER_CODE = :NEW.USER_CODE;
+            
+            
+            IF(V_SCORE_NUM < 1800)    
+            THEN    RAISE SCORE_NUM_ERROR;
+            
+            ELSE
+                --○ 참여중인 스터디 갯수 확인
+                SELECT COUNT(*) INTO V_STUDY_NUM
+                FROM VIEW_STUDY_NOW;                
+            
+                IF(V_STUDY_NUM >2)
+                THEN    RAISE STUDY_NUM_ERROR;
+
+                END IF;
+            END IF;
+        END IF;
+        
+        
+        -- 예외처리
+        EXCEPTION
+                WHEN SUSPEND_CHECK_ERROR
+                    THEN    RAISE_APPLICATION_ERROR(-70021,'계정정지상태라 개설불가~!!!');
+                WHEN STUDY_NUM_ERROR
+                    THEN    RAISE_APPLICATION_ERROR(-70022,'4등급 이하라 개설불가~!!!');
+                WHEN SCORE_NUM_ERROR 
+                    THEN    RAISE_APPLICATION_ERROR(-70023,'진행중인 스터디가 2개이상이라 개설불가~!!!');
                 WHEN OTHERS
                     THEN ROLLBACK;
 END;
@@ -407,6 +425,8 @@ END;
 
 --@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@----
 --○ 경고소멸 : 경고 인서트될 때 마지막 경고 날짜 체크해서 1년 지났으면 그 전 경고 소멸.
+-- 프로시저로 변경해서 함
+/*
 CREATE OR REPLACE TRIGGER TRG_BIA
         BEFORE
         INSERT  ON TBL_WARNING
@@ -497,49 +517,4 @@ BEGIN
 END;
 
 
---@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@----
---○ 내보내기 등록할때 체크해서 50% 넘었으면 내보내기처리 인서트+취소처리에 인서트
-CREATE OR REPLACE TRIGGER TRG_BI_
-        AFTER
-        INSERT  ON TBL_MEM_KICK_REG
-        FOR EACH ROW
-    
-DECLARE
-        -- 스터디 참가자 수 담을 변수 
-        V_APPLY_NUM   NUMBER;
-        -- 내보내기 누른 수 담을 변수
-        V_KICK_NUM      NUMBER;
-        -- 스터디 참가자 코드를 담을 변수
-        V_APPLY_CODE   TBL_STUDY_PARTICIPANT.APPLY_CODE%TYPE;
-        
-BEGIN
-     -- 스터디 참가자 수 확인
-     SELECT COUNT(*) INTO V_APPLY_NUM
-     FROM TBL_STUDY_PARTICIPANT
-     WHERE PARTI_CODE = :NEW.PARTI_KICKED_CODE;
-     
-     -- 내보내기 누른 수 확인
-     SELECT COUNT(*) INTO V_KICK_NUM
-     FROM TBL_MEM_KICK_REG
-     WHERE MEM_KICK_REG_CODE = :NEW.MEM_KICK_REG_CODE;
-     
-     -- 스터디 참가자 코드 확인
-     SELECT APPLY_CODE INTO V_APPLY_CODE
-     FROM TBL_STUDY_PARTICIPANT
-     WHERE APPLY_CODE = :NEW.APPLY_CODE;
-     
-     -- 내보내기 누른 수가 50% 이상인 경우 내보내기 처리 및 스터디 취소 처리 
-     IF( V_KICK_NUM / V_APPLY_NUM >= 0.5 )
-     THEN
-        -- 내보내기 처리
-        INSERT INTO TBL_MEM_KICK_HANDLE
-        (MEM_KICK_HANDLE_CODE, MEM_KICK_REG_CODE, MEM_KICK_HANDLE_DATE)
-        VALUES
-        ('??'||MEM_KH_SEQ.NEXTVAL, :NEW.MEM_KICK_REG_CODE, SYSDATE);
-        
-        -- 스터디 취소 처리
-        INSERT INTO TBL_STUDY_CANCEL
-        (CANCEL_CODE, APPLY_CODE, CANCEL_DATE)
-        VALUES('??'||STUDY_CANC_SEQ.NEXTVAL, V_APPLY_CODE, SYSDATE);
-    END IF;
-END;
+*/

@@ -1,18 +1,4 @@
 
-기술정보공유 신고 등록 여기서 갯수를 세고 5회미만이면 각각의 날짜를 세서 삭제
---○ it, 기술정보 공유 신고 삭제 
-
-EXEC PRC_REPORT_REG_INFORM('GI58',5);
-
-
-SELECT * 
-FROM TBL_BOARD_INFORM;
-
-SELECT * 
-FROM TBL_REPORT_REG_INFORM;
-
-
-TBL_REPORT_REG_INFORM
 --○ 미리 해당 게시물의 신고 갯수가 5회미만인지 판단
 CREATE OR REPLACE PROCEDURE PRC_REPORT_REG_INFORM 
 (  POST_CODE IN TBL_BOARD_INFORM.POST_CODE%TYPE )
@@ -32,9 +18,6 @@ BEGIN
         CUR_REPORT_REG_INFORM(POST_CODE);
         END IF;
 END;
-
-
-
 
 --○ 커서를 이용한 신고 삭제
 CREATE OR REPLACE PROCEDURE CUR_REPORT_REG_INFORM
@@ -83,10 +66,9 @@ END;
 
 --------------------------------------------------------------------------------------------------------------------------------------------
 
-SELECT *
-FROM TBL_STUDY_APPLY
-ORDER BY STUDY_CODE
-;
+
+EXEC PRG_KICK_HANDLE_STUDY_CANCEL('PT4','PT5');
+-- ○ 내보내기 등록 -> 내보내기 갯수가 50% 이상이면 내보내기 처리 및 스터디 취소
 CREATE OR REPLACE PROCEDURE PRG_KICK_HANDLE_STUDY_CANCEL
 ( V_PARTI_KICKED_CODE   IN TBL_STUDY_PARTICIPANT.PARTI_CODE%TYPE 
 , V_PARTI_KICK_CODE     IN TBL_STUDY_PARTICIPANT.PARTI_CODE%TYPE 
@@ -161,6 +143,19 @@ END;
 
 
 
+-----------------------------------------------------------------------------
+--게시판별 신고 등록 프로시저
+EXEC PRC_RPT_REG_INFOM_INSERT( 'BI1', 'UC1', '', 'PR1');                 
+EXEC PRC_RPT_REG_INTERV_INSERT( 'BV2', 'UC1', '', 'PR1');
+EXEC PRC_RPT_REG_SEMINAR_INSERT( 'BS1', 'UC1', '', 'PR1');
+EXEC PRC_RPT_REG_FREE_INSERT( 'BF4', 'UC1', '', 'PR1');
+EXEC PRC_RPT_REG_QUE_INSERT('BQ6', 'UC1', '', 'PR1');
+EXEC PRC_RPT_REG_ANS_INSERT('BA1', 'UC1', '', 'PR1');
+EXEC PRC_RPT_REG_STDREVIEW_INSERT('BR6', 'UC1', '', 'PR1');
+EXEC PRC_RPT_REG_STDOPEN_INSERT('SO4', 'UC1', '', 'PR1');
+
+
+
 
 
 
@@ -168,7 +163,7 @@ END;
 
 
 --------------------------------------
-원본
+/*
 CREATE OR REPLACE PROCEDURE PRG_KICK_HANDLE_STUDY_CANCEL
 ( V_MEM_KICK_REG_CODE IN TBL_MEM_KICK_REG.MEM_KICK_REG_CODE%TYPE
 , V_PARTI_KICKED_CODE   IN TBL_STUDY_PARTICIPANT.PARTI_CODE%TYPE 
@@ -213,6 +208,7 @@ BEGIN
 
 
 END;
+*/
 /*
 --○ 내보내기 등록할때 체크해서 50% 넘었으면 내보내기처리 인서트+취소처리에 인서트
 CREATE OR REPLACE PROCEDURE PRG_KICK_HANDLE_STUDY_CANCEL
