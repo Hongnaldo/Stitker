@@ -108,7 +108,15 @@ String cp = request.getContextPath();
 						<div class="content_Row">
 							<div class="content_Cell">
 								<h1 style="text-align: left; padding-left: 20%;">
-									<span id="highlight">스터딧</span><br /> <span id="titlea">관심분야 스터디</span>
+									<c:choose>
+										<c:when test="${sessionScope.code==null }">
+											<span id="highlight">스터딧</span><br /> <span id="titlea">인기있는 스터디</span>
+										</c:when>
+										<c:otherwise>
+											<span id="highlight">스터딧</span><br /> <span id="titlea">관심분야 스터디</span>
+										</c:otherwise>
+									</c:choose>
+									
 								</h1>
 							</div>
 							<div class="content_Cell"></div>
@@ -118,16 +126,14 @@ String cp = request.getContextPath();
 								</button>
 							</div>
 						</div>
-					</div>
-					<!-- content_TableBody -->
-				</div>
-				<!-- content_Table -->
+					</div><!-- content_TableBody -->
+				</div><!-- content_Table -->
 
 
 
 				<div class="container">
 					<div class="row" style="width: 79%; margin-left: auto; margin-right: auto;">
-						<div class="col-4" style="width: 330px;">
+						<div class="col-4" style="width: 330px; margin-bottom: 15px;">
 							<div class="card">
 								<div class="card-header" style="color: gray; font-size: small;">열려있는 스터디</div>
 								<img src="images/study.jpg" alt="" style="height: 215px;"/>
@@ -140,7 +146,7 @@ String cp = request.getContextPath();
 								</div>
 							</div>
 						</div>
-						<div class="col-4" style="width: 330px">
+						<div class="col-4" style="width: 330px; margin-bottom: 15px;">
 							<div class="card">
 								<div class="card-header" style="color: gray; font-size: small;">열려있는 스터디</div>
 								<img src="images/study2.jpg" alt=""  style="height: 215px;"/>
@@ -153,7 +159,7 @@ String cp = request.getContextPath();
 								</div>
 							</div>
 						</div>
-						<div class="col-4" style="width: 330px">
+						<div class="col-4" style="width: 330px; margin-bottom: 15px;">
 							<div class="card">
 								<div class="card-header" style="color: gray; font-size: small;">열려있는 스터디</div>
 								<img src="images/study3.jpg" alt="" style="height: 215px;"/>
@@ -211,36 +217,22 @@ String cp = request.getContextPath();
 							</tr>
 						</thead>
 						<tbody>
+							<!-- 
 							<tr>
 								<td>박혜인</td>
 								<td>고급 개발자가 되는 법</td>
 								<td>298</td>
 								<td>132</td>
 							</tr>
-							<tr>
-								<td>박혜인</td>
-								<td>고급 개발자가 되는 법</td>
-								<td>298</td>
-								<td>132</td>
-							</tr>
-							<tr>
-								<td>박혜인</td>
-								<td>고급 개발자가 되는 법</td>
-								<td>298</td>
-								<td>132</td>
-							</tr>
-							<tr>
-								<td>박혜인</td>
-								<td>고급 개발자가 되는 법</td>
-								<td>298</td>
-								<td>132</td>
-							</tr>
-							<tr>
-								<td>박혜인</td>
-								<td>고급 개발자가 되는 법</td>
-								<td>298</td>
-								<td>132</td>
-							</tr>
+							-->
+							<c:forEach var="post" items="${informTop5 }">
+								<tr>
+									<td>${post.writer }</td>
+									<td>${post.title }</td>
+									<td>${post.rec }</td>
+									<td>${post.hitcount }</td>
+								</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -276,10 +268,11 @@ String cp = request.getContextPath();
 
 				<div class="container">
 					<div class="row" style="width: 79%; margin-left: auto; margin-right: auto;">
+						<!-- 
 						<div class="col-4" style="width: 330px;">
 							<div class="card">
 								<div class="card-header" style="color: gray; font-size: small;">스터디 후기</div>
-								<!-- <img src="images/study.jpg" alt="" style="height: 215px;"/> -->
+								<img src="images/study.jpg" alt="" style="height: 215px;"/>
 								<div class="card-body">
 									<h5 class="card-title">제목</h5>
 									<p class="card-text">Lorem ipsum dolor sit amet,
@@ -289,32 +282,20 @@ String cp = request.getContextPath();
 								</div>
 							</div>
 						</div>
-						<div class="col-4" style="width: 330px">
-							<div class="card">
-								<div class="card-header" style="color: gray; font-size: small;">스터디 후기</div>
-								<!-- <img src="images/" alt=""  style="height: 215px;"/> -->
-								<div class="card-body">
-									<h5 class="card-title">제목</h5>
-									<p class="card-text">Lorem ipsum dolor sit amet,
-										consectetur adipiscing elit. Nullam egestas sed sem ut
-										malesuada.</p>
-									<a href="#">More</a>
+						-->
+						<c:forEach var="post" items="${stdReviewTop3 }">
+							<div class="col-4" style="width: 330px">
+								<div class="card">
+									<div class="card-header" style="color: gray; font-size: small;">스터디 후기</div>
+									<!-- <img src="images/study3.jpg" alt="" style="height: 215px;"/> -->
+									<div class="card-body">
+										<h5 class="card-title">${post.title }</h5>
+										<p class="card-text">${post.content }</p>
+										<a href="#">More</a>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-4" style="width: 330px">
-							<div class="card">
-								<div class="card-header" style="color: gray; font-size: small;">스터디 후기</div>
-								<!-- <img src="images/study3.jpg" alt="" style="height: 215px;"/> -->
-								<div class="card-body">
-									<h5 class="card-title">제목</h5>
-									<p class="card-text">Lorem ipsum dolor sit amet,
-										consectetur adipiscing elit. Nullam egestas sed sem ut
-										malesuada.</p>
-									<a href="#">More</a>
-								</div>
-							</div>
-						</div>
+						</c:forEach>
 					</div>
 				
 				</div>
@@ -355,30 +336,31 @@ String cp = request.getContextPath();
 						<div class="content_Row">
 							<div class="content_Cell">
 								<h1>
-									<span id="highlight">25,000+</span>
+									<span id="highlight">${memCnt }+</span>
 								</h1>
 							</div>
 							<div class="content_Cell">
 								<h1>
-									<span id="highlight">4.5/5.0</span>
+									<span id="highlight">${avgStdAssess }/5.0</span>
 								</h1>
 							</div>
 							<div class="content_Cell">
 								<h1>
-									<span id="highlight">3000+</span>
+									<!-- <span id="highlight">3000+</span> -->
+									<span id="highlight">${stdCnt }+</span>
 								</h1>
 							</div>
 						</div>
 						<div class="content_Row" style="">
 						<div class="content_Cell">
-							<span style="color: #ccc">(2021년 1월 4일기준)</span>
+							<!-- <span style="color: #ccc">(2021년 1월 4일기준)</span> -->
+							<span style="color: #ccc">(${today } 기준)</span>
 						</div>
 						<div class="content_Cell">
-							<span style="color: #ccc">(리더, 진행 방식, 멤버,<br />
-							지인 추천 의향, 재등록 의향 부문 조사 평균)</span>
+							<span style="color: #ccc">(스터디 평균 만족도)</span>
 						</div>
 						<div class="content_Cell">
-							<span style="color: #ccc">(2021년 1월 4일기준)</span>
+							<span style="color: #ccc">(${today } 기준)</span>
 						</div>
 					</div>
 					</div>

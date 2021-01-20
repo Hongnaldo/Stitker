@@ -37,10 +37,13 @@ String cp = request.getContextPath();
 				<div class="find_result">
 
 					<!-- 비밀번호 찾기 결과 -->
-					<%-- <span><span id="userInfo">${email }</span>으로<br>임시 비밀번호가 발송되었습니다.</span> --%>
-					<span><span id="userInfo">임시 비밀번호가 발급되었습니다. </span><br>${rndStr }</span>
+					<span style="font-size: 10pt;">임시 비밀번호가 발급되었습니다.<br>
+					로그인 후 비밀번호를 변경해 주세요.</span>
+					<br><br>
+					<span style="font-size: 10pt;">임시비밀번호 : </span>
+					<span id="userInfo">${rndStr }</span>
+					<span style="font-size: 10pt;"></span>
 					<br><br><br><br>
-
 
 					<div id="btn_gotoLogin" style="padding-bottom: 15px;">
 						<form action="loginform.action">

@@ -10,10 +10,9 @@ package com.studyit.mybatis;
 
 
 
-import java.util.Random;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,26 +50,102 @@ public class LoginFindController
 	
 	// 비밀번호 찾기 폼
 	@RequestMapping(value = "/findpwform.action", method = RequestMethod.GET)
-	public String findPwForm()
+	public String findPwForm(Model model)
 	{
-		return "/WEB-INF/views/Find_pw.jsp";
+		IFindPwDAO dao = sqlSession.getMapper(IFindPwDAO.class);
+		
+		ArrayList<FindPwQueDTO> queList = new ArrayList<FindPwQueDTO>();
+		
+		queList = dao.questionList();
+		
+		//테스트
+		/*
+		for (FindPwQueDTO findPwQueDTO : queList)
+		{
+			System.out.println(findPwQueDTO.getQuestion());
+		}
+		*/
+		
+		model.addAttribute("queList", queList);
+		
+		return "WEB-INF/views/Find_pw.jsp";
 	}
 	
-	// 비밀번호 찾기 액션
+	// 비밀번호 찾기 액션 - 이메일
 	@RequestMapping(value = "/findbyemail.action", method = RequestMethod.POST)
 	public String findPw(Model model, HttpServletRequest request)
 	{
 		IFindPwDAO dao = sqlSession.getMapper(IFindPwDAO.class);
 		
+		String userId = request.getParameter("userId");
 		String email = request.getParameter("email");
-		String rndStr = dao.rndPw();
+		String result = null;
 		
-		dao.updatePwByEmail(rndStr, email);
+		FindPwQueDTO dto = dao.findPwByEmail(email, userId);
 		
-		model.addAttribute("email", email);
-		model.addAttribute("rndStr", rndStr);
+		if (email.equals(dto.getEmail()))
+		{
+			String rndStr = dao.rndPw();
+			
+			dao.updatePw(userId, rndStr);
+			
+			model.addAttribute("rndStr", rndStr);
+			
+			result = "/WEB-INF/views/Find_pw_result.jsp";
+		}
+		else
+		{
+			result = "WEB-INF/views/Find_pw.jsp";
+		}
 		
-		return "/WEB-INF/views/Find_pw_result.jsp";
+		return result;
+	}
+	
+	// 비밀번호 찾기 액션 - 비밀번호 찾기 질문&답
+	@RequestMapping(value = "/findbyqna.action", method = RequestMethod.POST)
+	public String findPw2(Model model, HttpServletRequest request)
+	{
+		IFindPwDAO dao = sqlSession.getMapper(IFindPwDAO.class);
+		
+		String result = null;
+		
+		String userId = request.getParameter("userId");
+		String userAns = request.getParameter("userAns");
+		String quecode = request.getParameter("selectQue"); 
+		
+		// 테스트
+		//System.out.println(userId);
+		//System.out.println(userAns);
+		
+		FindPwQueDTO dto = dao.findPwByQna(quecode, userAns, userId);
+		
+		System.out.println(quecode);
+		System.out.println(dto.getQuecode());
+		
+		System.out.println(userAns);
+		System.out.println(dto.getAnswer());
+		
+		if (quecode.equals(dto.getQuecode()) && userAns.equals(dto.getAnswer()))
+		{
+			String rndStr = dao.rndPw();
+			dao.updatePw(userId, rndStr);
+			
+			model.addAttribute("rndStr", rndStr);
+			
+			result = "/WEB-INF/views/Find_pw_result.jsp";
+		}
+		else
+		{
+			result = "WEB-INF/views/Find_pw.jsp";
+		}
+		// 동적으로 생성되는 셀렉트 박스에서 values 얻어오는 법..
+		// 걍 셀렉트박스 네임으로 겟파라미터해서 받아오면되네;
+		
+		//result = "비밀번호 찾기 질문&답이 일치하지 않습니다.";
+		
+		//model.addAttribute("err", result);
+		
+		return result;
 	}
 	
 	

@@ -358,7 +358,8 @@ String cp = request.getContextPath();
 						<div class="content_Row">
 							<div class="content_Cell">
 								<h1>
-									<span id="highlight">25,000+</span>
+									<!-- <span id="highlight">25,000+</span> -->
+									<span id="highlight">${stdCnt }+</span>
 								</h1>
 							</div>
 							<div class="content_Cell">

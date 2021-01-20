@@ -56,18 +56,18 @@ String cp = request.getContextPath();
 					<div class="login_input">
 						<!-- 로그인 ID 입력 -->
 						<input type="text" class="form-control" id="id" name="id"
-							placeholder="아이디 입력" required="required" />
+							placeholder="아이디 입력" required="required"/><!-- value = "${id} -->
 
 						<!-- 로그인 Password 입력 -->
 						<input type="password" class="form-control" id="pw" name="pw"
 							placeholder="비밀번호 입력" required="required" />
-						<p>입력한 아이디와 비밀번호가 일치하지 않습니다. 아이디 또는 비밀번호를 다시 한번 입력해 주세요.</p>
-						
+						<!-- <p>입력한 아이디와 비밀번호가 일치하지 않습니다. 아이디 또는 비밀번호를 다시 한번 입력해 주세요.</p> -->
+						<p>${sessionScope.logres }</p>
 						<br><br>
 						
 						<div class="custom-control custom-checkbox">
-						<input type="checkbox" id="loginck" class="custom-control-input">
-						<label class="custom-control-label" for="loginck">로그인 상태 유지</label>
+							<input type="checkbox" id="loginck" name="loginck" value="true" class="custom-control-input">
+							<label class="custom-control-label" for="loginck">로그인 상태 유지</label>
 						</div>		
 
 						<!-- 로그인 버튼 -->

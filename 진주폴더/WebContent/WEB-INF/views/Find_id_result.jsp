@@ -40,12 +40,15 @@ String cp = request.getContextPath();
 				<div class="find_result">
 					<form action="loginform.action">
 						<!-- 아이디 찾기 결과 -->
-						<span><span id="userInfo">${email }</span> 으로 찾은 아이디입니다.</span>
+						<span>
+							<span id="find_result">${email }</span>
+							<span style="font-size: 10pt;">으로 찾은 아이디입니다.</span>
+						</span>
 						<br>
 						<br>
 	
 						<!-- 사용자 아이디 -->
-						<span id="find_result">${id }</span> <br>
+						<span id="userInfo">${id }</span> <br>
 						<br><br><br>
 	
 						<div id="toLogin" style="padding-bottom: 15px;">
