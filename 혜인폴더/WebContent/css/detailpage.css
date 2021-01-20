@@ -104,12 +104,13 @@ a
 	color: #000000;
 	text-decoration: none;
 	line-height: 150%;
+	list-style: none;
 }
 
 a:hover, a:active
 {
 	color: #8000ff;
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 #commentWrite tr
@@ -148,7 +149,7 @@ a:hover, a:active
 {
 	border: 0px solid #000000;
 	color: #000000;
-	width: 750px;
+	width: 790px;
 	height: 100px;
 	font-size: 9pt;
 }

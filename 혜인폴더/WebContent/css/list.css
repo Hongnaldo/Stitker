@@ -52,6 +52,13 @@
 	margin-top: 40px;
 }
 
+#table2 a
+{
+	list-style: none;
+	text-decoration: none;
+	color: #000000;
+}
+
 
 #btnSet
 {
