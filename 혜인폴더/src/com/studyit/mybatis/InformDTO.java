@@ -7,15 +7,26 @@ package com.studyit.mybatis;
 public class InformDTO
 {
 	// 주요 속성 구성
-	private String post_num, user_code, user_name, write_date, title, content, interest_mc_code
+	private String post_num, post_code, user_code, user_name, write_date, title, content, interest_mc_code
 	             , interest_mc;
 	private int hitcount, rec, notrec;
 	
 	// getter / setter 구성
+	
+	public String getPost_code()
+	{
+		return post_code;
+	}
+	public void setPost_code(String post_code)
+	{
+		this.post_code = post_code;
+	}
+	
 	public String getPost_num()
 	{
 		return post_num;
 	}
+	
 	public void setPost_num(String post_num)
 	{
 		this.post_num = post_num;

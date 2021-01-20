@@ -12,6 +12,11 @@
 .menu a:hover {color: SlateBlue;}
 .selected {color: SlateBlue;}
 
+ /* 하위 요소(child)의 높이를 동일하게 조정하기 위함 */
+.main-content {display: flex;}
+.menu {order: 1;}
+.content {order: 2;}
+
 .form-control
 {
 	font-size: 9pt;

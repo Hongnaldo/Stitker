@@ -44,7 +44,7 @@
 				{
 					//alert("수정 버튼 클릭");
 					//alert($(this).val());
-					$(location).attr("href", "informupdateform.action?post_num=" + $(this).val());
+					$(location).attr("href", "informupdateform.action?post_code=" + $(this).val());
 				
 				});
 				
@@ -56,7 +56,7 @@
 					
 					if (confirm("현재 선택한 데이터를 정말 삭제하시겠습니까?"))
 					{
-						$(location).attr("href", "informdelete.action?post_num=" +$(this).val());
+						$(location).attr("href", "informdelete.action?post_code=" +$(this).val());
 					}
 				});
 			});
@@ -117,9 +117,9 @@
 				</td>
 				<td colspan="4" style="text-align: right; border-bottom: #ffffff;">
 					<button type="button" class="btn btn-primary btn-sm updateBtn"
-								value="${detail.post_num }">수정</button>
+								value="${detail.post_code }">수정</button>
 					<button type="button" class="btn btn-primary btn-sm deleteBtn"
-								value="${detail.post_num}">삭제</button>
+								value="${detail.post_code}">삭제</button>
 				</td>
 			</tr>
 		</table>

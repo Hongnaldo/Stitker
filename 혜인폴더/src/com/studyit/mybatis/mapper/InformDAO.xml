@@ -13,7 +13,7 @@
 	 <!--    자동 매핑이 이루어진다. -->
 	 
 	 <select id="list" resultType="com.studyit.mybatis.InformDTO">
-		 SELECT POST_NUM, USER_CODE, WRITE_DATE, HITCOUNT
+		 SELECT POST_NUM, POST_CODE, USER_CODE, WRITE_DATE, HITCOUNT
 		      , TITLE, CONTENT, REC, NOTREC, INTEREST_MC, USER_NAME
 		 FROM VIEW_BOARD_INFORM
 		 ORDER BY POST_CODE DESC
@@ -39,14 +39,24 @@
 	 
 	 <update id="hitcounts">
 		UPDATE TBL_BOARD_INFORM
-		SET HITCOUNT = HITCOUNT +1
-		WHERE POST_NUM = #{post_num}
+		SET HITCOUNT = (HITCOUNT+1)
+		WHERE POST_CODE = #{post_code}
 	 </update>
 	 
+	 <insert id="addRec">
+	 	INSERT INTO TBL_REC_SEMINAR(REC_CODE, POST_CODE, USER_CODE, REC_CHECK, REC_DATE) 
+		VALUES ('RS'||REC_SEMINAR_SEQ.NEXTVAL, #{post_code}, #{user_code}, 1, DEFAULT); 
+	 </insert>
+	 
+	 <insert id="addNotRec">
+	 	INSERT INTO TBL_REC_SEMINAR(REC_CODE, POST_CODE, USER_CODE, REC_CHECK, REC_DATE) 
+		VALUES ('RS'||REC_SEMINAR_SEQ.NEXTVAL, #{post_code}, #{user_code}, 2, DEFAULT); 
+	 </insert>
+
 	 <select id="detail" resultType="com.studyit.mybatis.InformDTO">
 	 	SELECT POST_NUM, POST_CODE, USER_NAME, WRITE_DATE, HITCOUNT, TITLE, CONTENT, REC, NOTREC, INTEREST_MC 
 		FROM VIEW_BOARD_INFORM
-		WHERE POST_NUM = #{post_num}
+		WHERE POST_CODE = #{post_code}
 	 </select>
 
 	 

@@ -164,7 +164,7 @@
 				<tr>
 					<td>${inform.post_num }</td>
 					<td>${inform.interest_mc}</td>
-					<td><a href="informdetail.action?post_num=${inform.post_num}">${inform.title}</a></td>
+					<td><a href="informdetail.action?post_code=${inform.post_code}">${inform.title}</a></td>
 					<td>${inform.user_name}</td>
 					<td>${inform.write_date }</td>
 					<td>${inform.hitcount}</td>

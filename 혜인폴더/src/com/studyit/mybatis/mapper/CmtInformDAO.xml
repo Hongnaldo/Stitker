@@ -15,14 +15,14 @@
 	 <select id="cmtList" resultType="com.studyit.mybatis.CmtInformDTO">
 		SELECT COMMENT_CODE, POST_CODE, COMMENTS, USER_NAME, WRITE_DATE
 		FROM VIEW_COMMENT_INFORM
-		WHERE POST_NUM = #{post_num}
+		WHERE POST_CODE = #{post_code}
 		ORDER BY POST_CODE DESC
 		
 	 </select>
 	 <select id="cmtCount" resultType="java.lang.Integer">
 	 	SELECT COUNT(*) AS COUNT
 		FROM TBL_COMMENT_INFORM
-		WHERE SUBSTR(POST_CODE, 3) = #{post_num}
+		WHERE POST_CODE = #{post_code}
 	 </select>
 	 
 	 

@@ -16,6 +16,13 @@ body {margin: 0; }
 .menu a:hover {color: SlateBlue;}
 .selected {color: SlateBlue;}
 
+ /* 하위 요소(child)의 높이를 동일하게 조정하기 위함 */
+.main-content {display: flex;}
+.menu {order: 1;}
+.content {order: 2;}
+
+.content {padding-bottom: 100px;}
+
 
 /*혜인언니 수정본*/
 /* 메뉴와 컨텐트 레이아웃, 배경색 설정 */

@@ -1,9 +1,10 @@
 /*========================
- StudentController.java
+ InformListController.java
 =======================*/
 package com.studyit.mybatis;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,11 +60,25 @@ public class InformListController
    }
    
    @RequestMapping(value ="/informinsert.action", method = RequestMethod.POST)
-   public String studentInsert(InformDTO inform)
+   public String informInsert(HttpServletRequest request)
    {
       IInformDAO dao = sqlSession.getMapper(IInformDAO.class);
       
-      dao.add(inform);
+      String title = request.getParameter("title");
+	  String content = request.getParameter("content");
+	  String interest_mc = request.getParameter("interest_mc");
+      
+	  HttpSession session = request.getSession();
+	  InformDTO inform = (InformDTO)session.getAttribute("inform");
+	  String id = (String)session.getAttribute("id");
+	  String pw = (String)session.getAttribute("pw");
+	  
+	  String user_code = inform.getUser_code();
+	  String user_name = inform.getUser_name();
+	  String interest_mc_code = inform.getInterest_mc_code();
+	  
+ 
+	  dao.add(inform);
       
       return "redirect:informlist.action";
    }
@@ -74,7 +89,7 @@ public class InformListController
    {
       String result = null;
       
-      String post_num = request.getParameter("post_num");
+      String post_code = request.getParameter("post_code");
       
       IInformDAO inform = sqlSession.getMapper(IInformDAO.class);
 	  IInterestDAO interest = sqlSession.getMapper(IInterestDAO.class); 
@@ -82,16 +97,15 @@ public class InformListController
       
       InformDTO dto = new InformDTO();
       
-	  inform.hitcounts(post_num);
+	  inform.hitcounts(post_code);
       
       model.addAttribute("count", inform.count());
-		/* model.addAttribute("hitcounts", inform.hitcounts(post_num)); */
-      model.addAttribute("detail" , inform.detail(post_num));
+      model.addAttribute("detail" , inform.detail(post_code));
       model.addAttribute("imList", interest.imList());
-      model.addAttribute("cmtList", comment.cmtList(post_num));
-      model.addAttribute("cmtCount", comment.cmtCount(post_num));
+      model.addAttribute("cmtList", comment.cmtList(post_code));
+      model.addAttribute("cmtCount", comment.cmtCount(post_code));
       
-      result = "/WEB-INF/views/Inform_detail.jsp?post_num=" + post_num;
+      result = "/WEB-INF/views/Inform_detail.jsp?post_code=" + post_code;
       
       return result;
    }
