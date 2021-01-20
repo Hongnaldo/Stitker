@@ -1,9 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,8 +53,8 @@
 			<br><br><br>
 			<nav>
 				<ul>
-					<li><a href="participantreportlist.action">스터디원</a></li>
-					<li><a href="boardreportlist.action" class="selected">게시물</a></li>		
+					<li><a href="participantreportlist.action" class="selected">스터디원</a></li>
+					<li><a href="boardreportlist.action">게시물</a></li>			
 				</ul>
 			</nav>
 		</div>
@@ -75,49 +71,34 @@
 						<th>신고일자</th>
 					</tr>
 					</thead>
-					
-					<c:forEach var="report" items="${list }">
-						<tr>
-							<td>${report.rnum }</td>
-							<td>${report.report_ctg }</td>
-							<td>${report.report_id }</td>
-							<td>${report.report_date }</td>
-						</tr>
-						<c:if test="${report.report_reason != null }">
-							<tr class="reason">
-								<td colspan="4">
-									<span class="reasonSpan">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
-					  						<path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
-										</svg>
-										${report.report_reason }
-									</span>
-								</td>
-							</tr>
-						</c:if>
-					</c:forEach>
-					
-					<c:forEach var="report" items="${memList }">
-						<tr>
-							<td>${report.rnum }</td>
-							<td>${report.report_ctg }</td>
-							<td>${report.report_id }</td>
-							<td>${report.report_date }</td>
-						</tr>
-						<c:if test="${report.report_reason != null }">
-							<tr class="reason">
-								<td colspan="4">
-									<span class="reasonSpan">
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
-					  						<path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
-										</svg>
-										${report.report_reason }
-									</span>
-								</td>
-							</tr>
-						</c:if>
-					</c:forEach>
-					
+					<tr>
+						<td>1</td>
+						<td>예시스팸,광고</td>
+						<td>예시허수민</td>
+						<td>예시2020/12/25</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>예시기타</td>
+						<td>예시허수민</td>
+						<td>예시2020/12/25</td>
+					</tr>
+					<tr class="reason">
+						<td colspan="4">
+							<span class="reasonSpan">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+			  						<path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
+								</svg>
+								기타를 선택한 경우 사유(해당 게시물은 저작권을 침해한 게시물입니다.)
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>예시스팸,광고</td>
+						<td>예시허수민</td>
+						<td>예시2020/12/25</td>
+					</tr>
 				</table>
 			</div>
 			<br><br>

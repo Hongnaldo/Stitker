@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.studyit.mvc.IParticipant_report_list_DAO">
+
+<select id="list" resultType="com.studyit.mvc.Participant_report_list_DTO">
+	SELECT ROWNUM RNUM, STUDY_NAME, NVL(HANDLE_RESULT,'미처리') HANDLE_RESULT, REPORTED_ID, HANDLE_CODE, REPORTED_CODE
+	FROM RH_STUDYMEM_VIEW
+</select>
+
+<select id="count" resultType="java.lang.Integer">	
+	SELECT COUNT(*) AS COUNT
+	FROM RH_STUDYMEM_VIEW
+	WHERE HANDLE_RESULT IS NULL
+</select>
+
+</mapper>

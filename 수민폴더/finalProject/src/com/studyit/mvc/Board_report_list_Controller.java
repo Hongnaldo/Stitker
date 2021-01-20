@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class Board_Report_List_Controller
+public class Board_report_list_Controller
 {
 	@Autowired
 	private SqlSession sqlSession;
@@ -16,7 +16,7 @@ public class Board_Report_List_Controller
 	@RequestMapping(value="boardreportlist.action", method=RequestMethod.GET)
 	public String list(Model model)
 	{
-		IBoard_Report_List_DAO dao = sqlSession.getMapper(IBoard_Report_List_DAO.class);
+		IBoard_report_list_DAO dao = sqlSession.getMapper(IBoard_report_list_DAO.class);
 		String result = null;
 		
 		model.addAttribute("list", dao.list());

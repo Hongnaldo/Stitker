@@ -24,6 +24,10 @@
 		document.getElementById("answer").style.display = "block";
 		document.getElementById("answerBtn").innerHTML = "답변등록하기";
 	}
+	
+	function modify(ask_code) {
+		window.location.href="supportqamodify.action?ask_code=" + ask_code;
+	}
 
 </script>
 </head>
@@ -38,8 +42,8 @@
 			<br><br><br>
 			<nav>
 				<ul>
-					<li><a href="Support_notice_list.jsp">공지사항</a></li>
-					<li><a href="Support_Q&A_list.jsp" class="selected">1:1문의</a></li>
+					<li><a href="supportnoticelist.action">공지사항</a></li>
+					<li><a href="supportqalist.action" class="selected">1:1문의</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -80,7 +84,7 @@
 			<br>
 			<div class="buttons">
 				<button type="button" class="btn btn-outline-primary">답변수정하기</button>
-				<button type="button" class="btn btn-outline-primary" onclick="window.location.href='Support_Q&A_list.jsp'">목록으로</button>
+				<button type="button" class="btn btn-outline-primary" onclick="window.location.href='supportqalist.action'">목록으로</button>
 				<button type="button" class="btn btn-outline-primary" onclick="clickAnswer()" id="answerBtn">답변하기</button>
 			</div>
 		</div>

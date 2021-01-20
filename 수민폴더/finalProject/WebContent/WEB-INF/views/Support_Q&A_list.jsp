@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +15,15 @@
 
 <!-- 직접 설정한 CSS -->
 <link rel="stylesheet" href="css/sumin/Layout.css">
-<link rel="stylesheet" href="css/sumin/ListPage.css">
+<link rel="stylesheet" href="css/sumin/ListPage2.css">
+
+<script type="text/javascript">
+
+	function clickQa(ask_code) {
+		window.location.href="supportqadetail.action?ask_code="+ask_code;
+	}
+
+</script>
 
 </head>
 <body>
@@ -29,16 +37,17 @@
 			<br><br><br>
 			<nav>
 				<ul>
-					<li><a href="Support_notice_list.jsp">공지사항</a></li>
-					<li><a href="Support_Q&A_list.jsp"  class="selected">1:1문의</a></li>
+					<li><a href="supportnoticelist.action">공지사항</a></li>
+					<li><a href="supportqalist.action" class="selected">1:1문의</a></li>
 				</ul>
 			</nav>
 		</div>
 
 		<div class="content">	
 			<br>	
-			<a href="Support_Q&A_register.jsp" class="btn btn-outline-primary">글 작성하기</a>
-			<br><br>
+			<h6 class="count">답변 대기 <span class="badge rounded-pill bg-primary">${count }</span></h6>
+			<a href="supportqawrite.action" class="btn btn-outline-primary">글 작성하기</a>
+			<br>
 			<div class="tableDiv">
 				<table class="table table-hover">
 					<thead>
@@ -49,18 +58,15 @@
 						<th>답변</th>
 					</tr>
 					</thead>
-					<tr onclick="window.location.href='Support_Q&A_detailpage.jsp'">
-						<td>예시)1</td>
-						<td>예시)스터디관련질문입니다.</td>
-						<td>예시)2020/12/26</td>
-						<td>예시)답변완료</td>
-					</tr>
-					<tr onclick="window.location.href='Support_Q&A_answer.jsp'">
-						<td>예시</td>
-						<td>예시</td>
-						<td>예시</td>
-						<td>예시</td>
-					</tr>
+					<c:forEach var="qa" items="${list }" >
+						<tr onclick="clickQa('${qa.ask_code}')" class=${qa.answer == "답변 대기"? "noResult" : "" }>
+							<td>${qa.rnum }</td>
+							<td>${qa.ask_title }</td>
+							<td>${qa.ask_date }</td>
+							<td>${qa.answer }</td>
+						</tr>
+					</c:forEach>
+					
 				</table>
 			</div>
 			<br>

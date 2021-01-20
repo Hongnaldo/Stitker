@@ -35,14 +35,24 @@
   		});
   
 	});
+	
+	function insertNotice() {
+		
+		var content = document.getElementById("summernote").value;
+		var title = document.getElementById("title").value;
+		
+		if(title != "" && (content == "" || content == " " || content == null))
+		{	
+			alert("내용을 입력하세요.");
+			return false;
+		}	
+		else if (title == "")
+			return false;
+		
+			return true;
+	}
 
 </script>
-
-<style type="text/css">
-
-.table .textareaTd {padding-right: 10%;}
-
-</style>
 
 </head>
 <body>
@@ -55,31 +65,31 @@
 			<br><br><br>
 			<nav>
 				<ul>
-					<li><a href="Support_notice_list.jsp" class="selected">공지사항</a></li>
-					<li><a href="Support_Q&A_list.jsp">1:1문의</a></li>
+					<li><a href="supportnoticelist.action" class="selected">공지사항</a></li>
+					<li><a href="supportqalist.action">1:1문의</a></li>
 				</ul>
 			</nav>
 		</div>
 		<div class="content">		
-			<p class="category">공지사항 작성하기</p>
+			<p class="category">공지사항 작성</p>
 			<br>
-			<form action="">
+			<form action="supportnoticeinsert.action" method="post" onsubmit="return insertNotice()">
 			<div class="tableDiv">
 				<table class="table table-borderless">
 					<tr>
 						<th>제목</th>
 						<td>
-							<input type="text" class="form-control write" id="title" placeholder="제목을 입력하세요">
+							<input type="text" class="form-control write" id="title" placeholder="제목을 입력하세요" name="notice_title" required>
 						</td>
 					</tr>
 					<tr>
 						<th>내용</th>
 						<td class="textareaTd">
-							<textarea name="editordata" id="summernote"></textarea>
+							<textarea name="notice_content" id="summernote" ></textarea>
 							<br><br>
 							<div class="buttons">
-								<button type="submit" class="btn btn-outline-primary">등록하기</button>
-								<button type="submit" class="btn btn-outline-primary" onclick="window.location.href='Support_notice_list.jsp'">취소하기</button>
+								<button type="submit" class="btn btn-outline-primary" >등록하기</button>
+								<button type="button" class="btn btn-outline-primary" onclick="window.location.href='supportnoticelist.action'">목록으로</button>
 							</div>
 							<br><br>
 						</td>

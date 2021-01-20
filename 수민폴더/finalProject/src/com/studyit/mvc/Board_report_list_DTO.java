@@ -1,6 +1,6 @@
 package com.studyit.mvc;
 
-public class Board_Report_List_DTO 
+public class Board_report_list_DTO 
 {
 	private String rownum, id, post_code, title, handle_result, handle_date;
 

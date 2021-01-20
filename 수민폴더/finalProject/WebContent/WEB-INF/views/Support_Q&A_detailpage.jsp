@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +18,18 @@
 <link rel="stylesheet" href="css/sumin/DetailPage.css">
 <link rel="stylesheet" href="css/sumin/Q&A_detailPage.css">
 
+<script type="text/javascript">
+
+	function clickAnswer() {
+		document.getElementById("answer").style.display = "block";
+		document.getElementById("answerBtn").innerHTML = "답변등록하기";
+	}
+	
+	function modify(ask_code) {
+		window.location.href="supportqamodify.action?ask_code=" + ask_code;
+	}
+
+</script>
 </head>
 <body>
 
@@ -30,8 +42,8 @@
 			<br><br><br>
 			<nav>
 				<ul>
-					<li><a href="Support_notice_list.jsp">공지사항</a></li>
-					<li><a href="Support_Q&A_list.jsp" class="selected">1:1문의</a></li>
+					<li><a href="supportnoticelist.action">공지사항</a></li>
+					<li><a href="supportqalist.action" class="selected">1:1문의</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -40,25 +52,31 @@
 			<table class="table">
 				<tr>
 					<th>제목</th>
-					<td colspan="6">제목예시)스터디 개설과 관련한 질문입니다.</td>
+					<td colspan="6">${qa.ask_title }</td>
 				</tr>
 				<tr class="title">
 					<th>작성자</th>
-					<td>허수민</td>
+					<td>${qa.id }</td>
 					<th>작성일</th>
-					<td>2020/12/13</td>
+					<td>${qa.ask_date }</td>
 					<th>답변</th>
-					<td>답변 대기</td>
+					<td>${qa.answer }</td>
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td colspan="6">안녕하세요
-					<br><br><br><br><br><br><br><br><br>
+					<td colspan="6">
+						<div class="table_content">
+							<span class="text">${qa.ask_content }</span>
+						</div>
 					</td>
 				</tr>
 				<tr>
 					<th>답변</th>
-					<td colspan="6">현재 등록된 답변이 없습니다.</td>
+					<td colspan="6">
+						<div class="answer_content">
+							<span class="text">${qa.answer == "답변 대기"? "현재 등록된 답변이 없습니다." : qa.ask_answer }</span>
+						</div>
+					</td>
 				</tr>
 			</table>
 			<div class="answer" id="answer">
@@ -70,10 +88,15 @@
 				<textarea rows="6" placeholder="답변을 입력하세요."></textarea>
 			</div>
 			<br>
-			<div class="buttons">
-				<button type="button" class="btn btn-outline-primary" onclick="window.location.href='Support_Q&A_modify.jsp'">수정하기</button>
+			<div class="buttons memberBtn">
+				<button type="button" class="btn btn-outline-primary" onclick="window.location.href='supportqamodifyqform.action?ask_code=${qa.ask_code}'">수정하기</button>
 				<button type="button" class="btn btn-outline-primary">삭제하기</button>
-				<button type="button" class="btn btn-outline-primary" onclick="window.location.href='Support_Q&A_list.jsp'">목록으로</button>
+				<button type="button" class="btn btn-outline-primary" onclick="window.location.href='supportqalist.action'">목록으로</button>
+			</div>
+			<div class="buttons adminBtn" style="display: none;">
+				<button type="button" class="btn btn-outline-primary" onclick="modify('${qa.ask_code}')">답변수정하기</button>
+				<button type="button" class="btn btn-outline-primary" onclick="window.location.href='supportqalist.action'">목록으로</button>
+				<button type="button" class="btn btn-outline-primary" onclick="clickAnswer()" id="answerBtn">답변하기</button>
 			</div>
 		</div>
 	</div>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -21,6 +22,14 @@
 <link rel="stylesheet" href="css/sumin/Layout.css">
 <link rel="stylesheet" href="css/sumin/ListPage.css">
 
+<script type="text/javascript">
+
+	function clickReport(report_code) {
+		window.location.href="reportdetail.action?report_code="+report_code;
+	}
+
+</script>
+
 </head>
 <body>
 
@@ -34,14 +43,14 @@
 			<br><br><br>
 			<nav>
 				<ul>
-					<li><a href="Study_report_list.jsp">스터디</a></li>
-					<li><a href="Participant_report_list.jsp">스터디원</a></li>
-					<li><a href="Board_report_list.jsp" class="selected">게시물</a></li>			
+					<li><a href="participantreportlist.action">스터디원</a></li>
+					<li><a href="boardreportlist.action" class="selected">게시물</a></li>			
 				</ul>
 			</nav>
 		</div>
 		
 		<div class="content">		
+			<h6 class="count">미처리 신고 <span class="badge rounded-pill bg-primary">${count }</span></h6>
 			<div class="tableDiv">
 				<table class="table table-hover">
 					<thead>
@@ -54,9 +63,37 @@
 					</tr>
 					</thead>
 					<c:forEach var="report" items="${list }">
-						<tr>
+					<c:set var="boardName" value="${fn:substring(report.post_code, 0, 2)}" />
+						<tr onclick="clickReport('${report.post_code }')" class=${report.handle_result == "미처리"? "noResult" : "" }>
 							<td>${report.rownum }</td>
-							<td>${report.post_code }</td>
+							<td>
+								<c:choose>
+									<c:when test="${boardName eq 'BI'}">
+										정보공유
+									</c:when>
+									<c:when test="${boardName eq 'BV'}">
+										면접/코테
+									</c:when>
+									<c:when test="${boardName eq 'BS'}">
+										세미나/공모전
+									</c:when>
+									<c:when test="${boardName eq 'BF'}">
+										자유
+									</c:when>
+									<c:when test="${boardName eq 'BQ'}">
+										질문
+									</c:when>
+									<c:when test="${boardName eq 'BA'}">
+										답변
+									</c:when>
+									<c:when test="${boardName eq 'BR'}">
+										스터디후기
+									</c:when>
+									<c:when test="${boardName eq 'SO'}">
+										스터디
+									</c:when>
+								</c:choose>
+							</td>
 							<td>${report.title }</td>
 							<td>${report.id }</td>
 							<td>${report.handle_result }</td>
@@ -66,7 +103,7 @@
 			</div>
 			<br>
 			<div class="page">페이징처리필요 1 2 3 4 5 6 7 8 9 10 > >></div>
-		</div>	
+		</div>
 	</div>
 	<jsp:include page="footer.jsp" flush="false"/>
 </div>

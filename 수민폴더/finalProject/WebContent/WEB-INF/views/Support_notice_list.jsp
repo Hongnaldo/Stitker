@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +16,16 @@
 
 <!-- 직접 설정한 CSS -->
 <link rel="stylesheet" href="css/sumin/Layout.css">
-<link rel="stylesheet" href="css/sumin/ListPage.css">
+<link rel="stylesheet" href="css/sumin/ListPage2.css">
 
+<script type="text/javascript">
+	
+	function clickNotice(notice_code) 
+	{
+		window.location.href="supportnoticedetail.action?notice_code="+notice_code;
+	}
+
+</script>
 </head>
 <body>
 
@@ -29,15 +38,15 @@
 			<br><br><br>
 			<nav>
 				<ul>
-					<li><a href="Support_notice_list.jsp" class="selected">공지사항</a></li>
-					<li><a href="Support_Q&A_list.jsp">1:1문의</a></li>
+					<li><a href="supportnoticelist.action" class="selected">공지사항</a></li>
+					<li><a href="supportqalist.action">1:1문의</a></li>
 				</ul>
 			</nav>
 		</div>
 
 		<div class="content">
-			<a href="Support_notice_write.jsp" class="btn btn-outline-primary">글 작성하기</a>	
-			<br><br>	
+			<a href="supportnoticewrite.action" class="btn btn-outline-primary" role="button">글 작성하기</a>	
+			<br><br><br>
 			<div class="tableDiv">
 				<table class="table table-hover">
 					<thead>				
@@ -46,20 +55,20 @@
 						<th>제목</th>
 						<th>작성자</th>
 						<th>작성일</th>
+						<th>조회수</th>
 					</tr>
 					</thead>
-					<tr onclick="window.location.href='Support_notice_detailpage.jsp'">
-						<td>예시</td>
-						<td>예시</td>
-						<td>예시</td>
-						<td>예시</td>
-					</tr>
-					<tr>
-						<td>예시</td>
-						<td>예시</td>
-						<td>예시</td>
-						<td>예시</td>
-					</tr>
+					
+					<c:forEach var="notice" items="${list }">
+						<tr onclick="clickNotice('${notice.notice_code}')">
+							<td>${notice.rnum }</td>
+							<td>${notice.notice_title }</td>
+							<c:set var="length">${fn:length(notice.admin_id) }</c:set> 
+							<td>관리자${fn:substring(notice.admin_id, 2, length) }</td>
+							<td>${notice.notice_date }</td>
+							<td>${notice.hitcount }</td>
+						</tr>
+					</c:forEach>
 				</table>
 			</div>
 			<br>

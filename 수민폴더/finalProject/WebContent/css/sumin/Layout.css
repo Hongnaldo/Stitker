@@ -2,6 +2,11 @@
 
 body {margin: 0; }
 
+ /* 하위 요소(child)의 높이를 동일하게 조정하기 위함 */
+.main-content {display: flex;}
+.menu {order: 1;}
+.content {order: 2;}
+
 /* 메뉴와 컨텐트 레이아웃, 배경색 설정 */
 .menu {float: left; background-color: white; width: 20%; min-height: 800px; border-right: 1px solid black;}
 .content {float: left; width: 80%; background-color: white; min-height: 800px;}
@@ -15,11 +20,6 @@ body {margin: 0; }
 .menu a:not(.selected) {color: black; }
 .menu a:hover {color: SlateBlue;}
 .selected {color: SlateBlue;}
-
-
-/*혜인언니 수정본*/
-/* 메뉴와 컨텐트 레이아웃, 배경색 설정 */
-.menu {float: left; background-color: white; width: 20%; min-height: 800px; border-right: 1px solid black;}
 
 /* footer 설정 */
 .footer {clear: left;}

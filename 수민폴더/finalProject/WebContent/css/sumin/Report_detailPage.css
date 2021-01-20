@@ -4,7 +4,7 @@
 .table { width: 90%; height: 80%; margin-right: auto; margin-left: auto;}
 tr:not(.reason) {text-align: center;}
 .category {font-size: 20pt; padding: 15px; font-weight: bold;}
-.reasonSpan {margin-left: 10%; color: tomato;}
+.reasonSpan {margin-left: 23%; color: tomato;}
 
 /* 버튼 설정 */
 .buttons {position: absolute; right:4%;}
