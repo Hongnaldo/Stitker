@@ -27,12 +27,12 @@
 					<Br><Br>
 					<table style="text-align: center; width:600px;" class="table table-bordered">
 						<tr>
-							<td colspan="2" style="color: red;">회원님의 아이디는 현재 계정
+							<td colspan="2" style="color: red;">회원님의 아이디 ${suspend.id }는 현재 계정
 								정지 상태입니다.</td>
 						</tr>
 						<tr>
 							<td>계정 정지 기간 :</td>
-							<td>2020-01-01 ~ 2020-12-31</td>
+							<td>${suspend.acct_sus_date } ~ ${suspend.acct_sus_date_end } 입니다</td>
 						</tr>
 						<tr>
 							<td colspan="2">스터디 조회 및 신청, 정보공유 게시판에 접근 가능하나 <br>스터디
