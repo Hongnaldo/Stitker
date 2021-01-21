@@ -25,23 +25,53 @@
 	{
 		var message = "";
 		var type = 1;
+		var response;
 		
-		if (args=="글삭제") 
-			message = "글을 삭제하시겠습니까? (제재 없음)";	
-		else if (args=="경고1회") 
-			message = "대상자에게 경고 1회를 부여하겠습니까?";	
-		else
+		if (args=="글삭제")
+		{
+			message = "글을 삭제하시겠습니까? (제재 없음)";
+			response = confirm(message);
+			
+			// 글 삭제만 함
+			if(response)
+			{
+				
+			}
+		}	
+		else if (args=="경고1회")
+		{	
+			message = "대상자에게 경고 1회를 부여하겠습니까?";
+			response = confirm(message);
+			
+			// 경고 1회
+			if(response)
+			{
+				
+			}
+		}	
+		else // 신고대상 아님
 		{	
 			message = "신고대상이 아니므로 신고수를 초기화하겠습니까?";
-			type = 2;
+			response = confirm(message);
+			
+			if(response)
+			{
+				response = confirm("신고자들에게 허위신고로 경고 1회를 부여하겠습니까?");
+				
+				// 허위신고 + 신고수 초기화
+				if(response)
+				{
+					
+				}
+				// 신고수 초기화
+				else
+				{
+					
+				}	
+			}
 		}	
 		
-		var response = confirm(message);
 		
-		if(response && type==2)
-		{
-			var response2 = confirm("신고자들에게 허위신고로 경고 1회를 부여하겠습니까?");
-		}	
 	}
 </script>
 

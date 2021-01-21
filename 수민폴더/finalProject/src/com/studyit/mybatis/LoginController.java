@@ -25,8 +25,12 @@ public class LoginController
 	
 	// 로그인 폼
 	@RequestMapping(value = "/loginform.action", method = RequestMethod.GET)
-	public String loginForm()
+	public String loginForm(HttpServletRequest request)
 	{
+		// 세션에 이전 페이지 주소 저장해놓기 
+		String referer = request.getHeader("Referer");
+		request.getSession().setAttribute("redirectURI", referer);
+		
 		return "/WEB-INF/views/LoginForm.jsp";
 	}
 	
@@ -70,7 +74,8 @@ public class LoginController
 				
 				
 				// ◆ 관리자로 로그인 성공 시 요청할 페이지 ◆
-				result = "redirect:studyit.action";
+				String url = (String)request.getSession().getAttribute("redirectURI");
+				result = "redirect:"+url;
 			}
 		}
 		else
@@ -95,7 +100,8 @@ public class LoginController
 				
 				
 				// ◆ 일반 사용자로 로그인 성공 시 요청할 페이지 ◆
-				result = "redirect:studyit.action";
+				String url = (String)request.getSession().getAttribute("redirectURI");
+				result = "redirect:"+url;
 			}
 		}
 		

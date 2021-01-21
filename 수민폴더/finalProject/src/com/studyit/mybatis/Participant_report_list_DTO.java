@@ -2,8 +2,10 @@ package com.studyit.mybatis;
 
 public class Participant_report_list_DTO
 {
+	// 주요 속성 구성
 	private String rnum, study_name, reported_id, handle_result, handle_code, reported_code;
 
+	// getter / setter 구성
 	public String getRnum()
 	{
 		return rnum;

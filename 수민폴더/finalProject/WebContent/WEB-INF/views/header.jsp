@@ -77,7 +77,7 @@ String cp = request.getContextPath();
 							<span class="bar">|</span>
 							<a href="#">회원가입</a>
 							<span class="bar">|</span>
-							<a href="#">고객센터</a>
+							<a href="supportnoticelist.action">고객센터</a>
 						</c:when>
 						<c:when test="${sessionScope.admin==null }">
 							<a href="logout.action">로그아웃</a>

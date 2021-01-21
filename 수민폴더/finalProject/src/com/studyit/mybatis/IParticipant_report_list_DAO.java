@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public interface IParticipant_report_list_DAO
 {
-	// ½ºÅÍµğ¿ø ½Å°í ¸®½ºÆ® Ãâ·Â
+	// ì‹ ê³ ì²˜ë¦¬í•  ìŠ¤í„°ë””ì› ë¦¬ìŠ¤íŠ¸
 	public ArrayList<Participant_report_list_DTO> list();
 	
-	// Ã³¸®¾È µÈ ½ºÅÍµğ¿ø ¼ö Ãâ·Â
+	// ì‹ ê³ ì²˜ë¦¬í•  ìŠ¤í„°ë””ì› ìˆ˜
 	public int count();
 }

@@ -22,17 +22,7 @@ public class Support_notice_list_Controller
 	public String list(ModelMap model, HttpServletRequest request)
 	{
 		String result = null;
-		
-		// 세션 처리 과정 추가(로그인에 대한 확인 과정 추가) ---------------------------------------------------------
 		HttpSession session = request.getSession();
-		
-		if (session.getAttribute("code") == null)	//-- 로그인이 되어있지 않은 상황
-		{
-			// 로그인이 되어있지 않은 상황에서의 처리
-			result = "redirect:loginform.action";
-			return result;
-		}	
-		// --------------------------------------------------------- 세션 처리 과정 추가(로그인에 대한 확인 과정 추가)
 		
 		result = "/WEB-INF/views/Support_notice_list.jsp";
 		ISupport_notice_list_DAO dao = sqlSession.getMapper(ISupport_notice_list_DAO.class);
