@@ -13,7 +13,7 @@ table {margin-top: 50px;}
 .title td:nth-child(4), .title td:nth-child(6) { width: 15%;}
 .table_content {min-height: 200px; display: table; margin: 20px;}
 .answer_content {min-height: 150px; display: table; margin: 20px;}
-.text {display: table-cell; vertical-align: middle;}
+.text {display: table-cell; vertical-align: middle; color: black; }
 .table tr:first-child td {font-weight: bold; padding-left: 20px;}
 
 /* 버튼 자리설정 */

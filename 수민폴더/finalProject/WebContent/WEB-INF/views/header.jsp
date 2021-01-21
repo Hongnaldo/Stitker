@@ -9,6 +9,18 @@ String cp = request.getContextPath();
 <head>
 <meta charset="UTF-8">
 <title></title>
+<style type="text/css">
+	.headerNav > a, span
+	{
+		text-decoration: none;
+		color: gray;
+	}
+	.headerNav > a:hover
+	{
+		color: SlateBlue;
+		/* font-weight: bold; */
+	}
+</style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm navbar-light bg-light">
@@ -24,8 +36,9 @@ String cp = request.getContextPath();
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link" aria-current="page"
-						href="#">스터딧 소개</a></li>
+					<!-- <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="#">스터딧소개</a>
+              </li> -->
 					<li class="nav-item"><a class="nav-link" href="#">스터디 찾기</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">스터디 개설</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">스터디 후기</a></li>
@@ -41,22 +54,51 @@ String cp = request.getContextPath();
 							<li><a class="dropdown-item" href="#">자유게시판</a></li>
 							<li><a class="dropdown-item" href="#">Q&A</a></li>
 						</ul>
-					</li>
 				</ul>
 				<form class="d-flex">
 					<input class="form-control me-2" type="search" placeholder="검색"
 						aria-label="Search">
 				</form>
-				<!--account--> 
-				<nav style="-bs-breadcrumb-divider: '┃';" aria-label="breadcrumb">
+				<!--account-->				
+				<!-- <nav style="-bs-breadcrumb-divider: '|';" aria-label="breadcrumb"> -->
+					<!-- 
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="#">로그인</a></li>
 						<li class="breadcrumb-item"><a href="#">회원가입</a></li>
 						<li class="breadcrumb-item"><a href="#">고객센터</a></li>
-					</ol>
+					</ol> 
+					-->
+				<nav class="headerNav">
+					 
+					<span class="bar">|</span>
+					<c:choose>
+						<c:when test="${sessionScope.code==null }">
+							<a href="loginform.action">로그인</a>
+							<span class="bar">|</span>
+							<a href="#">회원가입</a>
+							<span class="bar">|</span>
+							<a href="#">고객센터</a>
+						</c:when>
+						<c:when test="${sessionScope.admin==null }">
+							<a href="logout.action">로그아웃</a>
+							<span class="bar">|</span>
+							<a href="#">마이페이지</a>
+							<span class="bar">|</span>
+							<a href="supportnoticelist.action">고객센터</a>
+						</c:when>
+						<c:otherwise>
+							<a href="logout.action">로그아웃</a>
+							<span class="bar">|</span>
+							<a href="participantreportlist.action">신고처리</a>
+							<span class="bar">|</span>
+							<a href="supportnoticelist.action">문의관리</a>
+						</c:otherwise>
+					</c:choose>
+					 
 				</nav>
 			</div>
 		</div>
 	</nav>
+
 </body>
 </html>

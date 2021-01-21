@@ -36,7 +36,7 @@
 	<div class="main-content">
 		<div class="menu">
 			<br>
-			<h1 class="text-center">신고확인</h1>
+			<h1 class="text-center">신고처리</h1>
 			<br><br><br>
 			<nav>
 				<ul>

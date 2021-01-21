@@ -52,8 +52,8 @@
 	<jsp:include page="header.jsp" flush="false"/>
 	<div class="main-content">
 		<div class="menu">
-			<br><br>
-			<h1 class="text-center">신고확인</h1>
+			<br>
+			<h1 class="text-center">신고처리</h1>
 			<br><br><br>
 			<nav>
 				<ul>

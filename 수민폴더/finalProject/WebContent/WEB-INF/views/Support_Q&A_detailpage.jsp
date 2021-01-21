@@ -19,14 +19,57 @@
 <link rel="stylesheet" href="css/sumin/Q&A_detailPage.css">
 
 <script type="text/javascript">
-
-	function clickAnswer() {
-		document.getElementById("answer").style.display = "block";
-		document.getElementById("answerBtn").innerHTML = "답변등록하기";
+	
+	function clickAnswer(ask_code) {
+		
+		var btn = document.getElementById("answerBtn").innerHTML;
+		
+		if (btn == "답변등록하기" || btn == "답변수정완료") {
+			return true;
+		}
+		
+		answer.style.display = "block";
+		
+		if (btn == "답변하기")
+			document.getElementById("answerBtn").innerHTML = "답변등록하기";
+		else if(btn == "답변수정하기")
+			document.getElementById("answerBtn").innerHTML = "답변수정완료";
+		
+		document.getElementById("ask_answer").setAttribute("required", "");
+		
+		return false;
+		
 	}
 	
-	function modify(ask_code) {
-		window.location.href="supportqamodify.action?ask_code=" + ask_code;
+	$().ready(function(){
+		
+		if("<c:out value='${admin}'></c:out>" == "")
+			$(".admin").css("display", "none");
+		
+		else
+			$(".member").css("display", "none");
+	});
+	
+	function clickDelete(ask_code) {
+		
+		if ("<c:out value='${qa.answer}'></c:out>" == "답변 대기") 
+		{
+			window.location.href='supportqadeleteq.action?ask_code='+ ask_code;		
+		}
+		else
+			alert("답변이 등록된 게시물은 삭제할 수 없습니다.");
+		
+	}
+	
+	function clickModify(ask_code) {
+		
+		if ("<c:out value='${qa.answer}'></c:out>" == "답변 대기") 
+		{
+			window.location.href='supportqamodifyqform.action?ask_code='+ ask_code;	
+		}
+		else
+			alert("답변이 등록된 게시물은 수정할 수 없습니다.");
+		
 	}
 
 </script>
@@ -49,6 +92,7 @@
 		</div>
 		
 		<div class="content">
+		<form action="supportqainserta.action" method="POST" onsubmit="return clickAnswer('${qa.ask_code}')">
 			<table class="table">
 				<tr>
 					<th>제목</th>
@@ -85,19 +129,21 @@
   					<path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
 				</svg>
 				</span>
-				<textarea rows="6" placeholder="답변을 입력하세요."></textarea>
+				<textarea rows="6" placeholder="답변을 입력하세요." name="ask_answer" class="form-control" id="ask_answer">${qa.ask_answer }</textarea>
 			</div>
 			<br>
-			<div class="buttons memberBtn">
-				<button type="button" class="btn btn-outline-primary" onclick="window.location.href='supportqamodifyqform.action?ask_code=${qa.ask_code}'">수정하기</button>
-				<button type="button" class="btn btn-outline-primary">삭제하기</button>
+			<div class="buttons member">
+				<button type="button" class="btn btn-outline-primary" onclick="clickModify('${qa.ask_code}')">수정하기</button>
+				<button type="button" class="btn btn-outline-primary" onclick="clickDelete('${qa.ask_code}')">삭제하기</button>
 				<button type="button" class="btn btn-outline-primary" onclick="window.location.href='supportqalist.action'">목록으로</button>
 			</div>
-			<div class="buttons adminBtn" style="display: none;">
-				<button type="button" class="btn btn-outline-primary" onclick="modify('${qa.ask_code}')">답변수정하기</button>
+			<div class="buttons admin">
 				<button type="button" class="btn btn-outline-primary" onclick="window.location.href='supportqalist.action'">목록으로</button>
-				<button type="button" class="btn btn-outline-primary" onclick="clickAnswer()" id="answerBtn">답변하기</button>
+				<button type="submit" class="btn btn-outline-primary" id="answerBtn">${qa.answer == "답변 대기"? "답변하기" : "답변수정하기" }</button>
 			</div>
+			<input type="hidden" name="admin_code" value="${qa.admin_code }">
+			<input type="hidden" name="ask_code" value="${qa.ask_code }">
+			</form>
 		</div>
 	</div>
 	<jsp:include page="footer.jsp" flush="false"/>

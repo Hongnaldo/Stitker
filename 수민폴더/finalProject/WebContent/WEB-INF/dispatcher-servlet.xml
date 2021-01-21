@@ -18,7 +18,7 @@
 	
 	<!-- 1 기존 코드 -->
 	<!-- ※ Annotation 표기법으로 Controller 객체를 등록한다. -->
-	<context:component-scan base-package="com.studyit.mvc"/>
+	<context:component-scan base-package="com.studyit.mybatis"/>
 	
 	<!-- 3 mybatis 등록 과정에서 생겨나는 추가 코드 2 -->
 	<!-- ※ mybatis 를 사용하기 위해 환경 설정을 추가하는 과정에서 -->
@@ -39,7 +39,7 @@
 		<property name="dataSource" ref="remoteDataSource"></property>
 		
 		<!-- 5 매퍼 파일을 작성하고 와서 다시 추가 -->
-		<property name="mapperLocations" value="classpath:com/studyit/mvc/mapper/*.xml"></property>
+		<property name="mapperLocations" value="classpath:com/studyit/mybatis/mapper/*.xml"></property>
 	</bean>	
 	
 	<!-- 6 mybatis 등록 과정에서 생겨나는 추가 코드 3 -->

@@ -24,6 +24,13 @@
 	{
 		window.location.href="supportnoticedetail.action?notice_code="+notice_code;
 	}
+	
+	$().ready(function() {
+		if ("<c:out value='${admin}'></c:out>" != "admin") {
+			
+			$(".admin").css("display","none");
+		}
+	});
 
 </script>
 </head>
@@ -44,8 +51,7 @@
 			</nav>
 		</div>
 
-		<div class="content">
-			<a href="supportnoticewrite.action" class="btn btn-outline-primary" role="button">글 작성하기</a>	
+		<div class="content">	
 			<br><br><br>
 			<div class="tableDiv">
 				<table class="table table-hover">
@@ -71,6 +77,7 @@
 					</c:forEach>
 				</table>
 			</div>
+			<a href="supportnoticewrite.action" class="btn btn-outline-primary admin" role="button">글 작성하기</a>
 			<br>
 			<div class="page">페이징처리필요 1 2 3 4 5 6 7 8 9 10 > >></div>
 		</div>	

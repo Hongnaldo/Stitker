@@ -39,7 +39,7 @@
 	<div class="main-content">
 		<div class="menu">
 		<br> 
-			<h1 class="text-center">신고확인</h1>
+			<h1 class="text-center">신고처리</h1>
 			<br><br><br>
 			<nav>
 				<ul>
@@ -65,7 +65,7 @@
 					<c:forEach var="report" items="${list }">
 					<c:set var="boardName" value="${fn:substring(report.post_code, 0, 2)}" />
 						<tr onclick="clickReport('${report.post_code }')" class=${report.handle_result == "미처리"? "noResult" : "" }>
-							<td>${report.rownum }</td>
+							<td>${report.rnum }</td>
 							<td>
 								<c:choose>
 									<c:when test="${boardName eq 'BI'}">

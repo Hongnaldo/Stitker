@@ -22,9 +22,18 @@
 	function clickQa(ask_code) {
 		window.location.href="supportqadetail.action?ask_code="+ask_code;
 	}
+	
+	$().ready(function(){
+		
+		if("<c:out value='${admin}'></c:out>" == "")
+			$(".admin").css("display", "none");
+		
+		else
+			$(".member").css("display", "none");
+	});
+	
 
 </script>
-
 </head>
 <body>
 
@@ -45,9 +54,8 @@
 
 		<div class="content">	
 			<br>	
-			<h6 class="count">답변 대기 <span class="badge rounded-pill bg-primary">${count }</span></h6>
-			<a href="supportqawrite.action" class="btn btn-outline-primary">글 작성하기</a>
-			<br>
+			<h6 class="count admin">답변 대기 <span class="badge rounded-pill bg-primary">${count }</span></h6>
+			<br><br>
 			<div class="tableDiv">
 				<table class="table table-hover">
 					<thead>
@@ -59,7 +67,7 @@
 					</tr>
 					</thead>
 					<c:forEach var="qa" items="${list }" >
-						<tr onclick="clickQa('${qa.ask_code}')" class=${qa.answer == "답변 대기"? "noResult" : "" }>
+						<tr onclick="clickQa('${qa.ask_code}')" class=${admin=="admin" && qa.answer == "답변 대기"? "noResult" : "" }>
 							<td>${qa.rnum }</td>
 							<td>${qa.ask_title }</td>
 							<td>${qa.ask_date }</td>
@@ -69,6 +77,7 @@
 					
 				</table>
 			</div>
+			<a href="supportqawrite.action" class="btn btn-outline-primary member">글 작성하기</a>
 			<br>
 			<div class="page">페이징처리필요 1 2 3 4 5 6 7 8 9 10 > >></div>
 		</div>	

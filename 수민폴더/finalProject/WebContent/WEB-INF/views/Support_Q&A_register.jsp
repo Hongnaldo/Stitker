@@ -58,7 +58,7 @@
 							<br><br>
 							<div class="buttons">
 								<button type="submit" class="btn btn-outline-primary">등록하기</button>
-								<button type="submit" class="btn btn-outline-primary" onclick="window.location.href='supportqalist.action'">취소하기</button>
+								<button type="button" class="btn btn-outline-primary" onclick="window.location.href='supportqalist.action'">취소하기</button>
 							</div>
 							<br><br>
 						</td>
