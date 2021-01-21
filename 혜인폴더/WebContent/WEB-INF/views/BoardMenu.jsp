@@ -11,7 +11,7 @@
 <title>BoardMenu.jsp</title>
 
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/menu.css">
-<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script> -->
 <script type="text/javascript" src="<%=cp %>/js/util.js"></script>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="css/bootstrap.css">

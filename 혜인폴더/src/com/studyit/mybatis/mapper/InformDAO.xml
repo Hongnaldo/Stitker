@@ -16,7 +16,7 @@
 		 SELECT POST_NUM, POST_CODE, USER_CODE, WRITE_DATE, HITCOUNT
 		      , TITLE, CONTENT, REC, NOTREC, INTEREST_MC, USER_NAME
 		 FROM VIEW_BOARD_INFORM
-		 ORDER BY POST_CODE DESC
+		 ORDER BY WRITE_DATE DESC, POST_NUM DESC
 	 </select>
 	 <select id="count" resultType="java.lang.Integer">
 	 	SELECT COUNT(*) AS COUNT
@@ -42,6 +42,12 @@
 		SET HITCOUNT = (HITCOUNT+1)
 		WHERE POST_CODE = #{post_code}
 	 </update>
+	 
+	 <select id="interestMc" resultType="java.lang.String">
+	 	SELECT INTEREST_MC_CODE
+	 	FROM TBL_INTEREST_MC
+		WHERE INTEREST_MC = #{interest_mc}
+	 </select>
 	 
 	 <insert id="addRec">
 	 	INSERT INTO TBL_REC_SEMINAR(REC_CODE, POST_CODE, USER_CODE, REC_CHECK, REC_DATE) 

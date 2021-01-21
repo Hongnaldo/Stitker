@@ -76,7 +76,7 @@
    </div>
 
 	<div class="main">
-		<form action="" name="myForm">
+		<form action="infocmtinsert.action" method="get" name="myForm">
 		<table id="table1" class="table">
 			<tr>
 				<th colspan="2">${detail.interest_mc }</th>
@@ -115,7 +115,14 @@
 					<input type="button" value="리스트" class="btn btn-primary btn-sm"
 					onclick="location.href='informlist.action'">
 				</td>
+				
+				<!--  관리자 로그인 -->
 				<td colspan="4" style="text-align: right; border-bottom: #ffffff;">
+			        <c:if test="${sessionScope.admin==null && sessionScope.sessionID=='admin'}">
+			            <input type="button" value="신고" class="btn btn-danger btn-sm">
+			        </c:if>
+
+
 					<button type="button" class="btn btn-primary btn-sm updateBtn"
 								value="${detail.post_code }">수정</button>
 					<button type="button" class="btn btn-primary btn-sm deleteBtn"
@@ -152,7 +159,9 @@
 				</tr>
 				
 			</table>
+		
 		<table id="table2" class="table">
+				<input type="hidden" name="code" value="${sessionScope.code}">
 				<c:forEach var="comment" items="${cmtList }">
 				<tr>
 			 		<th>${comment.user_name }</th>
@@ -182,15 +191,17 @@
 			 		<div id="commentCnt">(0 / 300)</div>
 			 	</td>
 			 	<td>
-	   				<button type="button" class="btn btn-outline-primary btn-sm btn2">등록</button>	
+	   				<button type="submit" class="btn btn-outline-primary btn-sm btn2">등록</button>	
    				</td>
 		 	</tr>	
 		</table>
+		
+		</form>
 
 	</div><!-- .main -->
 	
 
-	</form>
+	
    
   </div>
   

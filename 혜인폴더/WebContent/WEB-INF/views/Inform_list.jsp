@@ -98,7 +98,7 @@
 	
 	<div class="main">
 		
-		<form action="informinsert.action" method="post" name="myForm">
+		<form action=""  name="myForm">
 		<table id="table1" class="table">
 			<tr>
 				<td>
@@ -175,8 +175,9 @@
 		</table>
 		
 		<div id=btnSet>
-			<input type="button" value="글쓰기" class="btn btn-primary" id="write">
-			<input type="button" value="새로고침" class="btn btn-primary" >	
+			<input type="button" value="글쓰기" class="btn btn-outline-primary" id="write">
+			<input type="button" value="새로고침" class="btn btn-outline-primary" 
+			onclick="location.href='informlist.action'">	
 		</div>
 		
 		<div id="footer">

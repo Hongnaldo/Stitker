@@ -15,6 +15,7 @@ import org.apache.ibatis.annotations.Param;
 public interface IInformDAO
 {
 	public int add(InformDTO inform);
+
 	public ArrayList<InformDTO> list();
 	public int count();
 	public int modify(InformDTO inform);
@@ -22,7 +23,7 @@ public interface IInformDAO
 	public void hitcounts(String post_code);
 	public void recAdd(String post_code);
 	public void recNotAdd(String post_code);
-	
+	public String interestMc(@Param("interest_mc") String interest_mc);
 	
 	public ArrayList<InterestDTO> imList();
 	

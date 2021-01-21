@@ -53,6 +53,18 @@
 			return; 
 		} 
 	}
+	
+	
+	$(document).ready(function()
+			{
+				$('#write').click(function()
+				{ 
+					var url = "seminarinsertform.action";  
+					location.href = url; 
+				});
+
+			
+			});
 
 
 </script>
@@ -131,7 +143,7 @@
 		</table>
 		
 		<div id=btnSet>
-			<input type="button" value="글쓰기" class="btn btn-primary">
+			<input type="button" value="글쓰기" class="btn btn-primary" id="write">
 			<input type="button" value="새로고침" class="btn btn-primary" >	
 		</div>
 		

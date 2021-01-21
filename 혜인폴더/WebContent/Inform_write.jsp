@@ -10,7 +10,6 @@
 <title>IT기술정보공유 글 작성</title>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="css/bootstrap.css">
-<link rel="stylesheet" href="<%=cp %>/css/style.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="http://code.jquery.com/jquery.min.js"></script>
 
@@ -20,8 +19,8 @@
 <link rel="stylesheet" href="css/summernote-lite.css">
 
 <!-- 직접 설정한 CSS -->
-<link rel="stylesheet" href="css/sumin/Layout.css">
-<link rel="stylesheet" href="css/sumin/Support_write.css">
+<link rel="stylesheet" href="css/Write.css">
+<link rel="stylesheet" href="css/Layout.css">
 
 
 <script type="text/javascript">
@@ -116,8 +115,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="textareaTd" colspan="2">
-                     <textarea name="content" id="summernote"></textarea>
+				<td colspan="2">
+                     <textarea class="form-control" name="content" id="summernote"></textarea>
 				</td>
 			</tr>
 			

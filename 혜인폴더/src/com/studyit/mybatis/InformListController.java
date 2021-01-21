@@ -3,6 +3,8 @@
 =======================*/
 package com.studyit.mybatis;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -45,8 +47,10 @@ public class InformListController
       return result;
    }
    
+
+   
    @RequestMapping(value = "/informinsertform.action", method = RequestMethod.GET)
-   public String informInsertForm(Model model)
+   public String informInsertForm(HttpServletRequest request, Model model)
    {
       String result = null;
       
@@ -55,30 +59,45 @@ public class InformListController
       
       model.addAttribute("imList", interest.imList());
       
-      result = "/WEB-INF/views/Inform_write.jsp";
+      // 글쓰기 버튼을 누르면 로그인 여부 판단 후 글 작성 페이지/로그인 페이지
+      HttpSession session = request.getSession();
+      if (session.getAttribute("code")!=null) // 로그인 사용자
+      {
+         if (session.getAttribute("admin")==null) // 어드민이 아닌 >> 일반 회원
+         {
+            String user_code = (String) session.getAttribute("code"); //세션에서 유저코드 얻어오기
+                  
+            //테스트
+           // System.out.println(user_code); //--> UC1
+            result = "/WEB-INF/views/Inform_write.jsp";
+         }
+      }
+      else
+      {
+    	  result = "redirect:loginform.action";
+      }
+
       return result;
    }
    
-   @RequestMapping(value ="/informinsert.action", method = RequestMethod.POST)
-   public String informInsert(HttpServletRequest request)
+   @RequestMapping(value ="/informinsert.action", method = RequestMethod.GET)
+   public String informInsert(HttpServletRequest request, InformDTO inform)
    {
       IInformDAO dao = sqlSession.getMapper(IInformDAO.class);
       
       String title = request.getParameter("title");
 	  String content = request.getParameter("content");
 	  String interest_mc = request.getParameter("interest_mc");
-      
+
 	  HttpSession session = request.getSession();
-	  InformDTO inform = (InformDTO)session.getAttribute("inform");
-	  String id = (String)session.getAttribute("id");
-	  String pw = (String)session.getAttribute("pw");
+	  String user_code = (String)session.getAttribute("code");
 	  
-	  String user_code = inform.getUser_code();
-	  String user_name = inform.getUser_name();
-	  String interest_mc_code = inform.getInterest_mc_code();
+	  inform.setUser_code(user_code); 
+	  inform.setTitle(title);
+	  inform.setContent(content); 
+	  inform.setInterest_mc_code(interest_mc);
 	  
- 
-	  dao.add(inform);
+	  dao.add(inform); 
       
       return "redirect:informlist.action";
    }
@@ -110,6 +129,45 @@ public class InformListController
       return result;
    }
    
+   
+   @RequestMapping(value ="/infocmtinsert.action", method = RequestMethod.GET)
+   public String informCommentInsert(HttpServletRequest request, CmtInformDTO dto)
+   {
+      ICmtInformDAO dao = sqlSession.getMapper(ICmtInformDAO.class);
+      String result = null;
+      
+      // 댓글 등록 버튼을 누르면 로그인 여부 판단 후 글 작성 페이지/로그인 페이지
+      HttpSession session = request.getSession();
+      
+      String post_code = request.getParameter("post_code");
+      
+      if (session.getAttribute("code")!=null) // 로그인 사용자
+      {
+         if (session.getAttribute("admin")==null) // 어드민이 아닌 >> 일반 회원
+         {
+            String user_code = (String)session.getAttribute("code"); //세션에서 유저코드 얻어오기
+                  
+            result = "redirect:informdetail.action?post_code=" + post_code;
+         }
+      }
+      else
+      {
+    	  result = "redirect:loginform.action";
+      }
+
+      
+	  String user_code = (String)session.getAttribute("code");
+	  String commentBox = request.getParameter("commentBox");  
+
+	  dto.setUser_code(user_code); 
+		 
+	  System.out.println(user_code);
+	  System.out.println(commentBox);
+
+	  dao.cmtAdd(dto); 
+      
+      return "redirect:informdetail.action?post_code=" + post_code;
+   }
 
    
    

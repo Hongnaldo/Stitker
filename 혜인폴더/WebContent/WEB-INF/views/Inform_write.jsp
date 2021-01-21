@@ -11,16 +11,18 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="js/bootstrap.min.js"></script>
+
+<script src="https://kit.fontawesome.com/5cdf4f755d.js" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 
-<!-- Summernote-lite 가져오기 -->
-<script src="js/summernote-lite.js"></script>
-<script src="js/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="css/summernote-lite.css">
+<link rel="stylesheet" href="css/Write.css">
+<link rel="stylesheet" href="css/Layout.css">
 
-<!-- 직접 설정한 CSS -->
-<link rel="stylesheet" href="css/sumin/Layout.css">
-<link rel="stylesheet" href="css/sumin/Support_write.css">
+<!-- summernote 적용 -->
+<script src="js/summernote-lite.js"></script>
+<script src="js/summernote-ko-KR.js"></script>	
+<link rel="stylesheet" href="css/summernote-lite.css">
 
 
 <script type="text/javascript">
@@ -89,14 +91,15 @@
 	<div class="content">
 		<br>
 		<p class="category">기술정보공유 글 작성하기</p>
-		<form action="informinsert.action" method="post" name="myForm" role="form" class="form-inline">
-		<table class="table table-borderless" id="table">
-		<tr>
+		 <form method="get" action="informinsert.action" name="myForm" enctype="multipart/form-data">
+			<input type="hidden" name="code" value="${sessionScope.code}">
+			<table class="table table-borderless" id="table">
+			<tr>
 				<th>
 					말머리
 				</th>
 				<td>
-					<select name="searchCategory" id="searchCategory" class="form-control" required="required">
+					<select name="interest_mc" id="searchCategory" class="form-control" required="required">
 						<option value="">선택</option>
 						 <c:forEach var="interest" items="${imList }">
 							 <option value="${interest.interest_mc_code }">
@@ -123,8 +126,7 @@
 			
 		</table>
 		<div id="btnSet">
-			<input type="submit" value="작성하기" class="btn btn-outline-primary"
-			>
+			<input type="submit" value="작성하기" class="btn btn-outline-primary">
 			<input type="button" value="취소하기" class="btn btn-outline-primary" id="cancel">	
 		</div>
 		</form>
