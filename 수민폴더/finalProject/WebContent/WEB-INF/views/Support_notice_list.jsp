@@ -79,7 +79,7 @@
 			</div>
 			<a href="supportnoticewrite.action" class="btn btn-outline-primary admin" role="button">글 작성하기</a>
 			<br>
-			<div class="page">페이징처리필요 1 2 3 4 5 6 7 8 9 10 > >></div>
+			<div class="page">${pageIndexList }</div>
 		</div>	
 	</div>
 	<jsp:include page="footer.jsp" flush="false"/>

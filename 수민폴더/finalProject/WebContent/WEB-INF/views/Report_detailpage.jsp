@@ -14,13 +14,33 @@
 <link rel="stylesheet" href="css/bootstrap.css">
 <link href="css/bootstrap.min.css">
 <script src="https://kit.fontawesome.com/5cdf4f755d.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 
 <!-- 직접 설정한 CSS -->
 <link rel="stylesheet" href="css/sumin/Layout.css">
 <link rel="stylesheet" href="css/sumin/Report_detailPage.css">
 
 <script type="text/javascript">
-
+	 
+	window.onload = function() {
+		
+		var result = "<c:out value='${param.result}'></c:out>";
+		
+		if (result == "WarningSuccess") {
+			alert("경고 등록이 완료되었습니다.");
+		}	
+		else if(result == "UpdateSuccess"){
+			alert("신고수 초기화가 완료되었습니다.");
+			window.location.href="participantreportlist.action";
+		}
+		else if(result == "UpdateAndWarningSuccess"){
+			alert("초기화 및 허위신고 처리가 완료되었습니다.");
+			window.location.href="participantreportlist.action";
+		}
+	}		
+	
+	
+	
 	function clickBtn(args) 
 	{
 		var message = "";
@@ -35,7 +55,7 @@
 			// 글 삭제만 함
 			if(response)
 			{
-				
+				return;
 			}
 		}	
 		else if (args=="경고1회")
@@ -46,7 +66,8 @@
 			// 경고 1회
 			if(response)
 			{
-				
+				document.getElementById("form").setAttribute( 'action', 'insertwarning.action' );
+				document.getElementById("form").submit();				
 			}
 		}	
 		else // 신고대상 아님
@@ -61,18 +82,19 @@
 				// 허위신고 + 신고수 초기화
 				if(response)
 				{
-					
+					document.getElementById("form").setAttribute( 'action', 'updateAndInsertWarning.action' );
+					document.getElementById("form").submit();
 				}
 				// 신고수 초기화
 				else
 				{
-					
+					document.getElementById("form").setAttribute( 'action', 'updateReg.action' );
+					document.getElementById("form").submit();
 				}	
 			}
-		}	
-		
-		
+		} 
 	}
+	
 </script>
 
 </head>
@@ -87,8 +109,8 @@
 			<br><br><br>
 			<nav>
 				<ul>
-					<li><a href="participantreportlist.action">스터디원</a></li>
-					<li><a href="boardreportlist.action" class="selected">게시물</a></li>		
+					<li><a href="participantreportlist.action" class=${memList == null? "" : "selected" }>스터디원</a></li>
+					<li><a href="boardreportlist.action" class=${memList == null? "selected" : "" }>게시물</a></li>		
 				</ul>
 			</nav>
 		</div>
@@ -96,6 +118,7 @@
 		<div class="content">
 			<p class="category">신고내역</p>
 			<div class="tableDiv">
+			<form id="form">
 				<table class="table">
 					<thead>
 					<tr>
@@ -105,7 +128,6 @@
 						<th>신고일자</th>
 					</tr>
 					</thead>
-					
 					<c:forEach var="report" items="${list }">
 						<tr>
 							<td>${report.rnum }</td>
@@ -132,7 +154,7 @@
 							<td>${report.rnum }</td>
 							<td>${report.report_ctg }</td>
 							<td>${report.report_id }</td>
-							<td>${report.report_date }</td>
+							<td>${report.report_date }</td>							
 						</tr>
 						<c:if test="${report.report_reason != null }">
 							<tr class="reason">
@@ -142,13 +164,16 @@
 					  						<path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
 										</svg>
 										${report.report_reason }
+										<input type="hidden" name="report_user_code" value="${report.report_user_code }">
 									</span>
 								</td>
 							</tr>
 						</c:if>
 					</c:forEach>
-					
 				</table>
+				<input type="hidden" name="reported_parti_code" value="${reported_parti_code }"/>
+				<input type="hidden" name="reported_user_code" value="${reported_user_code }">
+				</form>
 			</div>
 			<br><br>
 			<p class="category">해당 게시물</p>
@@ -160,7 +185,7 @@
 					<button type="submit" class="btn btn-outline-primary" onclick="clickBtn(this.innerText)">글삭제</button>
 					<button type="submit" class="btn btn-outline-primary" onclick="clickBtn(this.innerText)">경고1회</button>
 					<button type="submit" class="btn btn-outline-primary" onclick="clickBtn(this.innerText)">신고대상아님</button>
-					<button type="submit" class="btn btn-outline-primary" onclick="window.location.href='Board_report_list.jsp'">목록으로</button>
+					<button type="button" class="btn btn-outline-primary" onclick="window.location.href='${memList == null? 'boardreportlist.action' : 'participantreportlist.action'}'">목록으로</button>
 				</div>
 		</div>
 	</div>

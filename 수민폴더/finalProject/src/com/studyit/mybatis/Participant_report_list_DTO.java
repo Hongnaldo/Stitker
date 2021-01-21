@@ -3,7 +3,7 @@ package com.studyit.mybatis;
 public class Participant_report_list_DTO
 {
 	// 주요 속성 구성
-	private String rnum, study_name, reported_id, handle_result, handle_code, reported_code;
+	private String rnum, study_name, reported_id, handle_result, handle_code, reported_parti_code, reported_user_code;
 
 	// getter / setter 구성
 	public String getRnum()
@@ -56,14 +56,24 @@ public class Participant_report_list_DTO
 		this.handle_code = handle_code;
 	}
 
-	public String getReported_code()
+	public String getReported_user_code()
 	{
-		return reported_code;
+		return reported_user_code;
 	}
 
-	public void setReported_code(String reported_code)
+	public void setReported_user_code(String reported_user_code)
 	{
-		this.reported_code = reported_code;
+		this.reported_user_code = reported_user_code;
+	}
+
+	public String getReported_parti_code()
+	{
+		return reported_parti_code;
+	}
+
+	public void setReported_parti_code(String reported_parti_code)
+	{
+		this.reported_parti_code = reported_parti_code;
 	}
 	
 }

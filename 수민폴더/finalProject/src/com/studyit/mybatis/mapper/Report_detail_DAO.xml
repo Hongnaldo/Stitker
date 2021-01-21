@@ -11,9 +11,9 @@
 </select>
 
 <select id="memList" resultType="com.studyit.mybatis.Report_detail_DTO">
-	SELECT ROWNUM RNUM, REPORT_CTG, REPORT_REASON, REPORT_ID, REPORT_DATE
+	SELECT ROWNUM RNUM, REPORT_CTG, REPORT_REASON, REPORT_ID, REPORT_DATE, REPORT_CODE, REPORT_USER_CODE
 	FROM RH_MEM_REPORTLIST_VIEW
-	WHERE REPORTED_CODE = #{reported_code}
+	WHERE REPORTED_CODE = #{reported_parti_code}
 </select>
 
 </mapper>
