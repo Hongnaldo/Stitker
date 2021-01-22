@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.studyit.mybatis.IInterview">
+
+	<select id="list" resultType="com.studyit.mybatis.InterviewDTO">
+		SELECT POST_NUM, USER_NAME, WRITE_DATE, HITCOUNT, TITLE, CONTENT,REC,NOTREC, INTEREST_MC, POST_CODE, USER_CODE, INTEREST_MC_CODE 
+		FROM VIEW_BOARD_INTERVIEW
+		ORDER BY WRITE_DATE, POST_NUM
+	</select>
+	
+	<!-- 오타~!!! -->
+	<!-- <select id="count" resultType="java.langInteger"> -->
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM TBL_BOARD_INTERVIEW
+	</select>
+	
+	<select id ="interestlist" resultType="com.studyit.mybatis.InterviewDTO">
+		SELECT INTEREST_MC, INTEREST_MC_CODE
+		FROM VIEW_INTEREST
+	</select>
+		
+	<insert id="add">
+		INSERT INTO TBL_BOARD_INTERVIEW(POST_CODE, USER_CODE,HITCOUNT, TITLE, CONTENT, INTEREST_MC_CODE)
+		VALUES('BV'||BOARD_INFORM_SEQ.NEXTVAL, #{user_code}, 0, #{title}, #{content}, #{interest_mc_code})
+	</insert>
+	
+	<select id ="searchlist" resultType="com.studyit.mybatis.InterviewDTO">
+		SELECT POST_NUM, USER_NAME, WRITE_DATE, HITCOUNT, TITLE, CONTENT,REC,NOTREC, INTEREST_MC, POST_CODE, USER_CODE, INTEREST_MC_CODE 
+		FROM VIEW_BOARD_INTERVIEW
+		WHERE POST_CODE = #{post_code}
+	</select>
+	
+	<update id="hitcount">
+		UPDATE TBL_BOARD_INTERVIEW
+		SET HITCOUNT = HITCOUNT+1
+		WHERE POST_CODE = #{post_code}
+	
+	</update>
+	
+	<insert id="addComment">
+		INSERT INTO TBL_COMMENT_INTERVIEW(COMMENT_CODE, POST_CODE, COMMENTS, USER_CODE, WRITE_DATE)
+		VALUES('CC'||COMMENT_INTERVIEW_SEQ.NEXTVAL, #{param1}, #{param3}, #{param2},SYSDATE)
+	</insert>
+	
+	<delete id="remove">
+		DELETE
+		FROM TBL_BOARD_INTERVIEW
+		WHERE POST_CODE=#{post_code}
+	</delete>
+
+	<select id="commentlist" resultType="com.studyit.mybatis.InterviewCommentDTO">
+		SELECT COMMENT_CODE, POST_NUM, POST_CODE, COMMENTS, USER_CODE, WRITE_DATE, USER_NAME
+		FROM VIEW_COMMENT_INTERVIEW
+		WHERE POST_CODE = #{post_code}
+		ORDER BY WRITE_DATE DESC
+	</select>
+	
+	<insert id="addRec">
+		INSERT INTO TBL_REC_INTERVIEW(REC_CODE,POST_CODE,USER_CODE,REC_CHECK)
+		VALUES('RC'||REC_INTERVIEW_SEQ.NEXTVAL,#{param1}, #{param2},1)
+	
+	</insert>
+	
+	<insert id="addNotRec">
+		INSERT INTO TBL_REC_INTERVIEW(REC_CODE,POST_CODE,USER_CODE,REC_CHECK)
+		VALUES('RC'||REC_INTERVIEW_SEQ.NEXTVAL,#{param1}, #{param2},2)
+	
+	</insert>
+	
+	<select id="recCheck" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM TBL_REC_INTERVIEW
+		WHERE USER_CODE= #{param2} AND POST_CODE = #{param1}
+	</select>
+</mapper>

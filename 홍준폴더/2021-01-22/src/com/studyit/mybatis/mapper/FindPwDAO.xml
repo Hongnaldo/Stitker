@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+<mapper namespace="com.studyit.mybatis.IFindPwDAO">
+		
+		<select id="rndPw" resultType="java.lang.String">
+			SELECT DBMS_RANDOM.STRING('A', 10) AS RNDSTR
+			FROM DUAL
+		</select>
+
+		<update id="updatePwByEmail">
+			UPDATE TBL_USER_REGISTER
+			SET PW = #{rndStr}
+			WHERE EMAIL = #{email}
+		</update>
+		
+		
+		<!-- 	
+		<select id="findPwByQna" resultType="java.lang.String">
+			SELECT ID
+			FROM TBL_USER_REGISTER
+			WHERE EMAIL = #{email}
+		</select>
+		
+		-->
+		
+		
+		
+</mapper>

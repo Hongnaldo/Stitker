@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.studyit.mybatis.IStudyReview">
+
+	<select id="list" resultType="com.studyit.mybatis.StudyReviewDTO">
+		SELECT POST_NUM, USER_NAME, WRITE_DATE, HITCOUNT, TITLE, CONTENT,REC,NOTREC, INTEREST_MC 
+		FROM VIEW_BOARD_STUDYREVIEW
+		ORDER BY POST_NUM
+	</select>
+	
+	<!-- 오타~!!! -->
+	<!-- <select id="count" resultType="java.langInteger"> -->
+	<select id="count" resultType="java.lang.Integer">
+		SELECT COUNT(*) AS COUNT
+		FROM TBL_BOARD_STUDYREVIEW
+	</select>
+	
+	<select id ="interestlist" resultType="com.studyit.mybatis.StudyReviewDTO">
+		SELECT INTEREST_MC
+		FROM VIEW_INTEREST
+	</select>
+		
+	<!-- <insert id="add">
+		INSERT INTO TBL_MEMBERLIST(MID, NAME, TELEPHONE)
+		VALUES(MEMBERLISTSEQ.NEXTVAL, #{name}, #{telephone})
+	</insert>
+	
+	<delete id="remove">
+		DELETE
+		FROM TBL_MEMBERLIST
+		WHERE MID=#{mid}
+	</delete> -->
+
+</mapper>
