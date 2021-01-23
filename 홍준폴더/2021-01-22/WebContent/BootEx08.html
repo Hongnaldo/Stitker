@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BootEx08.html</title>
+
+<link rel="stylesheet" href="css/bootstrap.css" />
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+<!-- 추가~!!! -->
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+
+</head>
+<body>
+
+<div>
+	<h1>Glyphicons</h1>
+	<hr />
+</div>
+
+<div>
+	아이콘 : <span class="glyphicon glyphicon-th-list"
+			style="font-size: 30px; color: gold;"></span>
+	<!-- span이 아니어도 되지만 일반적으로 span을 활용한다.
+	특정 부분에 스타일 먹일때.
+	내용 부분에. -->
+	<!-- 주의할 점 1 : 그리피콘의 사이즈는 font-size로 조정한다. 
+	     텍스트 기반 문자를 기반으로 처리됨!-->
+	
+</div>
+
+<br /><br />
+<!-- 주의할 점 2 -->
+<!-- Attribute Content Type → Simple Type → 적용 안됨 -->
+<div>
+	<input type="button" class="glyphicon glyphicon-th-list"/>
+</div>
+
+<!-- input엔 pc데이터영역이없 -->
+<!-- Attribute Content Type → Complex Type → 적용 됨 -->
+<div>
+	<button type="button" class="btn btn-default">
+		<span class="glyphicon glyphicon-print">인쇄하기</span>
+	</button>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+
+
+
+<div class="btn-group" role="group">
+	<button type="button" class="btn btn-default">Left</button>
+	<button type="button" class="btn btn-default">Middle</button>
+	<button type="button" class="btn btn-default">Right</button>
+</div>
+<br /><br />
+
+
+
+<div class="btn-group" role="group">
+	<button type="button" class="btn btn-default">
+		<span class="glyphicon glyphicon-align-left"></span>
+	</button>
+	<button type="button" class="btn btn-default">
+		<span class="glyphicon glyphicon-align-center"></span>
+	</button>
+	<button type="button" class="btn btn-default">
+		<span class="glyphicon glyphicon-align-right"></span>
+	</button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

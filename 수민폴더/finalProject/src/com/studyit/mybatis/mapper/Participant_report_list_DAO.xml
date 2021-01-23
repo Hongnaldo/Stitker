@@ -5,7 +5,7 @@
 <mapper namespace="com.studyit.mybatis.IParticipant_report_list_DAO">
 
 <select id="list" resultType="com.studyit.mybatis.Participant_report_list_DTO">
-	SELECT RNUM, STUDY_NAME, NVL(HANDLE_RESULT,'미처리') HANDLE_RESULT, REPORTED_ID, HANDLE_CODE, REPORTED_CODE
+	SELECT RNUM, STUDY_NAME, NVL(HANDLE_RESULT,'미처리') HANDLE_RESULT, REPORTED_ID, HANDLE_CODE, REPORTED_PARTI_CODE, REPORTED_USER_CODE
 	FROM RH_STUDYMEM_VIEW
 	ORDER BY RNUM DESC
 </select>
@@ -15,5 +15,37 @@
 	FROM RH_STUDYMEM_VIEW
 	WHERE HANDLE_RESULT IS NULL
 </select>
+
+
+<resultMap type="hashmap" id="param"></resultMap>
+<select id="insertWarning" statementType="CALLABLE">
+	{
+		CALL PRC_INSERT_WARNING(#{reported_user_code}, SYSDATE)
+	}
+</select>
+
+<update id="updateRhParti">
+UPDATE TBL_MEM_REPORT_HANDLE
+SET HANDLE_RESULT = 'RH1', HANDLE_DATE = SYSDATE
+WHERE MEM_REPORT_REG_CODE = (SELECT H.MEM_REPORT_REG_CODE
+							 FROM TBL_MEM_REPORT_REG R JOIN TBL_MEM_REPORT_HANDLE H
+							   ON R.MEM_REPORT_REG_CODE = H.MEM_REPORT_REG_CODE
+							 WHERE PARTI_REPORTED_CODE = #{reported_parti_code})
+</update>
+
+<delete id="deleteRegParti">
+	DELETE
+	FROM TBL_MEM_REPORT_REG
+	WHERE PARTI_REPORTED_CODE = #{reported_parti_code}
+</delete>
+
+<delete id="deleteRhParti">
+	DELETE
+	FROM TBL_MEM_REPORT_HANDLE
+	WHERE MEM_REPORT_REG_CODE = (SELECT H.MEM_REPORT_REG_CODE
+							 FROM TBL_MEM_REPORT_REG R JOIN TBL_MEM_REPORT_HANDLE H
+							   ON R.MEM_REPORT_REG_CODE = H.MEM_REPORT_REG_CODE
+							 WHERE PARTI_REPORTED_CODE = #{reported_parti_code})
+</delete>
 
 </mapper>

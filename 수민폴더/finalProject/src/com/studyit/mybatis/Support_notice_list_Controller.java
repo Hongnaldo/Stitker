@@ -22,12 +22,46 @@ public class Support_notice_list_Controller
 	public String list(ModelMap model, HttpServletRequest request)
 	{
 		String result = null;
-		HttpSession session = request.getSession();
-		
+		HttpSession session = request.getSession();		
 		result = "/WEB-INF/views/Support_notice_list.jsp";
 		ISupport_notice_list_DAO dao = sqlSession.getMapper(ISupport_notice_list_DAO.class);
+		Page page = new Page();
 		
-		model.addAttribute("list", dao.list());
+		// 페이지 번호 확인
+		String pageNum = request.getParameter("pageNum");
+		
+		// 현재 페이지
+		int currentPage = 1;
+		
+		// 넘어온 페이지번호가 있으면 현재 페이지를 해당 숫자로 바꾸기
+		if(pageNum != null)
+			currentPage = Integer.parseInt(pageNum);
+		
+		// 전체 데이터 갯수 구하기
+		int dataCount = dao.count();
+		
+		// 총 페이지 수 계산
+		int numPerPage = 10;
+		int totalPage = page.getPageCount(numPerPage, dataCount);
+		
+		// 전체 페이지 수보다 표시할 페이지가 큰 경우
+		// (그 사이 데이터 삭제해서 페이지 줄었을 경우) 표시할 페이지를 마지막 페이지로 구성
+		if (currentPage > totalPage)
+			currentPage = totalPage;
+		
+		// 데이터 베이스에서 가져올 게시물의 시작과 끝
+		int start = (currentPage-1) * numPerPage + 1;
+		int end = currentPage * numPerPage > dataCount? dataCount : currentPage * numPerPage;
+		int start2 = dataCount%end+1;
+		int end2 = start2+(end-start);
+		
+		// 페이징
+		String listUrl = "supportnoticelist.action";
+		String pageIndexList = page.getIndexList(currentPage, totalPage, listUrl);
+		
+		
+		model.addAttribute("pageIndexList", pageIndexList);
+		model.addAttribute("list", dao.list(start2, end2));
 		model.addAttribute("admin", (String)session.getAttribute("admin"));
 		
 		return result;

@@ -108,7 +108,10 @@ public class Report_list_Controller
 		result = "/WEB-INF/views/Report_detailpage.jsp";
 		IReport_detail_DAO dao = sqlSession.getMapper(IReport_detail_DAO.class);
 		
-		model.addAttribute("memList", dao.memList(request.getParameter("reported_code")));
+		model.addAttribute("memList", dao.memList(request.getParameter("reported_parti_code")));
+		model.addAttribute("reported_parti_code", request.getParameter("reported_parti_code"));
+		model.addAttribute("reported_user_code", request.getParameter("reported_user_code"));
+		
 		
 		return result;
 	}

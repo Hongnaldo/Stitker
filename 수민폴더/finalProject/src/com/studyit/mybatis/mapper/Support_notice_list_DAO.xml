@@ -5,7 +5,7 @@
 <mapper namespace="com.studyit.mybatis.ISupport_notice_list_DAO">
 
 <select id="list" resultType="com.studyit.mybatis.Support_notice_list_DTO">
-	
+	<![CDATA[ 
 	SELECT RNUM, NOTICE_CODE, NOTICE_DATE, NOTICE_TITLE, ADMIN_ID, HITCOUNT
 	FROM
 	(
@@ -17,8 +17,9 @@
 			ORDER BY NOTICE_DATE  
 		)
 	)
+	WHERE RNUM >= #{start} AND RNUM <= #{end}
 	ORDER BY RNUM DESC
-		
+	]]> 	
 </select>
 
 <update id="addHitCount">
@@ -56,6 +57,11 @@
 	SELECT NOTICE_TITLE, NOTICE_CONTENT, NOTICE_CODE
 	FROM TBL_NOTICE
 	WHERE NOTICE_CODE = #{notice_code}
+</select>
+
+<select id="count" resultType="java.lang.Integer">
+	SELECT COUNT(*) COUNT
+	FROM TBL_NOTICE
 </select>
 
 </mapper>

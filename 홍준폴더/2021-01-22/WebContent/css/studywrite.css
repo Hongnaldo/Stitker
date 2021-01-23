@@ -1,0 +1,291 @@
+@charset "UTF-8";
+*
+{
+	margin: 0px;
+	padding: 0px;
+}
+
+
+ul
+{
+	list-style: none;
+}
+
+.header_left
+{
+	
+	float: left;
+	font-size: 11pt;
+	font-weight: bold;
+}
+
+#table1 th
+{
+	text-align: center;
+	width: 150px;
+	font-size: 9pt;
+}
+	
+#table1 td
+{
+	text-align: left;
+	width: 550px;
+	font-size: 9pt;
+}
+
+.main
+{
+	width: 700px;
+	margin: 0px auto;
+}
+
+
+
+#footer
+{
+	clear: both;
+	height: 32px;
+	line-height: 32px;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	text-align: center;
+}
+
+#BoardArticle
+{
+   width: 750px;
+   margin: 30px auto;
+   text-align: left;
+}
+
+#StudyOpen_title
+{
+   width: 750px;
+   padding-bottom: 50px;
+   height: 40px;
+   text-align: left;
+   font-weight: bold;
+   line-height: 40px;
+   font-size: 20pt;
+   margin-bottom: 30px;
+}
+
+#BoardDetail
+{
+	float: right;
+	width: 750px;
+	overflow: visible;
+	border-top: 3px solid #000000;
+	border-bottom: 3px solid #000000;    
+	text-align: left;
+}
+
+#BoardDetail_header
+{
+   height: 35px;
+   line-height: 35px;
+   border-bottom: 2px solid #000000;
+   text-align: left;
+}
+
+#BoardDetail dt
+{
+   float: left;
+   height: 35px;
+   width: 60px;
+   line-height: 35px;
+   text-align: center;
+   background-color: #c0c0c0;
+}
+
+#BoardDetail dd
+{
+   float: left;
+   height: 35px;
+   width: 250px;
+   line-height: 35px;
+   text-align: left;
+   padding-left: 10px;
+}
+
+#BoardDetail_content table
+{
+	width: 600;
+}
+
+#BoardDetail_content td
+{
+
+	vertical-align: top; 
+	height: 150;
+}
+
+.BoardDetail_bottomLine
+{
+   height: 35px;
+   line-height: 35px;
+   clear: both;
+   text-align: left;
+   border-bottom: 1px solid #000000;
+}
+
+.BoardDetail_noLine
+{
+   height: 25px;
+   line-height: 25px;
+   clear: both;
+   text-align: left;
+}
+
+#BoardDetail_content
+{
+   overflow: visible;
+   border-bottom: 1px solid #000000;
+   text-align: left;
+   min-height: 250px;
+   padding: 20px 60px 20px 60px;
+   word-break: break-all;
+}
+
+#BoardDetail_footer
+{
+   width: 750px;
+   clear: both;
+   height: 32px;
+   line-height: 32px;
+}
+
+#BoardDetail_footer #leftFooter
+{
+   float: left;
+   width: 375px;
+   text-align: left;
+}
+
+
+#BoardDetail_footer #rightFooter
+{
+   float: right;
+   width: 375px;
+   text-align: right;
+}
+
+#BoardDetail_comment
+{
+	border-bottom: 2px solid #000000;
+	width: 750px;
+}
+
+.BoardDetail_commentHead
+{
+   height: 35px;
+   line-height: 35px;
+   clear: both;
+   text-align: left;
+   border-top: 2px solid #000000;
+   border-bottom: 1px solid #000000;
+   
+}
+
+.BoardDetail_commentHead td
+{
+   padding-left: 10px;
+   
+}
+
+.BoardDetail_commentHead #table #notify
+{
+	width: 630px;
+	text-align: right;
+}
+
+
+.BoardDetail_commentWrite
+{
+	border: 1px solid #000000;
+	width: 750px;
+	height: 120px;
+	margin-bottom: 20px;
+}
+
+.BoardDetail_commentRead #comment
+{
+	width: 660px;
+	text-align: left;
+	padding-left: 10px;
+}
+
+.BoardDetail_commentRead p
+{
+	text-align: center;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+
+#commentCnt
+{
+	float: right;
+} 
+
+.btn
+{
+	border: 0px solid #000000;
+}
+
+.btn2
+{
+	float: right;
+	margin-left: 10px;
+	
+}
+
+.commentBox
+{
+	border: 0px solid #000000;
+	color: #000000;
+}
+
+
+
+.BoardDetail_commentRead td
+{
+   height: 25px;
+   line-height: 25px;
+   clear: both;
+   text-align: left;
+   
+}
+
+#studyDate .hour{width: 30px;}
+#studyDate .minute{width: 30px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

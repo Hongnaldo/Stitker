@@ -3,7 +3,7 @@ package com.studyit.mybatis;
 public class Report_detail_DTO
 {
 	// 주요 속성 구성
-	private String rnum, report_ctg, report_reason, report_date, report_id;
+	private String rnum, report_ctg, report_reason, report_date, report_id, report_user_code;
 	
 	// getter, setter 구성
 	public String getRnum()
@@ -54,6 +54,16 @@ public class Report_detail_DTO
 	public void setReport_id(String report_id)
 	{
 		this.report_id = report_id;
+	}
+
+	public String getReport_user_code()
+	{
+		return report_user_code;
+	}
+
+	public void setReport_user_code(String report_user_code)
+	{
+		this.report_user_code = report_user_code;
 	}
 	
 	

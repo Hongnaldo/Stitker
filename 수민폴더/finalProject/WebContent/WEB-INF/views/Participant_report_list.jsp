@@ -21,9 +21,9 @@
 
 <script type="text/javascript">
 
-	function clickReport(reported_code) 
+	function clickReport(reported_parti_code, reported_user_code) 
 	{
-		window.location.href="memreportdetail.action?reported_code=" + reported_code;
+		window.location.href="memreportdetail.action?reported_parti_code=" + reported_parti_code + "&reported_user_code=" + reported_user_code;
 	}
 
 </script>
@@ -59,7 +59,7 @@
 					</tr>
 					</thead>
 					<c:forEach var="report" items="${list }">
-						<tr onclick="clickReport('${report.reported_code}')" class=${report.handle_result == "미처리"? "noResult" : "" }>
+						<tr onclick="clickReport('${report.reported_parti_code}', '${report.reported_user_code }')" class=${report.handle_result == "미처리"? "noResult" : "" }>
 							<td>${report.rnum }</td>
 							<td>${report.reported_id }</td>
 							<td>${report.study_name }</td>
